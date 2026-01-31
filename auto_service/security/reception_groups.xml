@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="group_reception_create" model="res.groups">
+        <field name="name">Reception Create</field>
+    </record>
+
+    <record id="group_reception_edit" model="res.groups">
+        <field name="name">Reception Edit</field>
+    </record>
+
+    <record id="group_invoice_confirm" model="res.groups">
+        <field name="name">Invoice Confirm</field>
+    </record>
+
+    <record id="group_invoice_draft" model="res.groups">
+        <field name="name">Invoice Draft</field>
+    </record>
+
+
+</odoo>

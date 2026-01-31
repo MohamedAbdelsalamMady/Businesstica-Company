@@ -1,0 +1,449 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="wait_to_deliver_form" model="ir.ui.view">
+        <field name="name">wait.to.deliver.form</field>
+        <field name="model">wait.to.deliver</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="show_finish" type="object"
+                            string="Show Finish" class="oe_highlight"
+                            />
+                    <field name="timer_start" widget="timer_timer"
+                           class="text-success ml-auto h2 ml-4 font-weight-bold"
+                           readonly="1" invisible="s == True"/>
+                    <field name="timer_start" widget="timer_timer"
+                           class="text-danger ml-auto h2 ml-4 font-weight-bold"
+                           readonly="1" invisible="s != True"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="1,2"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group string="Customer Information">
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="phone_number"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="address"/>
+                            <field name="check_pause_time"/>
+                            <field name="success_timer"/>
+                            <field name="task_status"/>
+                            <field name="s"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Car Information And Semi History">
+
+                            <group>
+                                <group>
+                                    <field name="reception_information_id"/>
+                                    <field name="car_creations_id"/>
+                                    <field name="license_plate_no"/>
+                                    <field name="motor_number"/>
+                                    <field name="top_number"/>
+                                    <field name="last_km"/>
+                                    <field name="now_km"/>
+                                    <field name="service_description"/>
+                                    <field name="stop_timer" invisible="1"/>
+                                    <field name="start_timer" invisible="1"/>
+                                    <field name="timer_pause" invisible="1"/>
+                                    <field name="is_timer_running"
+                                           invisible="1"/>
+                                    <field name="res_model" invisible="1"/>
+                                    <field name="res_id" invisible="1"/>
+                                    <field name="user_id" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="car_brand_id"/>
+                                    <field name="car_model_id"/>
+                                    <field name="car_agent_id"/>
+                                    <field name="car_body_style_id"/>
+                                    <field name="transmission_type_id"/>
+                                    <field name="engine_type_id"/>
+                                    <field name="engine_capacity_id"/>
+                                    <field name="car_cylinders_id"/>
+                                    <field name="car_generation_id"/>
+                                    <field name="request_ordinary_service"/>
+                                    <field name="service_name_id"
+                                           widget="many2many_tags"
+                                           invisible="request_ordinary_service != True"/>
+                                </group>
+                            </group>
+                            <group string="Project and Tasks">
+                                <group>
+                                    <field name="project_id"/>
+                                </group>
+                                <group>
+                                    <field name="project_task_ids"
+                                           widget="many2many_tags"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Final Inspection Before Delivery">
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        The car has been cleaned inside and out
+                                    </div>
+                                    <div class="col">
+                                        <field name="cleaned_inside_out" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="note_cleaned_inside"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Interior and exterior lights and spaces
+                                    </div>
+                                    <div class="col">
+                                        <field name="exterior_light_spaces" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="exterior_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Mirrors
+                                    </div>
+                                    <div class="col">
+                                        <field name="mirrors" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="note_mirrors"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        HVAC system
+                                    </div>
+                                    <div class="col">
+                                        <field name="hvac_system" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="hvac_system_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Brake system and parking brake
+                                    </div>
+                                    <div class="col">
+                                        <field name="system_parking_brake" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="parking_brake_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Guidance system
+                                    </div>
+                                    <div class="col">
+                                        <field name="guidance_system" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="guidance_system_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Gearbox and Differential
+                                    </div>
+                                    <div class="col">
+                                        <field name="gearbox_differential" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="gearbox_differential_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Front Suspension(The front furniture)
+                                    </div>
+                                    <div class="col">
+                                        <field name="front_suspension" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="front_suspension_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Rear Suspension(Background Furniture)
+                                    </div>
+                                    <div class="col">
+                                        <field name="rear_suspension" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="rear_suspension_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        The next maintenance appointment has
+                                        been reactivated in the dashboard
+                                    </div>
+                                    <div class="col">
+                                        <field name="maintenance_appointment_reactivated" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="appointment_reactivated_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Ensure that there are no warning
+                                        messages on the dashboard and that there
+                                        is sufficient water in the car's tank
+                                    </div>
+                                    <div class="col">
+                                        <field name="ensure_sufficient_tank" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="sufficient_tank_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Verify all works mentioned in the repair order
+                                    </div>
+                                    <div class="col">
+                                        <field name="verify_repair" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="verify_repair_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Verify all works mentioned in the repair order appendix
+                                    </div>
+                                    <div class="col">
+                                        <field name="mentioned_repair_appendix" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="repair_appendix_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Ensure that the customer's complaint is similar to the repair process
+                                    </div>
+                                    <div class="col">
+                                        <field name="ensure_similar_repair" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="similar_repair_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Check oil and fluid levels
+                                    </div>
+                                    <div class="col">
+                                        <field name="oil_fluid_levels" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="oil_fluid_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Ensure that the calf is connected to the torque
+                                    </div>
+                                    <div class="col">
+                                        <field name="ensure_calf_torque" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="calf_torque_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Examination of the spare tire and the kit
+                                    </div>
+                                    <div class="col">
+                                        <field name="examination_tire_kit" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="tire_kit_note"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </page>
+                    </notebook>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+
+            </form>
+        </field>
+    </record>
+
+    <record id="wait_to_deliver_list" model="ir.ui.view">
+        <field name="name">wait.to.deliver.list</field>
+        <field name="model">wait.to.deliver</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="phone_number"/>
+                <field name="address"/>
+                <field name="car_creations_id"/>
+                <field name="license_plate_no"/>
+                <field name="project_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="wait_to_deliver_search" model="ir.ui.view">
+        <field name="name">wait.to.deliver.search</field>
+        <field name="model">wait.to.deliver</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="phone_number"/>
+                <field name="address"/>
+                <field name="car_creations_id"/>
+                <field name="license_plate_no"/>
+                <field name="project_id"/>
+            </search>
+        </field>
+    </record>
+
+
+
+    <record id="wait_to_deliver_sequence" model="ir.sequence">
+        <field name="name">wait.to.deliver</field>
+        <field name="code">wait.to.deliver</field>
+        <field name="prefix">WTD/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="wait_to_deliver_action" model="ir.actions.act_window">
+        <field name="name">Wait To Deliver</field>
+        <field name="res_model">wait.to.deliver</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Wait To Deliver
+            </p>
+        </field>
+    </record>
+</odoo>

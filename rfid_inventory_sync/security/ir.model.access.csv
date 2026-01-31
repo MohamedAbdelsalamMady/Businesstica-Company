@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_rfid_inventory_sync_user,rfid.inventory.sync.user,model_rfid_inventory_sync,base.group_user,1,1,1,1

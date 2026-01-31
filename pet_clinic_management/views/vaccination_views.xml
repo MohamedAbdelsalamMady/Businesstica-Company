@@ -1,0 +1,43 @@
+<odoo>
+    <record id="vet_vaccination_form" model="ir.ui.view">
+        <field name="name">vet.vaccination.form</field>
+        <field name="model">vet.vaccination</field>
+        <field name="arch" type="xml">
+            <form string="Vaccination Record">
+                <sheet>
+                    <group>
+                        <field name="pet_id"/>
+                        <field name="breed" readonly="1"/>
+                        <field name="age" readonly="1"/>
+                        <field name="vaccine_id"/>
+                        <field name="vaccination_date"/>
+                        <field name="next_due_date"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vet_vaccination_tree" model="ir.ui.view">
+        <field name="name">vet.vaccination.tree</field>
+        <field name="model">vet.vaccination</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="pet_id"/>
+                <field name="vaccine_id"/>
+                <field name="vaccination_date"/>
+                <field name="next_due_date"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vet_vaccination_action" model="ir.actions.act_window">
+        <field name="name">Vaccinations</field>
+        <field name="res_model">vet.vaccination</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="vet_vaccination_menu" name="Vaccinations" parent="vet_clinic_root" action="vet_vaccination_action"
+              groups="base.group_user"/>
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="car_model_form" model="ir.ui.view">
+        <field name="name">car.model.form</field>
+        <field name="model">car.model</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="car_model_list" model="ir.ui.view">
+        <field name="name">car.model.list</field>
+        <field name="model">car.model</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="car_model_search" model="ir.ui.view">
+        <field name="name">car.model.search</field>
+        <field name="model">car.model</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="car_model_action" model="ir.actions.act_window">
+        <field name="name">Car Model</field>
+        <field name="res_model">car.model</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Car Model
+            </p>
+        </field>
+    </record>
+</odoo>

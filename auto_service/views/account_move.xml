@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherit_account_move_form" model="ir.ui.view">
+        <field name="name">inherit.account.move.form</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="send_to_approve" type="object" string="Send To Approve" class="oe_highlight"
+                       invisible="approved == True or state != 'draft' or move_type not in ['out_invoice', 'in_invoice']"/>
+                <button name="drft_to_approve" type="object" string="Send To Approve" class="oe_highlight"
+                       invisible="drft_approve == True or state != 'cancel' or move_type not in ['out_invoice', 'in_invoice']"/>
+            </xpath>
+
+        <xpath expr="//button[@name='action_post']" position="attributes">
+            <attribute name="groups">auto_service.group_invoice_confirm</attribute>
+        </xpath>
+
+        <xpath expr="//button[@name='button_draft']" position="attributes">
+            <attribute name="groups">auto_service.group_invoice_draft</attribute>
+        </xpath>
+
+
+            <!--            <button name="button_draft" string="Reset to Draft" type="object" groups="account.group_account_invoice" attrs="{'invisible' : [('show_reset_to_draft_button', '=', False)]}" data-hotkey="q"/>-->
+
+            <xpath expr="//div[@name='journal_div']" position="after">
+                <field name="car_diagnoses_id"
+                       invisible="move_type not in ['out_invoice']"/>
+                <field name="reception_information_id"
+                       invisible="move_type not in ['out_invoice']"/>
+                <field name="car_creations_id"
+                       invisible="move_type not in ['out_invoice']"/>
+                <field name="service_description"
+                       invisible="move_type not in ['out_invoice']"/>
+
+                <field name="not_paid_allow_perm" invisible="amount_residual == 0"/>
+                <field name="perm_user_id" invisible="1"/>
+
+                <field name="approved" invisible="1"/>
+                <field name="drft_approve" invisible="1"/>
+            </xpath>
+            <xpath expr="//page[@id='other_tab']" position="after">
+                <page string="Notes" invisible="move_type not in ['out_invoice']">
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </page>
+            </xpath>
+
+
+        </field>
+    </record>
+</odoo>

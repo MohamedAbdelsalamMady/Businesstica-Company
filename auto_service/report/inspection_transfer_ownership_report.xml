@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <report id="inspection_transfer_ownership_report"
+            model="inspection.transfer.ownership"
+            string="Inspection Transfer Ownership"
+            report_type="qweb-pdf"
+            name="auto_service.inspection_transfer_ownership_template"
+            file="auto_service.inspection_transfer_ownership_template"
+
+    />
+
+
+</odoo>

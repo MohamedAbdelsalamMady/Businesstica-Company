@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Group Category -->
+    <record id="module_category_pharmacy_management" model="ir.module.category">
+        <field name="name">Pharmacy Management</field>
+        <field name="sequence" eval="15"/>
+    </record>
+
+    <!-- Groups -->
+    <record id="group_compliance" model="res.groups">
+        <field name="name">Pharmacy Compliance</field>
+        <field name="category_id" ref="pharmacy_management_system.module_category_pharmacy_management"/>
+    </record>
+    <record id="group_pharmacist" model="res.groups">
+        <field name="name">Pharmacist</field>
+        <field name="category_id" ref="pharmacy_management_system.module_category_pharmacy_management"/>
+        <field name="implied_ids" eval="[(4, ref('pharmacy_management_system.group_compliance'))]"/>
+    </record>
+    <record id="group_manager" model="res.groups">
+        <field name="name">Pharmacy Manager</field>
+        <field name="category_id" ref="pharmacy_management_system.module_category_pharmacy_management"/>
+        <field name="implied_ids" eval="[(4, ref('pharmacy_management_system.group_pharmacist'))]"/>
+    </record>
+    <record id="group_portal_patient" model="res.groups">
+        <field name="name">Portal Patient</field>
+        <field name="category_id" ref="base.module_category_hidden"/>
+        <field name="users" eval="[(4, ref('base.public_user'))]"/>
+    </record>
+
+    <!-- Record Rules -->
+    <record id="rule_prescription_hospital_scope" model="ir.rule">
+        <field name="name">Prescription Hospital Scope</field>
+        <field name="model_id" ref="model_pharmacy_prescription"/>
+        <field name="domain_force">['|', ('hospital_id', '=', False), ('hospital_id', 'in', user.hospital_access_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_pharmacist')),(4, ref('group_manager'))]"/>
+    </record>
+
+    <record id="rule_claim_hospital_scope" model="ir.rule">
+        <field name="name">Insurance Claim Hospital Scope</field>
+        <field name="model_id" ref="model_pharmacy_insurance_claim"/>
+        <field name="domain_force">['|', ('hospital_id', '=', False), ('hospital_id', 'in', user.hospital_access_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_pharmacist')),(4, ref('group_manager'))]"/>
+    </record>
+
+    <record id="rule_controlled_log_scope" model="ir.rule">
+        <field name="name">Controlled Log Hospital Scope</field>
+        <field name="model_id" ref="model_pharmacy_controlled_log"/>
+        <field name="domain_force">['|', ('hospital_id', '=', False), ('hospital_id', 'in', user.hospital_access_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_compliance')),(4, ref('group_manager')),(4, ref('group_pharmacist'))]"/>
+    </record>
+
+    <record id="rule_pharmacy_branch_scope" model="ir.rule">
+        <field name="name">Pharmacy Branch Hospital Scope</field>
+        <field name="model_id" ref="model_pharmacy_pharmacy"/>
+        <field name="domain_force">['|', ('hospital_id', '=', False), ('hospital_id', 'in', user.hospital_access_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_manager')),(4, ref('group_pharmacist'))]"/>
+    </record>
+
+    <record id="rule_lot_hospital_scope" model="ir.rule">
+        <field name="name">Lot Hospital Scope</field>
+        <field name="model_id" ref="stock.model_stock_lot"/>
+        <field name="domain_force">['|', ('hospital_id', '=', False), ('hospital_id', 'in', user.hospital_access_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_manager')),(4, ref('group_pharmacist'))]"/>
+    </record>
+
+    <record id="rule_drug_coverage_scope" model="ir.rule">
+        <field name="name">Drug Coverage Hospital Scope</field>
+        <field name="model_id" ref="model_pharmacy_drug_coverage"/>
+        <field name="domain_force">['|', ('hospital_id', '=', False), ('hospital_id', 'in', user.hospital_access_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_manager')),(4, ref('group_pharmacist'))]"/>
+    </record>
+
+    <record id="rule_treatment_hospital_scope" model="ir.rule">
+        <field name="name">Treatment Hospital Scope</field>
+        <field name="model_id" ref="model_hospital_treatment"/>
+        <field name="domain_force">['|', ('hospital_id', '=', False), ('hospital_id', 'in', user.hospital_access_ids.ids)]</field>
+        <field name="groups" eval="[(4, ref('group_manager')),(4, ref('group_pharmacist'))]"/>
+    </record>
+
+
+    <!-- Admin full access rules -->
+    <record id="rule_prescription_admin_full_access" model="ir.rule">
+        <field name="name">Prescription Admin Full Access</field>
+        <field name="model_id" ref="model_pharmacy_prescription"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_claim_admin_full_access" model="ir.rule">
+        <field name="name">Insurance Claim Admin Full Access</field>
+        <field name="model_id" ref="model_pharmacy_insurance_claim"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_controlled_log_admin_full_access" model="ir.rule">
+        <field name="name">Controlled Log Admin Full Access</field>
+        <field name="model_id" ref="model_pharmacy_controlled_log"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_pharmacy_admin_full_access" model="ir.rule">
+        <field name="name">Pharmacy Admin Full Access</field>
+        <field name="model_id" ref="model_pharmacy_pharmacy"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_stock_lot_admin_full_access" model="ir.rule">
+        <field name="name">Stock Lot Admin Full Access</field>
+        <field name="model_id" ref="stock.model_stock_lot"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_treatment_admin_full_access" model="ir.rule">
+        <field name="name">Treatment Admin Full Access</field>
+        <field name="model_id" ref="model_hospital_treatment"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_drug_coverage_admin_full_access" model="ir.rule">
+        <field name="name">Drug Coverage Admin Full Access</field>
+        <field name="model_id" ref="model_pharmacy_drug_coverage"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <!-- Pharmacy-based Record Rules for New Models -->
+    <record id="rule_availability_pharmacy_scope" model="ir.rule">
+        <field name="name">Availability Pharmacy Scope</field>
+        <field name="model_id" ref="model_pharmacy_resource_availability"/>
+        <field name="domain_force">['|', ('pharmacy_id', '=', False), ('pharmacy_id.company_id', '=', user.company_id.id)]</field>
+        <field name="groups" eval="[(4, ref('group_pharmacist')),(4, ref('group_manager'))]"/>
+    </record>
+
+    <record id="rule_shift_template_company_scope" model="ir.rule">
+        <field name="name">Shift Template Company Scope</field>
+        <field name="model_id" ref="model_pharmacy_shift_template"/>
+        <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
+        <field name="groups" eval="[(4, ref('group_pharmacist')),(4, ref('group_manager'))]"/>
+    </record>
+
+    <record id="rule_patient_company_scope" model="ir.rule">
+        <field name="name">Patient Company Scope</field>
+        <field name="model_id" ref="model_hospital_patient"/>
+        <field name="domain_force">[('company_id', '=', user.company_id.id)]</field>
+        <field name="groups" eval="[(4, ref('group_pharmacist')),(4, ref('group_manager'))]"/>
+    </record>
+
+    <!-- Admin full access for new models -->
+    <record id="rule_availability_admin_full_access" model="ir.rule">
+        <field name="name">Availability Admin Full Access</field>
+        <field name="model_id" ref="model_pharmacy_resource_availability"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_shift_template_admin_full_access" model="ir.rule">
+        <field name="name">Shift Template Admin Full Access</field>
+        <field name="model_id" ref="model_pharmacy_shift_template"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+    <record id="rule_patient_admin_full_access" model="ir.rule">
+        <field name="name">Patient Admin Full Access</field>
+        <field name="model_id" ref="model_hospital_patient"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="groups" eval="[(4, ref('base.group_system'))]"/>
+    </record>
+
+
+</odoo>
+
+

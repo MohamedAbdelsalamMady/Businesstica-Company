@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Availability Calendar -->
+    <record id="view_pharmacy_resource_availability_calendar" model="ir.ui.view">
+        <field name="name">pharmacy.resource.availability.calendar</field>
+        <field name="model">pharmacy.resource.availability</field>
+        <field name="arch" type="xml">
+            <calendar string="Resource Availability" date_start="date" color="resource_type" mode="week">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="pharmacy_id"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_resource_availability_tree" model="ir.ui.view">
+        <field name="name">pharmacy.resource.availability.tree</field>
+        <field name="model">pharmacy.resource.availability</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="resource_type"/>
+                <field name="user_id"/>
+                <field name="pharmacy_id"/>
+                <field name="date"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+                <field name="capacity"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_resource_availability_form" model="ir.ui.view">
+        <field name="name">pharmacy.resource.availability.form</field>
+        <field name="model">pharmacy.resource.availability</field>
+        <field name="arch" type="xml">
+            <form string="Resource Availability">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="resource_type"/>
+                            <field name="user_id"/>
+                            <field name="pharmacy_id"/>
+                            <field name="company_id" readonly="1"/>
+                            <field name="shift_template_id"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                            <field name="slot_duration"/>
+                            <field name="capacity"/>
+                            <field name="state"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Notes">
+                            <field name="notes"/>
+                        </group>
+                        <group string="Linked Records">
+                            <field name="treatment_ids" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="search_pharmacy_resource_availability" model="ir.ui.view">
+        <field name="name">pharmacy.resource.availability.search</field>
+        <field name="model">pharmacy.resource.availability</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="resource_type"/>
+                <field name="user_id"/>
+                <field name="pharmacy_id"/>
+                <field name="date"/>
+                <field name="state"/>
+                <group expand="0" string="Group By">
+                    <filter string="Pharmacy" name="grp_pharmacy" context="{'group_by':'pharmacy_id'}"/>
+                    <filter string="Resource" name="grp_resource" context="{'group_by':'user_id'}"/>
+                    <filter string="State" name="grp_state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_resource_availability" model="ir.actions.act_window">
+        <field name="name">Staff Availability</field>
+        <field name="res_model">pharmacy.resource.availability</field>
+        <field name="view_mode">calendar,list,form</field>
+    </record>
+
+    <menuitem id="menu_pharmacy_availability" parent="pharmacy_management_system.menu_pharmacy_setup"
+              action="action_pharmacy_resource_availability" sequence="30"/>
+
+    <!-- Shift Templates -->
+    <record id="view_pharmacy_shift_template_tree" model="ir.ui.view">
+        <field name="name">pharmacy.shift.template.tree</field>
+        <field name="model">pharmacy.shift.template</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="resource_type"/>
+                <field name="weekday"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+                <field name="slot_duration"/>
+                <field name="capacity"/>
+                <field name="telemedicine"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_shift_template_form" model="ir.ui.view">
+        <field name="name">pharmacy.shift.template.form</field>
+        <field name="model">pharmacy.shift.template</field>
+        <field name="arch" type="xml">
+            <form string="Shift Template">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="resource_type"/>
+                        <field name="weekday"/>
+                    </group>
+                    <group>
+                        <field name="start_time"/>
+                        <field name="end_time"/>
+                        <field name="slot_duration"/>
+                        <field name="capacity"/>
+                        <field name="telemedicine"/>
+                    </group>
+                    <group>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_shift_template" model="ir.actions.act_window">
+        <field name="name">Shift Templates</field>
+        <field name="res_model">pharmacy.shift.template</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_pharmacy_shift_templates" parent="pharmacy_management_system.menu_pharmacy_setup"
+              action="action_pharmacy_shift_template" sequence="31"/>
+</odoo>
+
+

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Automatically populate inventory on install/upgrade -->
+        <function model="rfid.inventory.sync" name="action_populate_inventory"/>
+    </data>
+</odoo>

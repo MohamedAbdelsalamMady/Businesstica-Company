@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="report_plumbing_workshop_template">
+      <t t-foreach="docs" t-as="o">
+        <t t-call="web.html_container">
+          <t t-call="web.external_layout">
+            <div class="page">
+
+
+                <table class="table">
+
+                    <tbody>
+                        <tr>
+                            <th scope="row">Repair Order Number:</th>
+
+                            <td>
+                                <span t-field="o.repair_order_number"/>
+                            </td>
+                            <th scope="row">
+                                Business:
+                            </th>
+
+                            <td>
+                                <span t-field="o.business"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <th scope="row">
+                                Customer:
+                            </th>
+                            <td>
+                                <span t-field="o.partner_id.name"/>
+                            </td>
+                            <th scope="row">
+                                Waiting Spare Parts:
+                            </th>
+                            <td>
+                                <span t-field="o.Waiting_spare_parts"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Model:</th>
+
+                            <td>
+                                <span t-field="o.car_model.name"/>
+                            </td>
+                            <th scope="row">
+                                Plumbing:
+                            </th>
+                            <td>
+                                <span t-field="o.plumbing"/>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+
+                            <th scope="row">
+                                Plate Number:
+                            </th>
+                            <td>
+                                <span t-field="o.plate_number"/>
+                            </td>
+                            <th scope="row">paint:</th>
+
+                            <td>
+                                <span t-field="o.paint"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <th scope="row">
+                                Date Entry:
+                            </th>
+                            <td>
+                                <span t-field="o.date_entry"/>
+                            </td>
+                            <th scope="row">Unlock and Lock:</th>
+
+                            <td>
+                                <span t-field="o.unlock_and_lock"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <th scope="row">
+                                Reception Engineer:
+                            </th>
+                            <td>
+                                <span t-field="o.reception_engineer"/>
+                            </td>
+                            <th scope="row">Lockout Waiting:</th>
+
+                            <td>
+                                <span t-field="o.lockout_waiting"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+
+                            <th scope="row">
+
+                            </th>
+                            <td>
+
+                            </td>
+                            <th scope="row">Delivery:</th>
+
+                            <td>
+                                <span t-field="o.delivery"/>
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+          </t>
+        </t>
+      </t>
+    </template>
+
+</odoo>

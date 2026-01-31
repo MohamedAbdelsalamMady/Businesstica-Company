@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report id="pre_travel_vehicle_inspection_report"
+            model="pre.travel.vehicle.inspection"
+            string="Pre Travel Vehicle Inspection"
+            report_type="qweb-pdf"
+            name="auto_service.pre_travel_vehicle_inspection_template"
+            file="auto_service.pre_travel_vehicle_inspection_template"
+
+    />
+
+
+</odoo>

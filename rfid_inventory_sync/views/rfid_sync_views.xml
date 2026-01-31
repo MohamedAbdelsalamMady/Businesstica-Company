@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- List View -->
+    <record id="view_rfid_inventory_sync_list" model="ir.ui.view">
+        <field name="name">rfid.inventory.sync.list</field>
+        <field name="model">rfid.inventory.sync</field>
+        <field name="arch" type="xml">
+            <list string="RFID Sync" editable="top">
+
+                <field name="location_id" readonly="1"/>
+                <field name="product_id" readonly="1"/>
+                <field name="on_hand_quantity"/>
+                <field name="rfid_quantity"/>
+                <field name="difference" decoration-danger="difference &lt; 0" decoration-success="difference &gt; 0"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_rfid_inventory_sync" model="ir.actions.act_window">
+        <field name="name">RFID Inventory Sync</field>
+        <field name="res_model">rfid.inventory.sync</field>
+        <field name="view_mode">list</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Inventory data will be synced automatically.
+            </p>
+        </field>
+    </record>
+
+    <!-- Server Action to Sync and Open -->
+    <record id="action_rfid_sync_server" model="ir.actions.server">
+        <field name="name">RFID Inventory Sync</field>
+        <field name="model_id" ref="model_rfid_inventory_sync"/>
+        <field name="state">code</field>
+        <field name="code">
+model.action_populate_inventory()
+action = env.ref('rfid_inventory_sync.action_rfid_inventory_sync').read()[0]
+        </field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_rfid_sync_root" name="RFID Sync" sequence="10"/>
+    <menuitem id="menu_rfid_sync_main" name="Operations" parent="menu_rfid_sync_root" sequence="1"/>
+    <menuitem id="menu_rfid_sync_records" name="Inventory Sync" parent="menu_rfid_sync_main" action="action_rfid_sync_server" sequence="1"/>
+</odoo>

@@ -1,0 +1,836 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="inspection_transfer_ownership_form" model="ir.ui.view">
+        <field name="name">inspection.transfer.ownership.form</field>
+        <field name="model">inspection.transfer.ownership</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="confirm" type="object" string="Confirm"
+                            class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <button name="create_invoice" type="object"
+                            string="Create Invoice" class="oe_highlight"
+                            invisible="state != 'confirm'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm,invoiced"/>
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_transfer_ownership_account_move"
+                                type="object" class="oe_stat_button"
+                                icon="fa-pencil-square-o"
+                                invisible="count_invoices == 0">
+                            <field name="count_invoices" widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="repair_order_number"/>
+                            <field name="reception_information_id"/>
+                            <field name="partner_id"/>
+                            <field name="chassis_no"/>
+                            <field name="plate_number"/>
+                        </group>
+                        <group>
+                            <field name="date"/>
+                            <field name="person_conducting_disclosure"/>
+                            <field name="original_engine_number"/>
+                            <field name="product_ids" widget="many2many_tags"/>
+
+                        </group>
+
+
+                    </group>
+                    <notebook>
+                        <page string="Car Inspection Report">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Engine Oil
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="engine_sound"
+                                               widget="radio"
+                                               options="{'horizontal': True}"
+                                               required="1"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Engine Oil
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="engine_oil" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Transmission Oil
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="transmission_oil"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Power Oil
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="power_oil" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Brake Fluid
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="brake_fluid" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Freezing Liquid
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="freezing_liquid"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Thongs
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="thongs" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Belts Car
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="belts_car" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Front Drums
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="front_drums" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Back Drums
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="back_drums" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Front Staple
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="front_staple"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Posterior Tail
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="posterior_tail"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Front Shears
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="front_shears"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Background Shears
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="background_shears"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Steering Wheel Box
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="steering_wheel_box"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Steering Wheel Bars
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="steering_wheel_bars"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Background Helpers
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="background_helpers"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+                            <br/>
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        shakman
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="shakman" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        engine_bases
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="engine_bases"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        transmission_base
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="transmission_base"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        corona_sound
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="corona_sound"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        oil_leaks
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="oil_leaks" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        tires
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="tires" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        conditioning_hot
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="conditioning_hot"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        conditioning_cold
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="conditioning_cold"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        radio
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="radio" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        interior_lighting
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="interior_lighting"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        steering_wheel_case
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="steering_wheel_case"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        case_steering_buttons
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="case_steering_buttons"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        front_seat_movements
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="front_seat_movements"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        read_odometer
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="read_odometer"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        test_result_device
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="test_result_device"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        airbag_system
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="airbag_system"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        transmission_system
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="transmission_system"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        rest_systems_car
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="rest_systems_car"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        headlights
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="headlights" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Lanterns Background
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="lanterns_background"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Front Glass
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="front_glass" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Background Glass
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="background_glass"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Movable Roof
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="movable_roof"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Side Mirrors
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="side_mirrors"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        March Sound
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="march_sound" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Charging Dynamo
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="charging_dynamo"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Battery Status
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="battery_status"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Centerlock
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="centerlock" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Wiper Sprinklers
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="wiper_sprinklers"
+                                               widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Note
+                                    </div>
+
+
+                                    <div class="col-sm">
+                                        <field name="note"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="inspection_transfer_ownership_sequence" model="ir.sequence">
+        <field name="name">inspection.transfer.ownership</field>
+        <field name="code">inspection.transfer.ownership</field>
+        <field name="prefix">ITO/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="inspection_transfer_ownership_list" model="ir.ui.view">
+        <field name="name">inspection.transfer.ownership.list</field>
+        <field name="model">inspection.transfer.ownership</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="partner_id"/>
+                <field name="repair_order_number"/>
+                <field name="chassis_no"/>
+                <field name="plate_number"/>
+                <field name="date"/>
+                <field name="person_conducting_disclosure"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="inspection_transfer_ownership_action"
+            model="ir.actions.act_window">
+        <field name="name">Inspection Transfer Ownership</field>
+        <field name="res_model">inspection.transfer.ownership</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Inspection Transfer Ownership
+            </p>
+        </field>
+    </record>
+</odoo>

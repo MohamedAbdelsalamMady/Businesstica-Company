@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherit_stock_picking_form" model="ir.ui.view">
+        <field name="name">inherit.stock.picking.form</field>
+        <field name="model">stock.picking</field>
+        <field name="inherit_id" ref="stock.view_picking_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='state']" position="before">
+                <button name="view_action_auto_purchase_requisition"
+                        type="object" string="Purchase Requisition"
+                        class="oe_highlight"
+                        invisible="reception_ok == True"/>
+                <button name="action_timer_pause" type="object"
+                        string="Timer Pause" class="btn btn-primary btn-sm"
+                        invisible="stop_timer == True or start_timer == False"/>
+                <button name="action_timer_resume" type="object"
+                        string="Timer Resume" class="btn btn-primary btn-sm"
+                        invisible="stop_timer == True or start_timer == False"/>
+                <field name="timer_start" widget="timer_timer"
+                       class="ml-auto h2 ml-4 font-weight-bold"
+                       readonly="1"/>
+            </xpath>
+
+            <!--            <xpath expr="//field[@name='move_ids_without_package']/list//field[@name='product_uom']"-->
+<!--                   position="after">-->
+<!--                <field name="available_quantity"/>-->
+<!--            </xpath>-->
+
+            <field name="origin" position="after">
+                 <field name="car_creations_id"/>
+                <field name="license_plate_no"/>
+                <field name="account_analytic_id"/>
+                <field name="stop_timer" invisible="1"/>
+                <field name="start_timer" invisible="1"/>
+                <field name="timer_pause" invisible="1"/>
+                <field name="is_timer_running" invisible="1"/>
+                <field name="res_model" invisible="1"/>
+                <field name="res_id" invisible="1"/>
+                <field name="user_id" invisible="1"/>
+                <field name="reception_ok" invisible="1"/>
+            </field>
+        </field>
+    </record>
+</odoo>

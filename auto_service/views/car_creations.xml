@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="car_creations_form" model="ir.ui.view">
+        <field name="name">car.creations.form</field>
+        <field name="model">car.creations</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="car_brand_id"/>
+                            <field name="car_model_id"/>
+                            <field name="car_origin_id"/>
+                            <field name="car_body_style_id"/>
+                            <field name="transmission_type_id"/>
+                            <field name="engine_type_id"/>
+                            <field name="engine_capacity_id"/>
+                            <field name="car_color"/>
+                        </group>
+                        <group>
+                            <field name="license_plate_no"/>
+                            <field name="car_cylinders_id"/>
+                            <field name="maximum_power"/>
+                            <field name="fuel_consumption"/>
+                            <field name="car_generation_id"/>
+                            <field name="car_agent_id"/>
+                            <field name="motor_number"/>
+                            <field name="top_number"/>
+                            <field name="date_service_now" invisible="1"/>
+                            <field name="service_description" invisible="1"/>
+                            <field name="last_km" invisible="1"/>
+                            <field name="specified_maintenance_distance"/>
+                        </group>
+
+
+                    </group>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="car_creations_search" model="ir.ui.view">
+        <field name="name">car.creations.search</field>
+        <field name="model">car.creations</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="license_plate_no"/>
+                <field name="partner_id"/>
+                <field name="car_brand_id"/>
+                <field name="car_model_id"/>
+                <field name="car_origin_id"/>
+                <field name="car_body_style_id"/>
+                <field name="transmission_type_id"/>
+                <field name="engine_type_id"/>
+                <field name="engine_capacity_id"/>
+            </search>
+        </field>
+    </record>
+
+
+    <record id="car_creations_list" model="ir.ui.view">
+        <field name="name">car.creations.list</field>
+        <field name="model">car.creations</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="license_plate_no"/>
+                <field name="partner_id"/>
+                <field name="car_brand_id"/>
+                <field name="car_model_id"/>
+                <field name="car_origin_id"/>
+                <field name="car_body_style_id"/>
+                <field name="transmission_type_id"/>
+                <field name="engine_type_id"/>
+                <field name="engine_capacity_id"/>
+            </list>
+        </field>
+    </record>
+
+    
+    <record id="car_creations_action" model="ir.actions.act_window">
+        <field name="name">Car Creations</field>
+        <field name="res_model">car.creations</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Car Creations
+            </p>
+        </field>
+    </record>
+</odoo>

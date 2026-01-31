@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Main Menu -->
+    <menuitem id="menu_zk_attendance_root"
+              name="zk attendance"
+              sequence="100"/>
+<!--              web_icon="hr_attendance,static/description/icon.png"-->
+
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_zk_configuration"
+              name="Configuration"
+              parent="menu_zk_attendance_root"
+              sequence="10"/>
+
+    <!-- Devices Menu -->
+    <menuitem id="menu_zk_device"
+              name="Fingerprint Devices"
+              parent="menu_zk_configuration"
+              action="action_zk_device"
+              sequence="10"/>
+
+    <!-- Sync Logs Menu -->
+    <menuitem id="menu_zk_sync_log"
+              name="Sync Logs"
+              parent="menu_zk_attendance_root"
+              action="action_zk_sync_log"
+              sequence="20"/>
+</odoo>

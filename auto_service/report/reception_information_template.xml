@@ -1,0 +1,527 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="reception_information_template">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="mt16">
+                            <span t-field="o.name"/>
+                        </h2>
+                        <div class="p-3 mb-2 bg-light font-weight-bold"
+                             style="text-align:center;">
+                            Customer Information
+                        </div>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        Customer:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.partner_id"/>
+                                    </td>
+                                    <th scope="row">
+                                        Email:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.email"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Phone NO:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.phone_number"/>
+                                    </td>
+                                    <th scope="row">
+                                        Street:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.address"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div class="p-3 mb-2 bg-light font-weight-bold"
+                             style="text-align:center;">
+                            Receiption Information
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th scope="row">
+                                    Reception Employee:
+                                </th>
+                                <td>
+                                    <span t-field="o.user_id.name"/>
+                                </td>
+                                <th scope="row">
+                                    Team Manager:
+                                </th>
+                                <td>
+                                    <span t-field="o.res_users_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Service Team:
+                                </th>
+                                <td>
+                                    <span t-field="o.service_team_id.name"/>
+                                </td>
+                                <th scope="row">
+                                    Arriving Time:
+                                </th>
+                                <td>
+                                    <span t-field="o.arriving_time"/>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="p-3 mb-2 bg-light font-weight-bold"
+                             style="text-align:center;">
+                            Car Information And Semi History
+                        </div>
+                        <table class="table">
+                            <tr>
+                                <th scope="row">
+                                    Chassis Number:
+                                </th>
+                                <td>
+                                    <span t-field="o.car_creations_id.name"/>
+                                </td>
+                                <th scope="row">
+                                    Car Brand:
+                                </th>
+                                <td>
+                                    <span t-field="o.car_brand_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    License Plate No:
+                                </th>
+                                <td>
+                                    <span t-field="o.license_plate_no"/>
+                                </td>
+                                <th scope="row">
+                                    Car Model:
+                                </th>
+                                <td>
+                                    <span t-field="o.car_model_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Motor No:
+                                </th>
+                                <td>
+                                    <span t-field="o.motor_number"/>
+                                </td>
+                                <th scope="row">
+                                    Car Agent:
+                                </th>
+                                <td>
+                                    <span t-field="o.car_agent_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Top No:
+                                </th>
+                                <td>
+                                    <span t-field="o.top_number"/>
+                                </td>
+                                <th scope="row">
+                                    Car Body Style:
+                                </th>
+                                <td>
+                                    <span t-field="o.car_body_style_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Last Date Of Service:
+                                </th>
+                                <td>
+                                    <span t-field="o.last_date_service"/>
+                                </td>
+
+                                <th scope="row">
+                                    Transmission Type:
+                                </th>
+                                <td>
+                                    <span t-field="o.transmission_type_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Last Service Name:
+                                </th>
+                                <td>
+                                    <span t-field="o.last_service_name"/>
+                                </td>
+                                <th scope="row">
+                                    Engine Type:
+                                </th>
+                                <td>
+                                    <span t-field="o.engine_type_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Last KM:
+                                </th>
+                                <td>
+                                    <span t-field="o.last_km"/>
+                                </td>
+
+                                <th scope="row">
+                                    Engine Capacity:
+                                </th>
+                                <td>
+                                    <span t-field="o.engine_capacity_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Now KM:
+                                </th>
+                                <td>
+                                    <span t-field="o.now_km"/>
+                                </td>
+                                <th scope="row">
+                                    Car Cylinders:
+                                </th>
+                                <td>
+                                    <span t-field="o.car_cylinders_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Traveled Distance:
+                                </th>
+                                <td>
+                                    <span t-field="o.traveled_distance"/>
+                                </td>
+
+                                <th scope="row">
+                                    Car Generation:
+                                </th>
+
+                                <td>
+                                    <span t-field="o.car_generation_id.name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row">
+                                    Type Of Service:
+                                </th>
+                                <td>
+                                    <span t-field="o.type_of_service"/>
+                                </td>
+
+                            </tr>
+                        </table>
+                        <div class="p-3 mb-2 bg-light font-weight-bold"
+                             style="text-align:center;">
+                            First Inspection Of The Car
+                        </div>
+                        <table class="table">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        Old Spare Parts:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.check_old_spare_parts"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.old_spare_parts_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Calf Bolts:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.calf_bolts"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.calf_bolts_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Vehicle license and history:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.vehicle_license_history"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.vehicle_license_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Car Sumps:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.car_sumps"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.car_sumps_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Dashboard messages:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.dashboard_messages"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.dashboard_messages_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Conditioning review:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.conditioning_review"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.conditioning_review_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Radio review:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.radio"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.radio_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Wiper blades:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.wiper_blades"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.wiper_blades_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Front windshield review:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.front_windshield_review"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.front_windshield_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        North front seat movement:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.north_seat_movement"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.north_seat_movement_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Adaptation hobbies movement:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.adaptation_hobbies_movement"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.adaptation_hobbies_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        General glass switch:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.general_glass_switch"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.general_glass_switch_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Mirror movement:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.mirror_movement"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.mirror_movement_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Watch the rest of the glass:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.watch_rest_glass"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.watch_rest_glass_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Lighter:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.lighter_glass"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.lighter_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Sunroof:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.sunroof"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.sunroof_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Console mat:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.console_mat"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.console_mat_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Mouse movement:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.mouse_movement"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.mouse_movement_note"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Center lock:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.center_lock"/>
+                                    </td>
+                                    <th scope="row">
+                                        Note:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.center_lock_note"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

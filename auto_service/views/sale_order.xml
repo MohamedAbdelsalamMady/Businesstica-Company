@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="inherit_sale_order_form" model="ir.ui.view">
+        <field name="name">inherit.sale.order.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='payment_term_id']" position="after">
+                <field name="car_diagnoses_id"
+                       invisible="from_car_diagnoses != True"/>
+                <field name="reception_information_id"
+                       invisible="from_car_diagnoses != True"/>
+                <field name="car_creations_id"
+                       invisible="from_car_diagnoses != True"/>
+                <field name="service_description"
+                       invisible="from_car_diagnoses != True"/>
+                <field name="from_car_diagnoses" invisible="1"/>
+            </xpath>
+
+                 <xpath expr="//header/field[@name='state']" position="before">
+                <field name="timer_start" widget="timer_timer"
+                       class="ml-auto h2 ml-4 font-weight-bold"
+                       readonly="1"/>
+                <field name="timer_stop" widget="float_time"
+                       class="ml-auto h2 ml-4 font-weight-bold"
+                       readonly="1"
+                       invisible="timer_start != False"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

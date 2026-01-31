@@ -1,0 +1,11 @@
+<odoo>
+    <data>
+        <record id="project_stage_rejected" model="project.task.type">
+            <field name="sequence">25</field>
+            <field name="name">Rejected</field>
+            <field name="legend_done">Ready to reopen</field>
+            <field name="fold" eval="True"/>
+            <field name="is_closed" eval="True"/>
+        </record>
+    </data>
+</odoo>

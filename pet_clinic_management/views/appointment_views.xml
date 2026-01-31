@@ -1,0 +1,45 @@
+<odoo>
+    <record id="vet_appointment_form" model="ir.ui.view">
+        <field name="name">vet.appointment.form</field>
+        <field name="model">vet.appointment</field>
+        <field name="arch" type="xml">
+            <form string="Appointment">
+                <sheet>
+                    <group>
+                        <field name="name" readonly="1"/>
+                        <field name="pet_id"/>
+                        <field name="owner_id"/>
+                        <field name="breed" readonly="1"/>
+                        <field name="age" readonly="1"/>
+                        <field name="date"/>
+                        <field name="reason"/>
+                        <field name="diagnosis"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vet_appointment_tree" model="ir.ui.view">
+        <field name="name">vet.appointment.tree</field>
+        <field name="model">vet.appointment</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="pet_id"/>
+                <field name="owner_id"/>
+                <field name="date"/>
+                <field name="reason"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vet_appointment_action" model="ir.actions.act_window">
+        <field name="name">Appointments</field>
+        <field name="res_model">vet.appointment</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="vet_appointment_menu" name="Appointments" parent="vet_clinic_root" action="vet_appointment_action"
+              groups="base.group_user"/>
+</odoo>

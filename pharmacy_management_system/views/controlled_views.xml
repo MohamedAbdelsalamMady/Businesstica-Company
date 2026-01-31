@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pharmacy_controlled_log_tree" model="ir.ui.view">
+        <field name="name">pharmacy.controlled.log.tree</field>
+        <field name="model">pharmacy.controlled.log</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="timestamp"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="drug_id"/>
+                <field name="qty"/>
+                <field name="action_type"/>
+                <field name="user_id"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_pharmacy_controlled_log_form" model="ir.ui.view">
+        <field name="name">pharmacy.controlled.log.form</field>
+        <field name="model">pharmacy.controlled.log</field>
+        <field name="arch" type="xml">
+            <form string="Controlled Log">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="timestamp"/>
+                            <field name="hospital_id"/>
+                            <field name="pharmacy_id"/>
+                            <field name="drug_id"/>
+                        </group>
+                        <group>
+                            <field name="action_type"/>
+                            <field name="qty"/>
+                            <field name="user_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notes" placeholder="Additional notes about this controlled substance transaction..."/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_controlled_log_kanban" model="ir.ui.view">
+        <field name="name">pharmacy.controlled.log.kanban</field>
+        <field name="model">pharmacy.controlled.log</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban o_kanban_small_column pharmacy-controlled-log-kanban">
+                <field name="timestamp"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="drug_id"/>
+                <field name="qty"/>
+                <field name="action_type"/>
+                <field name="user_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click pharmacy-controlled-log-card pharma-card">
+                            <!-- Header with icon, title, status -->
+                            <div class="o_kanban_record_top">
+                                <div class="kanban-header-left">
+                                    <div class="kanban-icon-wrapper">
+                                        <i class="fa fa-shield kanban-icon" title="Controlled Log"></i>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <div class="o_kanban_record_title">
+                                            <strong><field name="drug_id"/></strong>
+                                            <div class="o_kanban_record_subtitle">
+                                                <field name="action_type"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="oe_kanban_content">
+                                <!-- Configuration Tags -->
+                                <div class="o_kanban_record_bottom config-tags">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- Hospital -->
+                                        <div class="config-tag" t-if="record.hospital_id.value">
+                                            <i class="fa fa-hospital-o" title="Hospital"></i>
+                                            <field name="hospital_id"/>
+                                        </div>
+                                        
+                                        <!-- Pharmacy -->
+                                        <div class="config-tag" t-if="record.pharmacy_id.value">
+                                            <i class="fa fa-home" title="Pharmacy"></i>
+                                            <field name="pharmacy_id"/>
+                                        </div>
+                                        
+                                        <!-- Timestamp -->
+                                        <div class="config-tag" t-if="record.timestamp.value">
+                                            <i class="fa fa-calendar" title="Date"></i>
+                                            <field name="timestamp"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Statistics in Two Columns -->
+                                <div class="o_kanban_record_bottom stats-section">
+                                    <div class="stats-column stats-left">
+                                        <!-- Quantity -->
+                                        <div class="stat-item">
+                                            <i class="fa fa-cubes text-primary"></i>
+                                            <span class="stat-value">
+                                                <field name="qty"/> Qty
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stats-column stats-right">
+                                        <!-- User -->
+                                        <div class="stat-item" t-if="record.user_id.value">
+                                            <i class="fa fa-user text-info"></i>
+                                            <span class="stat-value">
+                                                <field name="user_id"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_controlled_activity_pivot" model="ir.ui.view">
+        <field name="name">controlled.activity.pivot</field>
+        <field name="model">pharmacy.controlled.log</field>
+        <field name="arch" type="xml">
+            <pivot string="Controlled Substance Activity">
+                <field name="timestamp" type="row" interval="month"/>
+                <field name="hospital_id" type="row"/>
+                <field name="action_type" type="col"/>
+                <field name="drug_id" type="col"/>
+                <field name="qty" type="measure"/>
+                <field name="count_field" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_controlled_log" model="ir.actions.act_window">
+        <field name="name">Controlled Logs</field>
+        <field name="res_model">pharmacy.controlled.log</field>
+        <field name="view_mode">kanban,list,form,pivot,graph</field>
+    </record>
+
+    <record id="search_pharmacy_controlled_log" model="ir.ui.view">
+        <field name="name">pharmacy.controlled.log.search</field>
+        <field name="model">pharmacy.controlled.log</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="drug_id"/>
+                <field name="user_id"/>
+                <filter string="Dispense" name="type_dispense" domain="[('action_type','=','dispense')]"/>
+                <filter string="Return" name="type_return" domain="[('action_type','=','return')]"/>
+                <filter string="Destroy" name="type_destroy" domain="[('action_type','=','destroy')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Hospital" name="grp_hospital" context="{'group_by':'hospital_id'}"/>
+                    <filter string="Pharmacy" name="grp_pharmacy" context="{'group_by':'pharmacy_id'}"/>
+                    <filter string="Drug" name="grp_drug" context="{'group_by':'drug_id'}"/>
+                    <filter string="Action" name="grp_action" context="{'group_by':'action_type'}"/>
+                    <filter string="User" name="grp_user" context="{'group_by':'user_id'}"/>
+                    <filter string="Date" name="grp_date" context="{'group_by':'timestamp:day'}"/>
+                    <filter string="Month" name="grp_month" context="{'group_by':'timestamp:month'}"/>
+                    <filter string="Week" name="grp_week" context="{'group_by':'timestamp:week'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="menu_pharmacy_controlled_log" parent="pharmacy_management_system.menu_pharmacy_controlled" action="action_pharmacy_controlled_log"/>
+
+</odoo>
+
+

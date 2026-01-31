@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="inspection_transfer_ownership_template">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+                        <h2 class="mt16">
+                            <span t-field="o.name"/>
+                        </h2>
+                        <table class="table">
+
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        Customer:
+                                    </th>
+
+                                    <td>
+
+                                        <span t-field="o.partner_id"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Date:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.date"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Repair Order No:
+                                    </th>
+
+                                    <td>
+
+                                        <span t-field="o.repair_order_number"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Plate Number:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.person_conducting_disclosure"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Chassis No:
+                                    </th>
+
+                                    <td>
+
+                                        <span t-field="o.chassis_no"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Original Engine NO:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.original_engine_number"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Products:
+                                    </th>
+
+                                    <td>
+                                        <div t-if="o.product_ids" t-foreach="o.product_ids" t-as="p" class="col-auto col-3 mw-100 mb-2">
+                                            <div class="m-0" t-field="p.name"/>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <div class="p-3 mb-2 bg-light font-weight-bold"
+                             style="text-align:center;">
+                            Car Inspection Report
+                        </div>
+                        <table class="table">
+
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        Engine Sound:
+                                    </th>
+
+                                    <td>
+
+                                        <span t-field="o.engine_sound"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Engine Oil:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.engine_oil"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Transmission Oil:
+                                    </th>
+
+                                    <td>
+
+                                        <span t-field="o.transmission_oil"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Power Oil:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.power_oil"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Brake Fluid:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.brake_fluid"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Freezing Liquid:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.freezing_liquid"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Belts Car:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.belts_car"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Front Drums:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.front_drums"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">
+                                        Front Staple:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.front_staple"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Posterior Tail:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.posterior_tail"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">
+                                        Front Shears:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.front_shears"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Background Shears:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.background_shears"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">
+                                        Steering Wheel Box:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.steering_wheel_box"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Steering Wheel Bars:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.steering_wheel_bars"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Background Helpers:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.background_helpers"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        shakman:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.shakman"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">
+                                        Engine Bases:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.engine_bases"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Transmission Base:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.transmission_base"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Corona Sound:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.corona_sound"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Oil Leaks:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.oil_leaks"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Tires:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.tires"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Conditioning Hot:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.conditioning_hot"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Conditioning Cold:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.conditioning_cold"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Radio:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.radio"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Interior Lighting:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.interior_lighting"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Steering Wheel Case:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.steering_wheel_case"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Case Steering Buttons:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.case_steering_buttons"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Front Seat Movements:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.front_seat_movements"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Read Odometer:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.read_odometer"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Test Result Device:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.test_result_device"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">
+                                        Airbag System:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.airbag_system"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Transmission System:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.transmission_system"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">
+                                        Airbag System:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.airbag_system"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Transmission System:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.transmission_system"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Rest Systems Car:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.rest_systems_car"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Headlights:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.headlights"/>
+                                    </td>
+                                </tr>
+
+
+                                <tr>
+                                    <th scope="row">
+                                        Lanterns Background:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.lanterns_background"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Front Glass:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.front_glass"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">
+                                        Background Glass:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.background_glass"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Movable Roof:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.movable_roof"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Side Mirrors:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.side_mirrors"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        March Sound:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.march_sound"/>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <th scope="row">
+                                        Charging Dynamo:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.charging_dynamo"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Battery Status:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.battery_status"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Centerlock:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.centerlock"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Wiper Sprinklers:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.wiper_sprinklers"/>
+                                    </td>
+                                </tr>
+
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

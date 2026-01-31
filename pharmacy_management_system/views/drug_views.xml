@@ -1,0 +1,363 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pharmacy_drug_category_tree" model="ir.ui.view">
+        <field name="name">pharmacy.drug.category.tree</field>
+        <field name="model">pharmacy.drug.category</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="controlled"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_pharmacy_drug_category_form" model="ir.ui.view">
+        <field name="name">pharmacy.drug.category.form</field>
+        <field name="model">pharmacy.drug.category</field>
+        <field name="arch" type="xml">
+            <form string="Drug Category">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="controlled"/>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_drug_category" model="ir.actions.act_window">
+        <field name="name">Drug Categories</field>
+        <field name="res_model">pharmacy.drug.category</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="search_pharmacy_drug_category" model="ir.ui.view">
+        <field name="name">pharmacy.drug.category.search</field>
+        <field name="model">pharmacy.drug.category</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <filter string="Controlled" name="controlled_only" domain="[('controlled','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Controlled" name="grp_controlled" context="{'group_by':'controlled'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <menuitem id="menu_pharmacy_drug_category" parent="pharmacy_management_system.menu_pharmacy_drugs" action="action_pharmacy_drug_category"/>
+
+    <record id="view_pharmacy_drug_tree" model="ir.ui.view">
+        <field name="name">pharmacy.drug.tree</field>
+        <field name="model">pharmacy.drug</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="product_id"/>
+                <field name="company_id"/>
+                <field name="drug_category_id"/>
+                <field name="controlled"/>
+                <field name="is_prescription_required"/>
+                <field name="hospital_count"/>
+                <field name="stock_qty_available"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_pharmacy_drug_form" model="ir.ui.view">
+        <field name="name">pharmacy.drug.form</field>
+        <field name="model">pharmacy.drug</field>
+        <field name="arch" type="xml">
+            <form string="Drug">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_prescriptions" icon="fa-file-text-o">
+                            <field name="prescription_count" widget="statinfo" string="Prescriptions"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_stock" icon="fa-cubes">
+                            <field name="stock_qty_available" widget="statinfo" string="Stock"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_expiring_lots" icon="fa-exclamation-triangle" invisible="expiry_alert_count == 0">
+                            <field name="expiry_alert_count" widget="statinfo" string="Expiring"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_hospital_coverage" icon="fa-hospital-o">
+                            <field name="hospital_count" widget="statinfo" string="Hospitals"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="product_id"/>
+                            <field name="drug_category_id"/>
+                            <field name="is_prescription_required"/>
+                            <field name="controlled"/>
+                            <field name="hospital_ids" widget="many2many_tags"/>
+                            <field name="pharmacy_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="storage_temp_min"/>
+                            <field name="storage_temp_max"/>
+                        </group>
+                    </group>
+                    <group invisible="1">
+                        <field name="prescription_count"/>
+                        <field name="stock_qty_available"/>
+                        <field name="expiry_alert_count"/>
+                        <field name="hospital_count"/>
+                    </group>
+                    <notebook>
+                        <page string="Ingredients">
+                            <field name="ingredient_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="strength"/>
+                                    <field name="unit"/>
+                                    <field name="substitutable"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Coverage">
+                            <field name="coverage_ids">
+                                <list editable="bottom">
+                                    <field name="hospital_id"/>
+                                    <field name="pharmacy_id"/>
+                                    <field name="current_qty" readonly="1"/>
+                                    <field name="min_qty"/>
+                                    <field name="target_qty"/>
+                                    <field name="max_qty"/>
+                                    <field name="shortage_flag"/>
+                                    <field name="has_expiring_lots"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_drug_kanban" model="ir.ui.view">
+        <field name="name">pharmacy.drug.kanban</field>
+        <field name="model">pharmacy.drug</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban o_kanban_small_column pharmacy-drug-kanban">
+                <field name="product_id"/>
+                <field name="drug_category_id"/>
+                <field name="controlled"/>
+                <field name="is_prescription_required"/>
+                <field name="storage_temp_min"/>
+                <field name="storage_temp_max"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click pharmacy-drug-card pharma-card">
+                            <!-- Header with icon, title, status -->
+                            <div class="o_kanban_record_top">
+                                <div class="kanban-header-left">
+                                    <div class="kanban-icon-wrapper">
+                                        <i class="fa fa-medkit kanban-icon" title="Drug"></i>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <div class="o_kanban_record_title">
+                                            <strong><field name="product_id"/></strong>
+                                            <div class="o_kanban_record_subtitle">
+                                                <field name="drug_category_id"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="oe_kanban_content">
+                                <!-- Configuration Tags -->
+                                <div class="o_kanban_record_bottom config-tags">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- Temperature Range -->
+                                        <div class="config-tag" t-if="record.storage_temp_min.value or record.storage_temp_max.value">
+                                            <i class="fa fa-thermometer-half" title="Storage Temperature"></i>
+                                            <span>
+                                                <t t-esc="(record.storage_temp_min.value or '-') + '°C'"/> – 
+                                                <t t-esc="(record.storage_temp_max.value or '-') + '°C'"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Statistics in Two Columns -->
+                                <div class="o_kanban_record_bottom stats-section">
+                                    <div class="stats-column stats-left">
+                                        <!-- Controlled Badge -->
+                                        <div class="stat-item" t-if="record.controlled.raw_value">
+                                            <i class="fa fa-shield text-danger"></i>
+                                            <span class="stat-value">Controlled</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stats-column stats-right">
+                                        <!-- Prescription Required Badge -->
+                                        <div class="stat-item" t-if="record.is_prescription_required.raw_value">
+                                            <i class="fa fa-file-text text-warning"></i>
+                                            <span class="stat-value">Rx Required</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_drug" model="ir.actions.act_window">
+        <field name="name">Drugs</field>
+        <field name="res_model">pharmacy.drug</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+    <record id="search_pharmacy_drug" model="ir.ui.view">
+        <field name="name">pharmacy.drug.search</field>
+        <field name="model">pharmacy.drug</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="product_id"/>
+                <field name="drug_category_id"/>
+                <separator/>
+                <filter string="Expiring Drugs" name="expiring_drugs" domain="[('has_expiring_lots','=',True)]"/>
+                <separator/>
+                <filter string="Controlled" name="controlled_only" domain="[('controlled','=',True)]"/>
+                <filter string="Non-Controlled" name="non_controlled" domain="[('controlled','=',False)]"/>
+                <filter string="Hospital Scoped" name="hospital_scoped" domain="[('hospital_ids','!=',False)]"/>
+                <filter string="Rx Required" name="rx_required" domain="[('is_prescription_required','=',True)]"/>
+                <filter string="OTC" name="otc" domain="[('is_prescription_required','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Company" name="grp_company" context="{'group_by':'company_id'}"/>
+                    <filter string="Category" name="grp_category" context="{'group_by':'drug_category_id'}"/>
+                    <filter string="Prescription" name="grp_rx" context="{'group_by':'is_prescription_required'}"/>
+                    <filter string="Controlled" name="grp_controlled" context="{'group_by':'controlled'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <menuitem id="menu_pharmacy_drug" parent="pharmacy_management_system.menu_pharmacy_drugs" action="action_pharmacy_drug"/>
+
+    <record id="view_pharmacy_drug_coverage_tree" model="ir.ui.view">
+        <field name="name">pharmacy.drug.coverage.tree</field>
+        <field name="model">pharmacy.drug.coverage</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="drug_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="current_qty"/>
+                <field name="min_qty"/>
+                <field name="target_qty"/>
+                <field name="max_qty"/>
+                <field name="shortage_flag"/>
+                <field name="has_expiring_lots"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_pharmacy_drug_coverage_form" model="ir.ui.view">
+        <field name="name">pharmacy.drug.coverage.form</field>
+        <field name="model">pharmacy.drug.coverage</field>
+        <field name="arch" type="xml">
+            <form string="Drug Coverage">
+                <sheet>
+                    <group>
+                        <field name="drug_id"/>
+                        <field name="company_id" readonly="1"/>
+                        <field name="hospital_id"/>
+                        <field name="pharmacy_id"/>
+                    </group>
+                    <group>
+                        <field name="current_qty" readonly="1"/>
+                        <field name="min_qty"/>
+                        <field name="target_qty"/>
+                        <field name="max_qty"/>
+                        <field name="shortage_flag" readonly="1"/>
+                        <field name="has_expiring_lots" readonly="1"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+    <record id="view_drug_coverage_pivot" model="ir.ui.view">
+        <field name="name">drug.coverage.pivot</field>
+        <field name="model">pharmacy.drug.coverage</field>
+        <field name="arch" type="xml">
+            <pivot string="Drug Coverage Analysis">
+                <field name="hospital_id" type="row"/>
+                <field name="pharmacy_id" type="col"/>
+                <field name="shortage_flag" type="col"/>
+                <field name="current_qty" type="measure"/>
+                <field name="target_qty" type="measure"/>
+                <field name="min_qty" type="measure"/>
+                <field name="max_qty" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_drug_coverage" model="ir.actions.act_window">
+        <field name="name">Drug Coverage</field>
+        <field name="res_model">pharmacy.drug.coverage</field>
+        <field name="view_mode">list,form,pivot,graph</field>
+    </record>
+    <menuitem id="menu_pharmacy_drug_coverage" parent="pharmacy_management_system.menu_pharmacy_drugs" action="action_pharmacy_drug_coverage" sequence="40"/>
+
+    <record id="view_pharmacy_substitution_map_tree" model="ir.ui.view">
+        <field name="name">pharmacy.substitution.map.tree</field>
+        <field name="model">pharmacy.substitution.map</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="brand_id"/>
+                <field name="generic_id"/>
+                <field name="approved"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_pharmacy_substitution_map_form" model="ir.ui.view">
+        <field name="name">pharmacy.substitution.map.form</field>
+        <field name="model">pharmacy.substitution.map</field>
+        <field name="arch" type="xml">
+            <form string="Substitution Map">
+                <sheet>
+                    <group>
+                        <field name="brand_id"/>
+                        <field name="generic_id"/>
+                        <field name="approved"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_substitution_map" model="ir.actions.act_window">
+        <field name="name">Substitution Maps</field>
+        <field name="res_model">pharmacy.substitution.map</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <record id="search_pharmacy_substitution_map" model="ir.ui.view">
+        <field name="name">pharmacy.substitution.map.search</field>
+        <field name="model">pharmacy.substitution.map</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="brand_id"/>
+                <field name="generic_id"/>
+                <filter string="Approved" name="approved_only" domain="[('approved','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Approved" name="grp_approved" context="{'group_by':'approved'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <menuitem id="menu_pharmacy_substitution_map" parent="pharmacy_management_system.menu_pharmacy_drugs" action="action_pharmacy_substitution_map"/>
+
+</odoo>
+
+

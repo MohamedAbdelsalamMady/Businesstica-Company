@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+
+    <record id="report_plumbing_workshop_form" model="ir.ui.view">
+        <field name="name">report.plumbing.workshop.form</field>
+        <field name="model">report.plumbing.workshop</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="repair_order_number"/>
+                            <field name="partner_id"/>
+                            <field name="car_model"/>
+                            <field name="plate_number"/>
+                            <field name="date_entry"/>
+                            <field name="reception_engineer"/>
+                        </group>
+                        <group>
+                            <field name="business"/>
+                            <field name="Waiting_spare_parts"/>
+                            <field name="plumbing"/>
+                            <field name="paint"/>
+                            <field name="unlock_and_lock"/>
+                            <field name="lockout_waiting"/>
+                            <field name="delivery"/>
+                        </group>
+
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="report_plumbing_workshop_list" model="ir.ui.view">
+        <field name="name">Report Plumbing Workshop list</field>
+        <field name="model">report.plumbing.workshop</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="repair_order_number"/>
+                <field name="partner_id"/>
+                <field name="car_model"/>
+                <field name="plate_number"/>
+                <field name="date_entry"/>
+                <field name="reception_engineer"/>
+                <field name="business"/>
+                <field name="Waiting_spare_parts"/>
+                <field name="plumbing"/>
+                <field name="paint"/>
+                <field name="unlock_and_lock"/>
+                <field name="lockout_waiting"/>
+                <field name="delivery"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="report_plumbing_workshop_action" model="ir.actions.act_window">
+        <field name="name">Report Plumbing Workshop</field>
+        <field name="res_model">report.plumbing.workshop</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Report Plumbing Workshop
+            </p>
+        </field>
+    </record>
+</odoo>

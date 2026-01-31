@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="inherit_project_project_form" model="ir.ui.view">
+        <field name="name">inherit.project.project.form</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.edit_project"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/header" position="inside">
+                <button name="wait_to_deliver" type="object"
+                        string="Wait To Deliver" class="oe_highlight"
+                        invisible="all_tasks_done == False"/>
+            </xpath>
+            <xpath expr="//field[@name='partner_id']" position="after">
+                <field name="all_tasks_done" invisible="1"/>
+                <field name="car_diagnoses_id"/>
+                <field name="reception_information_id"/>
+                <field name="estimated_time" widget="float_time"/>
+                <field name="auto_service_timers_id"/>
+
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="car_creations_id"/>
+                <field name="license_plate_no"/>
+            </xpath>
+
+            <!--  i try change code from attribute to modifiers Menam code  -->
+
+            <!-- <xpath expr="//button[@name='%(project.project_share_wizard_action)d']" position="modifiers">
+                <modifiers name="modifiers">{'invisible': ['|',('privacy_visibility', '!=', 'portal'),('all_tasks_done','=',False)]}</modifiers>
+            </xpath> -->
+            <!-- <xpath expr="//button[@name='%(project.project_share_wizard_action)d']" position="attributes">
+                <attribute name="modifiers">{'invisible': ['|',('privacy_visibility', '!=', 'portal'),('all_tasks_done','=',False)]}</attribute>
+            </xpath> -->
+        </field>
+    </record>
+</odoo>

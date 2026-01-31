@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <report id="workshop_mechanics_report"
+            model="report.workshop.mechanics"
+            string="Workshop Mechanics Report"
+            report_type="qweb-pdf"
+            name="auto_service.workshop_mechanics_report_template"
+            file="auto_service.workshop_mechanics_report_template"
+
+    />
+
+
+</odoo>

@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="wait_to_deliver_report_template">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="mt16">
+                            <span t-field="o.name"/>
+                        </h2>
+                        <div style="page-break-inside:avoid;">
+                            <div class="p-3 mb-2 bg-light font-weight-bold"
+                                 style="text-align:center;">
+                                Customer Information
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            Customer:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.partner_id"/>
+                                        </td>
+                                        <th scope="row">
+                                            Email:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.email"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th> </th>
+                                        <td> </td>
+                                        <th scope="row">
+                                            Street:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.address"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div style="page-break-inside:avoid;">
+                            <div class="p-3 mb-2 bg-light font-weight-bold"
+                                 style="text-align:center;">
+                            </div>
+                            <table class="table">
+                                <tr>
+                                    <th scope="row">
+                                        Check Pause Time:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.check_pause_time"/>
+                                    </td>
+                                    <th scope="row">
+                                        Success Timer:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.success_timer"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Task Status:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.task_status"/>
+                                    </td>
+                                    <th scope="row">
+                                        S:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.s"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div style="page-break-inside:avoid;">
+                            <div class="p-3 mb-2 bg-light font-weight-bold"
+                                 style="text-align:center;">
+                                Car Information And Semi History
+                            </div>
+                            <table class="table">
+                                <tr>
+                                    <th scope="row">
+                                        Reception Information:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.reception_information_id.name"/>
+                                    </td>
+                                    <th scope="row">
+                                        Car Cylinders:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.car_cylinders_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Chassis Number:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.car_creations_id.name"/>
+                                    </td>
+                                    <th scope="row">
+                                        Car Brand:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.car_brand_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        License Plate No:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.license_plate_no"/>
+                                    </td>
+                                    <th scope="row">
+                                        Car Model:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.car_model_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Motor No:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.motor_number"/>
+                                    </td>
+                                    <th scope="row">
+                                        Car Agent:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.car_agent_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Top No:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.top_number"/>
+                                    </td>
+                                    <th scope="row">
+                                        Car Body Style:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.car_body_style_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Transmission Type:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.transmission_type_id.name"/>
+                                    </td>
+
+                                    <th scope="row">
+                                        Engine Capacity:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.engine_capacity_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Engine Type:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.engine_type_id.name"/>
+                                    </td>
+                                    <th scope="row">
+                                        Car Generation:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.car_generation_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Last KM:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.last_km"/>
+                                    </td>
+                                    <th scope="row">
+                                        Now KM:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.now_km"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Service Description:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.service_description"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Project:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.project_id.name"/>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+
+                        <div style="page-break-inside: avoid;">
+                            <strong scope="row">
+                                Project Tasks:
+                            </strong>
+                            <br/>
+                            <t t-foreach="o.project_task_ids" t-as="task">
+                                <span t-field="task.name"/>
+                                <br/>
+                            </t>
+                        </div>
+                        <div style="page-break-inside: avoid;">
+                            <div class="p-3 mb-2 bg-light font-weight-bold"
+                                 style="text-align:center;">
+                                First Inspection Before Delivery
+                            </div>
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th scope="row">
+                                            The car has been cleaned inside and out:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.cleaned_inside_out"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.note_cleaned_inside"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Interior and exterior lights and spaces:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.exterior_light_spaces"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.exterior_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Mirrors:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.mirrors"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.note_mirrors"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            HVAC system:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.hvac_system"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.hvac_system_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Brake system and parking brake:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.system_parking_brake"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.parking_brake_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Guidance system:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.guidance_system"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.guidance_system_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Gearbox and Differential:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.gearbox_differential"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.gearbox_differential_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Front Suspension(The front furniture):
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.front_suspension"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.front_suspension_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Rear Suspension(Background Furniture):
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.rear_suspension"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.rear_suspension_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            The next maintenance appointment has
+                                            been reactivated in the dashboard:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.maintenance_appointment_reactivated"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.appointment_reactivated_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Ensure that there are no warning
+                                            messages on the dashboard and that there
+                                            is sufficient water in the car's tank:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.ensure_sufficient_tank"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.sufficient_tank_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Verify all works mentioned in the repair order:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.verify_repair"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.verify_repair_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Verify all works mentioned in the repair order appendix:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.mentioned_repair_appendix"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.repair_appendix_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Ensure that the customer's complaint is similar to the repair process:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.ensure_similar_repair"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.similar_repair_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Check oil and fluid levels:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.oil_fluid_levels"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.oil_fluid_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Ensure that the calf is connected to the torque:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.ensure_calf_torque"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.calf_torque_note"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">
+                                            Examination of the spare tire and the kit:
+                                        </th>
+                                        <td>
+
+                                            <span t-field="o.examination_tire_kit"/>
+                                        </td>
+                                        <th scope="row">
+                                            Note:
+                                        </th>
+                                        <td>
+                                            <span t-field="o.tire_kit_note"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+
+</odoo>

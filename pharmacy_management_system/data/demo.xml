@@ -1,0 +1,921 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo noupdate="0">
+    <!-- Companies and currency are assumed to exist (use current company) -->
+
+    <!-- Hospital Partners (Addresses) -->
+    <record id="partner_hospital_general" model="res.partner">
+        <field name="name">General Hospital</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">123 Medical Center Drive</field>
+        <field name="street2">Suite 100</field>
+        <field name="city">Springfield</field>
+        <field name="zip">12345</field>
+        <field name="phone">+1 (555) 123-4567</field>
+        <field name="email">info@generalhospital.example.com</field>
+        <field name="website">www.generalhospital.example.com</field>
+    </record>
+    <record id="partner_hospital_city" model="res.partner">
+        <field name="name">City Hospital</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">456 Downtown Boulevard</field>
+        <field name="street2">Floor 5</field>
+        <field name="city">Metro City</field>
+        <field name="zip">54321</field>
+        <field name="phone">+1 (555) 234-5678</field>
+        <field name="email">contact@cityhospital.example.com</field>
+        <field name="website">www.cityhospital.example.com</field>
+    </record>
+    <record id="partner_hospital_sunrise" model="res.partner">
+        <field name="name">Sunrise Hospital</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">789 Sunrise Avenue</field>
+        <field name="city">Sunset Valley</field>
+        <field name="zip">67890</field>
+        <field name="phone">+1 (555) 345-6789</field>
+        <field name="email">info@sunrisehospital.example.com</field>
+        <field name="website">www.sunrisehospital.example.com</field>
+    </record>
+    <record id="partner_hospital_riverside" model="res.partner">
+        <field name="name">Riverside Hospital</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">321 River Road</field>
+        <field name="street2">Building A</field>
+        <field name="city">Riverside</field>
+        <field name="zip">11223</field>
+        <field name="phone">+1 (555) 456-7890</field>
+        <field name="email">contact@riversidehospital.example.com</field>
+        <field name="website">www.riversidehospital.example.com</field>
+    </record>
+    <record id="partner_hospital_greenvalley" model="res.partner">
+        <field name="name">Green Valley Hospital</field>
+        <field name="is_company" eval="True"/>
+        <field name="street">654 Valley Parkway</field>
+        <field name="city">Green Valley</field>
+        <field name="zip">44556</field>
+        <field name="phone">+1 (555) 567-8901</field>
+        <field name="email">info@greenvalleyhospital.example.com</field>
+        <field name="website">www.greenvalleyhospital.example.com</field>
+    </record>
+
+    <record id="partner_insurer_acme" model="res.partner">
+        <field name="name">ACME Insurance</field>
+        <field name="is_company" eval="True"/>
+        <field name="email">claims@acme-insure.example.com</field>
+    </record>
+
+    <!-- Warehouses for Hospitals - Using default warehouse for simplicity -->
+    <!-- In production, you would create dedicated warehouses per hospital -->
+
+    <!-- Hospital and Department -->
+    <record id="hospital_general" model="hospital.hospital">
+        <field name="name">General Hospital</field>
+        <field name="code">GEN</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="partner_id" ref="partner_hospital_general"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="hospital_city" model="hospital.hospital">
+        <field name="name">City Hospital</field>
+        <field name="code">CTY</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="partner_id" ref="partner_hospital_city"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="hospital_sunrise" model="hospital.hospital">
+        <field name="name">Sunrise Hospital</field>
+        <field name="code">SUN</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="partner_id" ref="partner_hospital_sunrise"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="hospital_riverside" model="hospital.hospital">
+        <field name="name">Riverside Hospital</field>
+        <field name="code">RIV</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="partner_id" ref="partner_hospital_riverside"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="hospital_greenvalley" model="hospital.hospital">
+        <field name="name">Green Valley Hospital</field>
+        <field name="code">GVH</field>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="partner_id" ref="partner_hospital_greenvalley"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Pharmacy Branch -->
+    <record id="pharmacy_main" model="pharmacy.pharmacy">
+        <field name="name">Main Pharmacy</field>
+        <field name="code">MAIN</field>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="pharmacy_cty_a" model="pharmacy.pharmacy">
+        <field name="name">City Pharmacy A</field>
+        <field name="code">CTY-A</field>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="pharmacy_sun_b" model="pharmacy.pharmacy">
+        <field name="name">Sunrise Pharmacy B</field>
+        <field name="code">SUN-B</field>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="pharmacy_riv_c" model="pharmacy.pharmacy">
+        <field name="name">Riverside Pharmacy C</field>
+        <field name="code">RIV-C</field>
+        <field name="hospital_id" ref="hospital_riverside"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="pharmacy_gvh_d" model="pharmacy.pharmacy">
+        <field name="name">GreenValley Pharmacy D</field>
+        <field name="code">GVH-D</field>
+        <field name="hospital_id" ref="hospital_greenvalley"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="warehouse_id" ref="stock.warehouse0"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <!-- Partners: Doctor and Patient (moved here after pharmacies are defined) -->
+    <record id="partner_doctor_john" model="res.partner">
+        <field name="name">Dr. John Carter</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">john.carter@example.com</field>
+        <field name="is_doctor" eval="True"/>
+        <field name="gender">male</field>
+        <field name="license_number">MD-00001</field>
+        <field name="specialty">General Practice</field>
+        <field name="default_pharmacy_id" ref="pharmacy_main"/>
+    </record>
+
+    <record id="partner_patient_amy" model="res.partner">
+        <field name="name">Amy Wong</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">amy.wong@example.com</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">female</field>
+        <field name="dob">1992-05-11</field>
+        <field name="medical_record_no">MRN-0001</field>
+        <field name="preferred_pharmacy_id" ref="pharmacy_main"/>
+    </record>
+
+    <record id="partner_patient_bob" model="res.partner">
+        <field name="name">Bob Martin</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">bob.martin@example.com</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">male</field>
+        <field name="dob">1985-04-22</field>
+        <field name="medical_record_no">MRN-0002</field>
+        <field name="preferred_pharmacy_id" ref="pharmacy_cty_a"/>
+    </record>
+    <record id="partner_patient_cara" model="res.partner">
+        <field name="name">Cara Lee</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">cara.lee@example.com</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">female</field>
+        <field name="dob">1990-08-09</field>
+        <field name="medical_record_no">MRN-0003</field>
+        <field name="preferred_pharmacy_id" ref="pharmacy_sun_b"/>
+    </record>
+    <record id="partner_patient_dan" model="res.partner">
+        <field name="name">Dan Fox</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">dan.fox@example.com</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">male</field>
+        <field name="dob">1978-01-17</field>
+        <field name="medical_record_no">MRN-0004</field>
+        <field name="preferred_pharmacy_id" ref="pharmacy_riv_c"/>
+    </record>
+    <record id="partner_patient_ella" model="res.partner">
+        <field name="name">Ella Park</field>
+        <field name="is_company" eval="False"/>
+        <field name="email">ella.park@example.com</field>
+        <field name="is_patient" eval="True"/>
+        <field name="gender">female</field>
+        <field name="dob">2001-12-29</field>
+        <field name="medical_record_no">MRN-0005</field>
+        <field name="preferred_pharmacy_id" ref="pharmacy_gvh_d"/>
+    </record>
+
+    <record id="department_er" model="hospital.department">
+        <field name="name">Emergency</field>
+        <field name="code">ER</field>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="department_cardio" model="hospital.department">
+        <field name="name">Cardiology</field>
+        <field name="code">CARD</field>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="department_neuro" model="hospital.department">
+        <field name="name">Neurology</field>
+        <field name="code">NEUR</field>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="department_peds" model="hospital.department">
+        <field name="name">Pediatrics</field>
+        <field name="code">PEDS</field>
+        <field name="hospital_id" ref="hospital_riverside"/>
+        <field name="active" eval="True"/>
+    </record>
+    <record id="department_onco" model="hospital.department">
+        <field name="name">Oncology</field>
+        <field name="code">ONC</field>
+        <field name="hospital_id" ref="hospital_greenvalley"/>
+        <field name="active" eval="True"/>
+    </record>
+
+    <record id="pharmacy_config_default" model="pharmacy.config">
+        <field name="tax_included" eval="True"/>
+        <field name="localization_code">other</field>
+        <field name="allow_substitution" eval="True"/>
+        <field name="default_expiry_days" eval="730"/>
+    </record>
+    <record id="pharmacy_config_us" model="pharmacy.config">
+        <field name="tax_included" eval="False"/>
+        <field name="localization_code">us</field>
+        <field name="allow_substitution" eval="True"/>
+        <field name="default_expiry_days" eval="730"/>
+    </record>
+    <record id="pharmacy_config_eu" model="pharmacy.config">
+        <field name="tax_included" eval="True"/>
+        <field name="localization_code">eu</field>
+        <field name="allow_substitution" eval="True"/>
+        <field name="default_expiry_days" eval="730"/>
+    </record>
+    <record id="pharmacy_config_in" model="pharmacy.config">
+        <field name="tax_included" eval="True"/>
+        <field name="localization_code">in</field>
+        <field name="allow_substitution" eval="False"/>
+        <field name="default_expiry_days" eval="540"/>
+    </record>
+    <record id="pharmacy_config_ae" model="pharmacy.config">
+        <field name="tax_included" eval="True"/>
+        <field name="localization_code">ae</field>
+        <field name="allow_substitution" eval="True"/>
+        <field name="default_expiry_days" eval="365"/>
+    </record>
+
+    <!-- Product templates and variants for drugs -->
+    <record id="product_template_paracetamol" model="product.template">
+        <field name="name">Paracetamol 500mg Tablet</field>
+        <field name="type">consu</field>
+        <field name="list_price" eval="2.50"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    </record>
+    <!-- Variant auto-created by Odoo for templates without attributes -->
+
+    <record id="product_template_acetaminophen" model="product.template">
+        <field name="name">Acetaminophen 500mg Tablet</field>
+        <field name="type">consu</field>
+        <field name="list_price" eval="1.95"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    </record>
+
+    <record id="product_template_ibuprofen" model="product.template">
+        <field name="name">Ibuprofen 200mg Tablet</field>
+        <field name="type">consu</field>
+        <field name="list_price" eval="3.40"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_template_amoxicillin" model="product.template">
+        <field name="name">Amoxicillin 500mg Capsule</field>
+        <field name="type">consu</field>
+        <field name="list_price" eval="5.80"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="product_template_cetirizine" model="product.template">
+        <field name="name">Cetirizine 10mg Tablet</field>
+        <field name="type">consu</field>
+        <field name="list_price" eval="2.10"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+        <field name="uom_po_id" ref="uom.product_uom_unit"/>
+    </record>
+    <!-- Variant auto-created by Odoo for templates without attributes -->
+
+    <!-- Drug Category -->
+    <record id="drug_category_analgesic" model="pharmacy.drug.category">
+        <field name="name">Analgesic</field>
+        <field name="code">ANL</field>
+        <field name="controlled" eval="False"/>
+    </record>
+    <record id="drug_category_antibiotic" model="pharmacy.drug.category">
+        <field name="name">Antibiotic</field>
+        <field name="code">ATB</field>
+        <field name="controlled" eval="False"/>
+    </record>
+    <record id="drug_category_antihistamine" model="pharmacy.drug.category">
+        <field name="name">Antihistamine</field>
+        <field name="code">ANTH</field>
+        <field name="controlled" eval="False"/>
+    </record>
+    <record id="drug_category_coughcold" model="pharmacy.drug.category">
+        <field name="name">Cough &amp; Cold</field>
+        <field name="code">CAC</field>
+        <field name="controlled" eval="False"/>
+    </record>
+    <record id="drug_category_controlled" model="pharmacy.drug.category">
+        <field name="name">Controlled</field>
+        <field name="code">CTRL</field>
+        <field name="controlled" eval="True"/>
+    </record>
+
+    <!-- Drugs and Ingredients -->
+    <record id="drug_paracetamol" model="pharmacy.drug">
+        <field name="product_id" ref="product_template_paracetamol"/>
+        <field name="drug_category_id" ref="drug_category_analgesic"/>
+        <field name="is_prescription_required" eval="False"/>
+        <field name="controlled" eval="False"/>
+        <field name="storage_temp_min" eval="15.0"/>
+        <field name="storage_temp_max" eval="25.0"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="hospital_ids" eval="[(4, ref('hospital_general')), (4, ref('hospital_city'))]"/>
+        <field name="pharmacy_ids" eval="[(4, ref('pharmacy_main')), (4, ref('pharmacy_cty_a'))]"/>
+    </record>
+    <record id="drug_paracetamol_ing" model="pharmacy.drug.ingredient">
+        <field name="name">Paracetamol</field>
+        <field name="strength">500</field>
+        <field name="unit">mg</field>
+        <field name="drug_id" ref="drug_paracetamol"/>
+        <field name="substitutable" eval="True"/>
+    </record>
+
+    <record id="drug_acetaminophen" model="pharmacy.drug">
+        <field name="product_id" ref="product_template_acetaminophen"/>
+        <field name="drug_category_id" ref="drug_category_analgesic"/>
+        <field name="is_prescription_required" eval="False"/>
+        <field name="controlled" eval="False"/>
+        <field name="storage_temp_min" eval="15.0"/>
+        <field name="storage_temp_max" eval="25.0"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="hospital_ids" eval="[(4, ref('hospital_general'))]"/>
+        <field name="pharmacy_ids" eval="[(4, ref('pharmacy_main'))]"/>
+    </record>
+    <record id="drug_ibuprofen" model="pharmacy.drug">
+        <field name="product_id" ref="product_template_ibuprofen"/>
+        <field name="drug_category_id" ref="drug_category_analgesic"/>
+        <field name="is_prescription_required" eval="False"/>
+        <field name="controlled" eval="False"/>
+        <field name="storage_temp_min" eval="15.0"/>
+        <field name="storage_temp_max" eval="25.0"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="hospital_ids" eval="[(4, ref('hospital_city')), (4, ref('hospital_sunrise'))]"/>
+        <field name="pharmacy_ids" eval="[(4, ref('pharmacy_cty_a')), (4, ref('pharmacy_sun_b'))]"/>
+    </record>
+    <record id="drug_amoxicillin" model="pharmacy.drug">
+        <field name="product_id" ref="product_template_amoxicillin"/>
+        <field name="drug_category_id" ref="drug_category_antibiotic"/>
+        <field name="is_prescription_required" eval="True"/>
+        <field name="controlled" eval="False"/>
+        <field name="storage_temp_min" eval="15.0"/>
+        <field name="storage_temp_max" eval="25.0"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="hospital_ids" eval="[(4, ref('hospital_sunrise')), (4, ref('hospital_riverside'))]"/>
+        <field name="pharmacy_ids" eval="[(4, ref('pharmacy_sun_b')), (4, ref('pharmacy_riv_c'))]"/>
+    </record>
+    <record id="drug_cetirizine" model="pharmacy.drug">
+        <field name="product_id" ref="product_template_cetirizine"/>
+        <field name="drug_category_id" ref="drug_category_antihistamine"/>
+        <field name="is_prescription_required" eval="False"/>
+        <field name="controlled" eval="False"/>
+        <field name="storage_temp_min" eval="15.0"/>
+        <field name="storage_temp_max" eval="25.0"/>
+        <field name="company_id" ref="base.main_company"/>
+        <field name="hospital_ids" eval="[(4, ref('hospital_greenvalley')), (4, ref('hospital_general'))]"/>
+        <field name="pharmacy_ids" eval="[(4, ref('pharmacy_gvh_d')), (4, ref('pharmacy_main'))]"/>
+    </record>
+    <record id="drug_acetaminophen_ing" model="pharmacy.drug.ingredient">
+        <field name="name">Acetaminophen</field>
+        <field name="strength">500</field>
+        <field name="unit">mg</field>
+        <field name="drug_id" ref="drug_acetaminophen"/>
+        <field name="substitutable" eval="True"/>
+    </record>
+    <record id="drug_ibuprofen_ing" model="pharmacy.drug.ingredient">
+        <field name="name">Ibuprofen</field>
+        <field name="strength">200</field>
+        <field name="unit">mg</field>
+        <field name="drug_id" ref="drug_ibuprofen"/>
+        <field name="substitutable" eval="True"/>
+    </record>
+    <record id="drug_amoxicillin_ing" model="pharmacy.drug.ingredient">
+        <field name="name">Amoxicillin</field>
+        <field name="strength">500</field>
+        <field name="unit">mg</field>
+        <field name="drug_id" ref="drug_amoxicillin"/>
+        <field name="substitutable" eval="False"/>
+    </record>
+    <record id="drug_cetirizine_ing" model="pharmacy.drug.ingredient">
+        <field name="name">Cetirizine</field>
+        <field name="strength">10</field>
+        <field name="unit">mg</field>
+        <field name="drug_id" ref="drug_cetirizine"/>
+        <field name="substitutable" eval="True"/>
+    </record>
+
+    <!-- Substitution Map -->
+    <record id="sub_map_para_aceta" model="pharmacy.substitution.map">
+        <field name="brand_id" ref="drug_paracetamol"/>
+        <field name="generic_id" ref="drug_acetaminophen"/>
+        <field name="approved" eval="True"/>
+    </record>
+    <record id="sub_map_para_ibuprofen" model="pharmacy.substitution.map">
+        <field name="brand_id" ref="drug_ibuprofen"/>
+        <field name="generic_id" ref="drug_paracetamol"/>
+        <field name="approved" eval="True"/>
+    </record>
+    <record id="sub_map_cetirizine_para" model="pharmacy.substitution.map">
+        <field name="brand_id" ref="drug_cetirizine"/>
+        <field name="generic_id" ref="drug_paracetamol"/>
+        <field name="approved" eval="False"/>
+    </record>
+    <record id="sub_map_amox_aceta" model="pharmacy.substitution.map">
+        <field name="brand_id" ref="drug_amoxicillin"/>
+        <field name="generic_id" ref="drug_acetaminophen"/>
+        <field name="approved" eval="False"/>
+    </record>
+    <record id="sub_map_ibuprofen_cet" model="pharmacy.substitution.map">
+        <field name="brand_id" ref="drug_ibuprofen"/>
+        <field name="generic_id" ref="drug_cetirizine"/>
+        <field name="approved" eval="False"/>
+    </record>
+
+    <!-- Drug Coverage -->
+    <record id="drug_paracetamol_general_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_paracetamol"/>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="pharmacy_id" ref="pharmacy_main"/>
+        <field name="min_qty" eval="50.0"/>
+        <field name="target_qty" eval="120.0"/>
+        <field name="max_qty" eval="200.0"/>
+    </record>
+    <record id="drug_paracetamol_city_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_paracetamol"/>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="pharmacy_id" ref="pharmacy_cty_a"/>
+        <field name="min_qty" eval="30.0"/>
+        <field name="target_qty" eval="90.0"/>
+        <field name="max_qty" eval="150.0"/>
+    </record>
+    <record id="drug_acetaminophen_general_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_acetaminophen"/>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="pharmacy_id" ref="pharmacy_main"/>
+        <field name="min_qty" eval="40.0"/>
+        <field name="target_qty" eval="100.0"/>
+        <field name="max_qty" eval="160.0"/>
+    </record>
+    <record id="drug_ibuprofen_city_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_ibuprofen"/>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="pharmacy_id" ref="pharmacy_cty_a"/>
+        <field name="min_qty" eval="25.0"/>
+        <field name="target_qty" eval="80.0"/>
+        <field name="max_qty" eval="140.0"/>
+    </record>
+    <record id="drug_ibuprofen_sunrise_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_ibuprofen"/>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="pharmacy_id" ref="pharmacy_sun_b"/>
+        <field name="min_qty" eval="20.0"/>
+        <field name="target_qty" eval="60.0"/>
+        <field name="max_qty" eval="100.0"/>
+    </record>
+    <record id="drug_amoxicillin_sunrise_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_amoxicillin"/>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="pharmacy_id" ref="pharmacy_sun_b"/>
+        <field name="min_qty" eval="15.0"/>
+        <field name="target_qty" eval="40.0"/>
+        <field name="max_qty" eval="70.0"/>
+    </record>
+    <record id="drug_amoxicillin_riverside_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_amoxicillin"/>
+        <field name="hospital_id" ref="hospital_riverside"/>
+        <field name="pharmacy_id" ref="pharmacy_riv_c"/>
+        <field name="min_qty" eval="10.0"/>
+        <field name="target_qty" eval="30.0"/>
+        <field name="max_qty" eval="60.0"/>
+    </record>
+    <record id="drug_cetirizine_greenvalley_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_cetirizine"/>
+        <field name="hospital_id" ref="hospital_greenvalley"/>
+        <field name="pharmacy_id" ref="pharmacy_gvh_d"/>
+        <field name="min_qty" eval="18.0"/>
+        <field name="target_qty" eval="60.0"/>
+        <field name="max_qty" eval="90.0"/>
+    </record>
+    <record id="drug_cetirizine_general_coverage" model="pharmacy.drug.coverage">
+        <field name="drug_id" ref="drug_cetirizine"/>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="pharmacy_id" ref="pharmacy_main"/>
+        <field name="min_qty" eval="22.0"/>
+        <field name="target_qty" eval="70.0"/>
+        <field name="max_qty" eval="110.0"/>
+    </record>
+
+    <!-- Treatment Stages -->
+    <record id="treatment_stage_assessment" model="hospital.treatment.stage">
+        <field name="name">Assessment</field>
+        <field name="sequence" eval="1"/>
+        <field name="is_default" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="treatment_stage_active" model="hospital.treatment.stage">
+        <field name="name">Active Care</field>
+        <field name="sequence" eval="2"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+    <record id="treatment_stage_completed" model="hospital.treatment.stage">
+        <field name="name">Completed</field>
+        <field name="sequence" eval="99"/>
+        <field name="is_closed" eval="True"/>
+        <field name="fold" eval="True"/>
+        <field name="company_id" ref="base.main_company"/>
+    </record>
+
+    <!-- Alert Rule -->
+    <record id="alert_expiry_30" model="pharmacy.alert.rule">
+        <field name="name">Expiry in 30 Days</field>
+        <field name="rule_type">expiry</field>
+        <field name="threshold" eval="30"/>
+        <field name="active" eval="True"/>
+        <field name="message_template">Lot is expiring within 30 days.</field>
+    </record>
+    <record id="alert_stock_low" model="pharmacy.alert.rule">
+        <field name="name">Low Stock</field>
+        <field name="rule_type">stock</field>
+        <field name="threshold" eval="5"/>
+        <field name="active" eval="True"/>
+        <field name="message_template">Stock below threshold.</field>
+    </record>
+    <record id="alert_recall" model="pharmacy.alert.rule">
+        <field name="name">Recall Flag</field>
+        <field name="rule_type">recall</field>
+        <field name="threshold" eval="0"/>
+        <field name="active" eval="True"/>
+        <field name="message_template">Lot is recalled.</field>
+    </record>
+    <record id="alert_controlled" model="pharmacy.alert.rule">
+        <field name="name">Controlled Handling</field>
+        <field name="rule_type">controlled</field>
+        <field name="threshold" eval="0"/>
+        <field name="active" eval="True"/>
+        <field name="message_template">Controlled substance handling required.</field>
+    </record>
+    <record id="alert_expiry_7" model="pharmacy.alert.rule">
+        <field name="name">Expiry in 7 Days</field>
+        <field name="rule_type">expiry</field>
+        <field name="threshold" eval="7"/>
+        <field name="active" eval="True"/>
+        <field name="message_template">Lot is expiring within a week.</field>
+    </record>
+
+    <!-- Stock Lot extended fields demo (no move/quant here) -->
+<!--    <record id="lot_para_batch1" model="stock.lot">-->
+<!--        <field name="name">PARA-B1</field>-->
+<!--        <field name="product_id" ref="product_template_paracetamol"/>-->
+<!--        <field name="expiry_date">2026-12-31</field>-->
+<!--        <field name="hospital_id" ref="hospital_general"/>-->
+<!--        <field name="pharmacy_id" ref="pharmacy_main"/>-->
+<!--        <field name="recall_flag" eval="False"/>-->
+<!--    </record>-->
+
+    <!-- Prescription with lines -->
+    <record id="rx_0001" model="pharmacy.prescription">
+        <field name="name">RX/DEMO/0001</field>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="pharmacy_id" ref="pharmacy_main"/>
+        <field name="patient_id" ref="partner_patient_amy"/>
+        <field name="doctor_id" ref="partner_doctor_john"/>
+        <field name="date_prescribed">2025-11-05</field>
+        <field name="state">approved</field>
+    </record>
+    <record id="rx_0001_line_1" model="pharmacy.prescription.line">
+        <field name="prescription_id" ref="rx_0001"/>
+        <field name="drug_id" ref="drug_paracetamol"/>
+        <field name="dosage">1 tablet twice daily</field>
+        <field name="qty_prescribed" eval="10.0"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="rx_0002" model="pharmacy.prescription">
+        <field name="name">RX/DEMO/0002</field>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="pharmacy_id" ref="pharmacy_cty_a"/>
+        <field name="patient_id" ref="partner_patient_bob"/>
+        <field name="doctor_id" ref="partner_doctor_john"/>
+        <field name="date_prescribed">2025-11-06</field>
+        <field name="state">draft</field>
+    </record>
+    <record id="rx_0002_line_1" model="pharmacy.prescription.line">
+        <field name="prescription_id" ref="rx_0002"/>
+        <field name="drug_id" ref="drug_cetirizine"/>
+        <field name="dosage">1 tablet daily</field>
+        <field name="qty_prescribed" eval="5.0"/>
+        <field name="uom_id" ref="uom.product_uom_unit"/>
+    </record>
+    <record id="rx_0003" model="pharmacy.prescription">
+        <field name="name">RX/DEMO/0003</field>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="pharmacy_id" ref="pharmacy_sun_b"/>
+        <field name="patient_id" ref="partner_patient_cara"/>
+        <field name="doctor_id" ref="partner_doctor_john"/>
+        <field name="date_prescribed">2025-11-07</field>
+        <field name="state">approved</field>
+    </record>
+    <record id="rx_0004" model="pharmacy.prescription">
+        <field name="name">RX/DEMO/0004</field>
+        <field name="hospital_id" ref="hospital_riverside"/>
+        <field name="pharmacy_id" ref="pharmacy_riv_c"/>
+        <field name="patient_id" ref="partner_patient_dan"/>
+        <field name="doctor_id" ref="partner_doctor_john"/>
+        <field name="date_prescribed">2025-11-08</field>
+        <field name="state">dispensed</field>
+    </record>
+    <record id="rx_0005" model="pharmacy.prescription">
+        <field name="name">RX/DEMO/0005</field>
+        <field name="hospital_id" ref="hospital_greenvalley"/>
+        <field name="pharmacy_id" ref="pharmacy_gvh_d"/>
+        <field name="patient_id" ref="partner_patient_ella"/>
+        <field name="doctor_id" ref="partner_doctor_john"/>
+        <field name="date_prescribed">2025-11-09</field>
+        <field name="state">cancel</field>
+    </record>
+
+    <!-- Treatments -->
+    <record id="treatment_amy_paracetamol" model="hospital.treatment">
+        <field name="name">TRT/DEMO/0001</field>
+        <field name="patient_id" ref="partner_patient_amy"/>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="pharmacy_id" ref="pharmacy_main"/>
+        <field name="stage_id" ref="treatment_stage_active"/>
+        <field name="start_datetime">2025-11-05 09:00:00</field>
+        <field name="telemedicine_enabled" eval="True"/>
+        <field name="telemedicine_session_id">VHJlYXRtZW50U2Vzc2lvbjAwMDE=</field>
+        <field name="telemedicine_session_url">aHR0cHM6Ly90ZWxlbWVkLndlYi9zZXNzLzAwMDE=</field>
+        <field name="telemedicine_join_token">anRfa2V5XzAwMDE=</field>
+        <field name="vitals_snapshot">{'bp': '118/76', 'pulse': 70}</field>
+        <field name="notes">Initial assessment and baseline vitals recorded.</field>
+        <field name="prescription_ids" eval="[(4, ref('rx_0001'))]"/>
+    </record>
+    <record id="treatment_bob_cetirizine" model="hospital.treatment">
+        <field name="name">TRT/DEMO/0002</field>
+        <field name="patient_id" ref="partner_patient_bob"/>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="pharmacy_id" ref="pharmacy_cty_a"/>
+        <field name="stage_id" ref="treatment_stage_assessment"/>
+        <field name="start_datetime">2025-11-06 11:30:00</field>
+        <field name="telemedicine_enabled" eval="False"/>
+        <field name="vitals_snapshot">{'bp': '125/84', 'pulse': 78}</field>
+        <field name="notes">Allergy consultation pending lab review.</field>
+        <field name="prescription_ids" eval="[(4, ref('rx_0002'))]"/>
+    </record>
+    <record id="treatment_cara_ibuprofen" model="hospital.treatment">
+        <field name="name">TRT/DEMO/0003</field>
+        <field name="patient_id" ref="partner_patient_cara"/>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="pharmacy_id" ref="pharmacy_sun_b"/>
+        <field name="stage_id" ref="treatment_stage_completed"/>
+        <field name="start_datetime">2025-10-30 10:00:00</field>
+        <field name="end_datetime">2025-11-07 10:00:00</field>
+        <field name="telemedicine_enabled" eval="True"/>
+        <field name="telemedicine_session_id">VHJlYXRtZW50U2Vzc2lvbjAwMDI=</field>
+        <field name="telemedicine_session_url">aHR0cHM6Ly90ZWxlbWVkLndlYi9zZXNzLzAwMDI=</field>
+        <field name="telemedicine_join_token">anRfa2V5XzAwMDI=</field>
+        <field name="vitals_snapshot">{'bp': '116/74', 'pulse': 68}</field>
+        <field name="notes">Completed anti-inflammatory course with follow-up call.</field>
+        <field name="prescription_ids" eval="[(4, ref('rx_0003'))]"/>
+    </record>
+
+    <!-- Insurance Claim -->
+    <record id="claim_0001" model="pharmacy.insurance.claim">
+        <field name="name">CLM/DEMO/0001</field>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="pharmacy_id" ref="pharmacy_main"/>
+        <field name="prescription_id" ref="rx_0001"/>
+        <field name="patient_id" ref="partner_patient_amy"/>
+        <field name="insurance_company_id" ref="partner_insurer_acme"/>
+        <field name="amount_claimed" eval="20.0"/>
+        <field name="state">submitted</field>
+    </record>
+    <record id="claim_0002" model="pharmacy.insurance.claim">
+        <field name="name">CLM/DEMO/0002</field>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="pharmacy_id" ref="pharmacy_cty_a"/>
+        <field name="prescription_id" ref="rx_0002"/>
+        <field name="patient_id" ref="partner_patient_bob"/>
+        <field name="insurance_company_id" ref="partner_insurer_acme"/>
+        <field name="amount_claimed" eval="8.0"/>
+        <field name="state">draft</field>
+    </record>
+    <record id="claim_0003" model="pharmacy.insurance.claim">
+        <field name="name">CLM/DEMO/0003</field>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="pharmacy_id" ref="pharmacy_sun_b"/>
+        <field name="prescription_id" ref="rx_0003"/>
+        <field name="patient_id" ref="partner_patient_cara"/>
+        <field name="insurance_company_id" ref="partner_insurer_acme"/>
+        <field name="amount_claimed" eval="15.0"/>
+        <field name="state">approved</field>
+    </record>
+    <record id="claim_0004" model="pharmacy.insurance.claim">
+        <field name="name">CLM/DEMO/0004</field>
+        <field name="hospital_id" ref="hospital_riverside"/>
+        <field name="pharmacy_id" ref="pharmacy_riv_c"/>
+        <field name="prescription_id" ref="rx_0004"/>
+        <field name="patient_id" ref="partner_patient_dan"/>
+        <field name="insurance_company_id" ref="partner_insurer_acme"/>
+        <field name="amount_claimed" eval="22.0"/>
+        <field name="state">paid</field>
+    </record>
+    <record id="claim_0005" model="pharmacy.insurance.claim">
+        <field name="name">CLM/DEMO/0005</field>
+        <field name="hospital_id" ref="hospital_greenvalley"/>
+        <field name="pharmacy_id" ref="pharmacy_gvh_d"/>
+        <field name="prescription_id" ref="rx_0005"/>
+        <field name="patient_id" ref="partner_patient_ella"/>
+        <field name="insurance_company_id" ref="partner_insurer_acme"/>
+        <field name="amount_claimed" eval="12.0"/>
+        <field name="state">rejected</field>
+    </record>
+
+    <!-- Portal Request -->
+    <record id="portal_request_0001" model="pharmacy.portal.request">
+        <field name="name">PRQ/DEMO/0001</field>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="pharmacy_id" ref="pharmacy_main"/>
+        <field name="partner_id" ref="partner_patient_amy"/>
+        <field name="type">reservation</field>
+        <field name="state">processing</field>
+    </record>
+    <record id="portal_request_0002" model="pharmacy.portal.request">
+        <field name="name">PRQ/DEMO/0002</field>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="pharmacy_id" ref="pharmacy_cty_a"/>
+        <field name="partner_id" ref="partner_patient_bob"/>
+        <field name="type">upload</field>
+        <field name="state">new</field>
+    </record>
+    <record id="portal_request_0003" model="pharmacy.portal.request">
+        <field name="name">PRQ/DEMO/0003</field>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="pharmacy_id" ref="pharmacy_sun_b"/>
+        <field name="partner_id" ref="partner_patient_cara"/>
+        <field name="type">query</field>
+        <field name="state">done</field>
+    </record>
+    <record id="portal_request_0004" model="pharmacy.portal.request">
+        <field name="name">PRQ/DEMO/0004</field>
+        <field name="hospital_id" ref="hospital_riverside"/>
+        <field name="pharmacy_id" ref="pharmacy_riv_c"/>
+        <field name="partner_id" ref="partner_patient_dan"/>
+        <field name="type">reservation</field>
+        <field name="state">processing</field>
+    </record>
+    <record id="portal_request_0005" model="pharmacy.portal.request">
+        <field name="name">PRQ/DEMO/0005</field>
+        <field name="hospital_id" ref="hospital_greenvalley"/>
+        <field name="pharmacy_id" ref="pharmacy_gvh_d"/>
+        <field name="partner_id" ref="partner_patient_ella"/>
+        <field name="type">upload</field>
+        <field name="state">done</field>
+    </record>
+
+    <!-- Controlled Log -->
+    <record id="controlled_log_demo" model="pharmacy.controlled.log">
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="pharmacy_id" ref="pharmacy_main"/>
+        <field name="drug_id" ref="drug_paracetamol"/>
+        <field name="qty" eval="2.0"/>
+        <field name="action_type">dispense</field>
+        <field name="notes">Demo dispense log</field>
+    </record>
+    <record id="controlled_log_demo2" model="pharmacy.controlled.log">
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="pharmacy_id" ref="pharmacy_cty_a"/>
+        <field name="drug_id" ref="drug_cetirizine"/>
+        <field name="qty" eval="1.0"/>
+        <field name="action_type">return</field>
+        <field name="notes">Return log</field>
+    </record>
+    <record id="controlled_log_demo3" model="pharmacy.controlled.log">
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="pharmacy_id" ref="pharmacy_sun_b"/>
+        <field name="drug_id" ref="drug_ibuprofen"/>
+        <field name="qty" eval="3.0"/>
+        <field name="action_type">dispense</field>
+        <field name="notes">Dispense log</field>
+    </record>
+    <record id="controlled_log_demo4" model="pharmacy.controlled.log">
+        <field name="hospital_id" ref="hospital_riverside"/>
+        <field name="pharmacy_id" ref="pharmacy_riv_c"/>
+        <field name="drug_id" ref="drug_amoxicillin"/>
+        <field name="qty" eval="1.0"/>
+        <field name="action_type">destroy</field>
+        <field name="notes">Destroyed</field>
+    </record>
+    <record id="controlled_log_demo5" model="pharmacy.controlled.log">
+        <field name="hospital_id" ref="hospital_greenvalley"/>
+        <field name="pharmacy_id" ref="pharmacy_gvh_d"/>
+        <field name="drug_id" ref="drug_paracetamol"/>
+        <field name="qty" eval="4.0"/>
+        <field name="action_type">dispense</field>
+        <field name="notes">Routine dispense</field>
+    </record>
+
+    <!-- Return / Quarantine -->
+    <record id="return_quarantine_demo" model="pharmacy.return.quarantine">
+        <field name="name">RTN/DEMO/0001</field>
+        <field name="drug_id" ref="drug_paracetamol"/>
+        <field name="qty" eval="1.0"/>
+        <field name="reason">Damaged packaging</field>
+        <field name="state">awaiting</field>
+    </record>
+    <record id="return_quarantine_demo2" model="pharmacy.return.quarantine">
+        <field name="name">RTN/DEMO/0002</field>
+        <field name="drug_id" ref="drug_ibuprofen"/>
+        <field name="qty" eval="2.0"/>
+        <field name="reason">Recall</field>
+        <field name="state">disposed</field>
+    </record>
+    <record id="return_quarantine_demo3" model="pharmacy.return.quarantine">
+        <field name="name">RTN/DEMO/0003</field>
+        <field name="drug_id" ref="drug_cetirizine"/>
+        <field name="qty" eval="1.0"/>
+        <field name="reason">Customer return</field>
+        <field name="state">awaiting</field>
+    </record>
+    <record id="return_quarantine_demo4" model="pharmacy.return.quarantine">
+        <field name="name">RTN/DEMO/0004</field>
+        <field name="drug_id" ref="drug_amoxicillin"/>
+        <field name="qty" eval="1.0"/>
+        <field name="reason">Expired</field>
+        <field name="state">disposed</field>
+    </record>
+    <record id="return_quarantine_demo5" model="pharmacy.return.quarantine">
+        <field name="name">RTN/DEMO/0005</field>
+        <field name="drug_id" ref="drug_paracetamol"/>
+        <field name="qty" eval="3.0"/>
+        <field name="reason">Damaged</field>
+        <field name="state">awaiting</field>
+    </record>
+
+    <!-- API Config -->
+    <record id="api_config_demo" model="hospital.api.config">
+        <field name="name">Demo FHIR</field>
+        <field name="hospital_id" ref="hospital_general"/>
+        <field name="endpoint_url">https://fhir.example.test</field>
+        <field name="enabled" eval="True"/>
+    </record>
+    <record id="api_config_demo2" model="hospital.api.config">
+        <field name="name">City FHIR</field>
+        <field name="hospital_id" ref="hospital_city"/>
+        <field name="endpoint_url">https://fhir.city.test</field>
+        <field name="enabled" eval="True"/>
+    </record>
+    <record id="api_config_demo3" model="hospital.api.config">
+        <field name="name">Sunrise HL7</field>
+        <field name="hospital_id" ref="hospital_sunrise"/>
+        <field name="endpoint_url">https://hl7.sunrise.test</field>
+        <field name="enabled" eval="False"/>
+    </record>
+    <record id="api_config_demo4" model="hospital.api.config">
+        <field name="name">Riverside FHIR</field>
+        <field name="hospital_id" ref="hospital_riverside"/>
+        <field name="endpoint_url">https://fhir.riverside.test</field>
+        <field name="enabled" eval="True"/>
+    </record>
+    <record id="api_config_demo5" model="hospital.api.config">
+        <field name="name">GreenValley HL7</field>
+        <field name="hospital_id" ref="hospital_greenvalley"/>
+        <field name="endpoint_url">https://hl7.greenvalley.test</field>
+        <field name="enabled" eval="False"/>
+    </record>
+
+</odoo>
+
+

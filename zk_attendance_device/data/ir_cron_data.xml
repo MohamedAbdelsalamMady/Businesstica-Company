@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ir_cron_zk_sync_devices" model="ir.cron">
+        <field name="name">ZK Devices Synchronization</field>
+        <field name="model_id" ref="model_zk_device"/>
+        <field name="state">code</field>
+        <field name="code">model.cron_sync_all_devices()</field>
+
+        <!-- Odoo 18 fields -->
+        <field name="interval_number">1</field>
+        <field name="interval_type">minutes</field>
+        <field name="active">True</field>
+    </record>
+</odoo>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<odoo>-->
+<!--    <record id="ir_cron_zk_sync_devices" model="ir.cron">-->
+<!--        <field name="name">مزامنة أجهزة البصمة ZK</field>-->
+<!--        <field name="model_id" ref="model_zk_device"/>-->
+<!--        <field name="state">code</field>-->
+<!--        <field name="code">model.cron_sync_all_devices()</field>-->
+
+<!--        &lt;!&ndash; Odoo 18 fields &ndash;&gt;-->
+<!--        <field name="interval_number">1</field>-->
+<!--        <field name="interval_type">minutes</field>-->
+<!--        <field name="active">True</field>-->
+<!--    </record>-->
+<!--</odoo>-->

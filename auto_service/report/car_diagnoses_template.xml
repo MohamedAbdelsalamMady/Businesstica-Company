@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="car_diagnoses_template">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <h2 class="mt16">
+                            <span t-field="o.name"/>
+                        </h2>
+                        <table class="table" style="page-break-inside: avoid;">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">
+                                        Customer:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.partner_id"/>
+                                    </td>
+                                    <th scope="row">
+                                        Date:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.date"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        License Plate No:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.license_plate_no"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Chassis No
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.car_creations_id.name"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <th scope="row">
+                                        Service Description:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.service_description"/>
+
+                                    </td>
+                                    <th scope="row">
+                                        Estimated Time:
+                                    </th>
+                                    <td>
+
+                                        <span t-field="o.estimated_time"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+                        </table>
+                        <div style="page-break-inside: avoid;">
+                            <div class="p-3 mb-2 bg-light font-weight-bold"
+                                 style="text-align:center;">
+                                Service Parts Diagnoses
+                            </div>
+                            <table class="table" style="page-break-inside: avoid;">
+                                <thead>
+                                    <th>Service Name</th>
+                                    <th>Unit Price</th>
+                                    <th>Quantity</th>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.service_parts_diagnoses_ids" t-as="service_part">
+                                        <tr>
+                                            <td>
+                                                <span t-field="service_part.product_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="service_part.unit_price"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="service_part.product_qty"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="page-break-inside: avoid;">
+                            <div class="p-3 mb-2 bg-light font-weight-bold"
+                                 style="text-align:center;">
+                                Spare Parts Diagnoses
+                            </div>
+
+                            <table class="table" style="page-break-inside: avoid;">
+                                <thead>
+                                    <th>Service Name</th>
+                                    <th>Task</th>
+                                    <th>Product</th>
+                                    <th>Unit Of Measure</th>
+                                    <th>Quantity</th>
+                                    <th>Available Quantity</th>
+                                    <th>Subtotal</th>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.spare_parts_diagnoses_ids" t-as="spare_part">
+                                        <tr>
+                                            <td>
+                                                <span t-field="spare_part.service_name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="spare_part.task"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="spare_part.product_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="spare_part.unit_price"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="spare_part.product_qty"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="spare_part.available_quantity"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="spare_part.subtotal"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                        <div style="page-break-inside: avoid;">
+                            <div class="p-3 mb-2 bg-light font-weight-bold"
+                                 style="text-align:center;">
+                                New Diagnose Items
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <th>Product</th>
+                                    <th>Unit Of Measure</th>
+                                    <th>Quantity</th>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="o.new_diagnoses_items_ids" t-as="item">
+                                        <tr>
+                                            <td>
+                                                <span t-field="item.product_id.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="item.product_uom.name"/>
+                                            </td>
+                                            <td>
+                                                <span t-field="item.product_uom_qty"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </div>
+
+
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="engine_capacity_form" model="ir.ui.view">
+        <field name="name">engine.capacity.form</field>
+        <field name="model">engine.capacity</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+                    </group>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="engine_capacity_list" model="ir.ui.view">
+        <field name="name">engine.capacity.list</field>
+        <field name="model">engine.capacity</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="engine_capacity_search" model="ir.ui.view">
+        <field name="name">engine.capacity.search</field>
+        <field name="model">engine.capacity</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+            </search>
+        </field>
+    </record>
+
+
+
+    <record id="engine_capacity_action" model="ir.actions.act_window">
+        <field name="name">Engine Capacity</field>
+        <field name="res_model">engine.capacity</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Engine Capacity
+            </p>
+        </field>
+    </record>
+</odoo>

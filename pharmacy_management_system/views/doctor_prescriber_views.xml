@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Doctors & Prescribers list -->
+    <record id="view_res_partner_doctor_tree" model="ir.ui.view">
+        <field name="name">res.partner.doctor.tree</field>
+        <field name="model">res.partner</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Doctors &amp; Prescribers" create="false" delete="false">
+                <field name="name"/>
+                <field name="license_number"/>
+                <field name="specialty"/>
+                <field name="default_pharmacy_id"/>
+                <field name="company_id"/>
+                <field name="active"/>
+                <field name="rx_count_total"/>
+                <field name="rx_count_by_pharmacy"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_res_partner_doctor_search" model="ir.ui.view">
+        <field name="name">res.partner.doctor.search</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <search string="Doctors &amp; Prescribers">
+                <field name="name"/>
+                <field name="license_number"/>
+                <field name="specialty"/>
+                <field name="default_pharmacy_id"/>
+                <filter string="Doctors" name="is_doctor" domain="[('is_doctor','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Default Pharmacy" name="grp_default_pharmacy" context="{'group_by':'default_pharmacy_id'}"/>
+                    <filter string="Company" name="grp_company" context="{'group_by':'company_id'}"/>
+                    <filter string="Active" name="grp_active" context="{'group_by':'active'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Doctors Kanban View -->
+    <record id="view_res_partner_doctor_kanban" model="ir.ui.view">
+        <field name="name">res.partner.doctor.kanban</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban o_kanban_small_column doctor-prescriber-kanban" default_group_by="default_pharmacy_id">
+                <field name="name"/>
+                <field name="license_number"/>
+                <field name="specialty"/>
+                <field name="default_pharmacy_id"/>
+                <field name="company_id"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="mobile"/>
+                <field name="active"/>
+                <field name="rx_count_total"/>
+                <field name="rx_count_by_pharmacy"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click doctor-prescriber-card pharma-card">
+                            <!-- Header with icon, title, status -->
+                            <div class="o_kanban_record_top">
+                                <div class="kanban-header-left">
+                                    <div class="kanban-icon-wrapper">
+                                        <i class="fa fa-user-md kanban-icon" title="Doctor"></i>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <div class="o_kanban_record_title">
+                                            <strong><field name="name"/></strong>
+                                            <div class="o_kanban_record_subtitle">
+                                                <span class="status-dot status-active"></span>
+                                                <field name="license_number" t-if="record.license_number.raw_value"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="oe_kanban_content">
+                                <!-- Specialty -->
+                                <div class="o_kanban_record_body">
+                                    <div class="config-tag" t-if="record.specialty.raw_value">
+                                        <i class="fa fa-graduation-cap" title="Specialty"></i>
+                                        <field name="specialty"/>
+                                    </div>
+                                </div>
+                                
+                                <!-- Configuration Tags -->
+                                <div class="o_kanban_record_bottom config-tags">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- Default Pharmacy -->
+                                        <div class="config-tag" t-if="record.default_pharmacy_id.raw_value">
+                                            <i class="fa fa-home" title="Default Pharmacy"></i>
+                                            <field name="default_pharmacy_id"/>
+                                        </div>
+                                        
+                                        <!-- Company -->
+                                        <div class="config-tag" t-if="record.company_id.raw_value">
+                                            <i class="fa fa-building" title="Company"></i>
+                                            <field name="company_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Statistics -->
+                                <div class="o_kanban_record_bottom stats-section">
+                                    <div class="stats-column stats-left">
+                                        <!-- Total RX -->
+                                        <div class="stat-item">
+                                            <i class="fa fa-file-text text-primary"></i>
+                                            <span class="stat-value">
+                                                <field name="rx_count_total"/> Total RX
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- RX by Pharmacy -->
+                                        <div class="stat-item" t-if="record.rx_count_by_pharmacy.raw_value">
+                                            <i class="fa fa-home text-info"></i>
+                                            <span class="stat-value">
+                                                <field name="rx_count_by_pharmacy"/> RX (Pharmacy)
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stats-column stats-right">
+                                        <!-- Phone -->
+                                        <div class="stat-item" t-if="record.phone.raw_value or record.mobile.raw_value">
+                                            <i class="fa fa-phone text-success"></i>
+                                            <span class="stat-value">
+                                                <t t-esc="record.phone.raw_value or record.mobile.raw_value or ''"/>
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- Email -->
+                                        <div class="stat-item" t-if="record.email.raw_value">
+                                            <i class="fa fa-envelope text-info"></i>
+                                            <span class="stat-value" t-att-title="record.email.raw_value">
+                                                <t t-esc="record.email.raw_value.length > 20 ? record.email.raw_value.substring(0, 20) + '...' : record.email.raw_value"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_res_partner_doctor" model="ir.actions.act_window">
+        <field name="name">Doctors &amp; Prescribers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('is_doctor','=',True)]</field>
+        <field name="search_view_id" ref="view_res_partner_doctor_search"/>
+        <field name="context">{'default_is_doctor': True}</field>
+    </record>
+
+    <menuitem id="menu_pharmacy_doctors" parent="pharmacy_management_system.menu_pharmacy_setup"
+              action="action_res_partner_doctor" sequence="20"/>
+</odoo>
+
+
+

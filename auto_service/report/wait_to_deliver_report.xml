@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <report id="wait_to_deliver_report"
+            model="wait.to.deliver"
+            string="Wait To Deliver"
+            report_type="qweb-pdf"
+            name="auto_service.wait_to_deliver_report_template"
+            file="auto_service.wait_to_deliver_report_template"
+
+    />
+
+
+</odoo>

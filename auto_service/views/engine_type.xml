@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="engine_type_form" model="ir.ui.view">
+        <field name="name">engine.type.form</field>
+        <field name="model">engine.type</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                        <group>
+                            <field name="code"/>
+                        </group>
+
+                    </group>
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="engine_type_list" model="ir.ui.view">
+        <field name="name">engine.type.list</field>
+        <field name="model">engine.type</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="engine_type_search" model="ir.ui.view">
+        <field name="name">engine.type.search</field>
+        <field name="model">engine.type</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+            </search>
+        </field>
+    </record>
+
+
+
+    <record id="engine_type_action" model="ir.actions.act_window">
+        <field name="name">Engine Type</field>
+        <field name="res_model">engine.type</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Engine Type
+            </p>
+        </field>
+    </record>
+</odoo>

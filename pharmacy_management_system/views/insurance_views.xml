@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pharmacy_insurance_claim_tree" model="ir.ui.view">
+        <field name="name">pharmacy.insurance.claim.tree</field>
+        <field name="model">pharmacy.insurance.claim</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="insurance_company_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="amount_claimed"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_insurance_claim_form" model="ir.ui.view">
+        <field name="name">pharmacy.insurance.claim.form</field>
+        <field name="model">pharmacy.insurance.claim</field>
+        <field name="arch" type="xml">
+            <form string="Insurance Claim">
+                <header>
+                    <button name="action_submit" type="object" string="Submit" class="btn-primary" invisible="state != 'draft'"/>
+                    <button name="action_approve" type="object" string="Approve" class="btn-success" invisible="state != 'submitted'"/>
+                    <button name="action_paid" type="object" string="Mark Paid" class="btn-success" invisible="state != 'approved'"/>
+                    <button name="action_reject" type="object" string="Reject" class="btn-danger" invisible="state not in ['submitted', 'approved']"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,submitted,approved,paid"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="hospital_id"/>
+                            <field name="pharmacy_id"/>
+                            <field name="prescription_id"/>
+                        </group>
+                        <group>
+                            <field name="patient_id"/>
+                            <field name="insurance_company_id"/>
+                            <field name="amount_claimed"/>
+                        </group>
+                    </group>
+                    <group invisible="1">
+                        <field name="currency_id"/>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_insurance_claim_kanban" model="ir.ui.view">
+        <field name="name">pharmacy.insurance.claim.kanban</field>
+        <field name="model">pharmacy.insurance.claim</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban o_kanban_small_column pharmacy-insurance-claim-kanban" default_group_by="state">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="insurance_company_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="amount_claimed"/>
+                <field name="state"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click pharmacy-insurance-claim-card pharma-card">
+                            <!-- Header with icon, title, status -->
+                            <div class="o_kanban_record_top">
+                                <div class="kanban-header-left">
+                                    <div class="kanban-icon-wrapper">
+                                        <i class="fa fa-credit-card kanban-icon" title="Insurance Claim"></i>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <div class="o_kanban_record_title">
+                                            <strong><field name="name"/></strong>
+                                            <div class="o_kanban_record_subtitle">
+                                                <span class="status-dot" 
+                                                      t-attf-class="status-dot status-#{record.state.raw_value}"></span>
+                                                <field name="state" 
+                                                       decoration-success="state in ['approved', 'paid']" 
+                                                       decoration-info="state == 'submitted'" 
+                                                       decoration-danger="state == 'rejected'"
+                                                       decoration-muted="state == 'draft'"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="oe_kanban_content">
+                                <!-- Patient Info -->
+                                <div class="o_kanban_record_body">
+                                    <div class="config-tag" t-if="record.patient_id.value">
+                                        <i class="fa fa-user" title="Patient"></i>
+                                        <field name="patient_id"/>
+                                    </div>
+                                    <div class="config-tag" t-if="record.insurance_company_id.value">
+                                        <i class="fa fa-building" title="Insurance Company"></i>
+                                        <field name="insurance_company_id"/>
+                                    </div>
+                                </div>
+                                
+                                <!-- Configuration Tags -->
+                                <div class="o_kanban_record_bottom config-tags">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- Hospital -->
+                                        <div class="config-tag" t-if="record.hospital_id.value">
+                                            <i class="fa fa-hospital-o" title="Hospital"></i>
+                                            <field name="hospital_id"/>
+                                        </div>
+                                        
+                                        <!-- Pharmacy -->
+                                        <div class="config-tag" t-if="record.pharmacy_id.value">
+                                            <i class="fa fa-home" title="Pharmacy"></i>
+                                            <field name="pharmacy_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Statistics in Two Columns -->
+                                <div class="o_kanban_record_bottom stats-section">
+                                    <div class="stats-column stats-left">
+                                        <!-- Amount -->
+                                        <div class="stat-item">
+                                            <i class="fa fa-dollar text-success"></i>
+                                            <span class="stat-value">
+                                                <field name="amount_claimed"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quick Actions -->
+                                <div class="o_kanban_record_bottom actions-section">
+                                    <div class="oe_kanban_bottom_right">
+                                        <button name="action_submit" type="object" 
+                                                class="btn-icon btn-preview" 
+                                                invisible="state != 'draft'"
+                                                title="Submit">
+                                            <i class="fa fa-upload"></i>
+                                        </button>
+                                        <button name="action_approve" type="object" 
+                                                class="btn-icon btn-publish" 
+                                                invisible="state != 'submitted'"
+                                                title="Approve">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button name="action_paid" type="object" 
+                                                class="btn-icon btn-refresh"
+                                                invisible="state != 'approved'"
+                                                title="Mark Paid">
+                                            <i class="fa fa-money"></i>
+                                        </button>
+                                        <button name="action_reject" type="object" 
+                                                class="btn-icon btn-duplicate"
+                                                invisible="state not in ['submitted', 'approved']"
+                                                title="Reject">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_insurance_claims_pivot" model="ir.ui.view">
+        <field name="name">insurance.claims.pivot</field>
+        <field name="model">pharmacy.insurance.claim</field>
+        <field name="arch" type="xml">
+            <pivot string="Insurance Claims Analysis">
+                <field name="create_date" type="row" interval="month"/>
+                <field name="hospital_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="insurance_company_id" type="col"/>
+                <field name="amount_claimed" type="measure"/>
+                <field name="count_field" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_insurance_claim" model="ir.actions.act_window">
+        <field name="name">Insurance Claims</field>
+        <field name="res_model">pharmacy.insurance.claim</field>
+        <field name="view_mode">kanban,list,form,pivot,graph</field>
+    </record>
+    <record id="search_pharmacy_insurance_claim" model="ir.ui.view">
+        <field name="name">pharmacy.insurance.claim.search</field>
+        <field name="model">pharmacy.insurance.claim</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="insurance_company_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="amount_claimed"/>
+                <separator/>
+                <filter string="Pending Claims" name="pending_claims" domain="[('state','in',['draft','submitted','approved'])]"/>
+                <separator/>
+                <filter string="Draft" name="state_draft" domain="[('state','=','draft')]"/>
+                <filter string="Submitted" name="state_submitted" domain="[('state','=','submitted')]"/>
+                <filter string="Approved" name="state_approved" domain="[('state','=','approved')]"/>
+                <filter string="Paid" name="state_paid" domain="[('state','=','paid')]"/>
+                <filter string="Rejected" name="state_rejected" domain="[('state','=','rejected')]"/>
+                <separator/>
+                <filter string="Amount &lt; 100" name="amount_lt_100" domain="[('amount_claimed','&lt;',100)]"/>
+                <filter string="Amount 100-500" name="amount_100_500" domain="[('amount_claimed','&gt;=',100),('amount_claimed','&lt;=',500)]"/>
+                <filter string="Amount &gt; 500" name="amount_gt_500" domain="[('amount_claimed','&gt;',500)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Hospital" name="grp_hospital" context="{'group_by':'hospital_id'}"/>
+                    <filter string="Pharmacy" name="grp_pharmacy" context="{'group_by':'pharmacy_id'}"/>
+                    <filter string="Company" name="grp_company" context="{'group_by':'insurance_company_id'}"/>
+                    <filter string="State" name="grp_state" context="{'group_by':'state'}"/>
+                    <filter string="Date" name="grp_date" context="{'group_by':'create_date:day'}"/>
+                    <filter string="Month" name="grp_month" context="{'group_by':'create_date:month'}"/>
+                    <filter string="Amount Range" name="grp_amount" context="{'group_by':'amount_claimed'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="menu_pharmacy_insurance_claim" parent="pharmacy_management_system.menu_pharmacy_claims" action="action_pharmacy_insurance_claim"/>
+
+</odoo>
+
+

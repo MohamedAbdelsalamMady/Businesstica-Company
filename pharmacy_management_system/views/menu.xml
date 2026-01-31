@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="menu_pharmacy_root" name="Pharmacy" sequence="10"/>
+
+    <menuitem id="menu_pharmacy_setup" name="Configuration" parent="menu_pharmacy_root" sequence="90"/>
+    <menuitem id="menu_pharmacy_operations" name="Operations" parent="menu_pharmacy_root" sequence="20"/>
+    <menuitem id="menu_pharmacy_reporting" name="Reporting" parent="menu_pharmacy_root" sequence="80"/>
+
+    <!-- Configuration Menu -->
+    <menuitem id="menu_pharmacy_branches" name="Pharmacies" parent="menu_pharmacy_setup" sequence="10"/>
+    <menuitem id="menu_pharmacy_availability" name="Staff Availability" parent="menu_pharmacy_setup" sequence="20"/>
+    <menuitem id="menu_pharmacy_doctors" name="Doctors &amp; Prescribers" parent="menu_pharmacy_setup" sequence="30"/>
+    <menuitem id="menu_pharmacy_alerts" name="Alerts" parent="menu_pharmacy_setup" sequence="40"/>
+    <menuitem id="menu_pharmacy_shift_templates" name="Shift Templates" parent="menu_pharmacy_setup" sequence="50"/>
+    <menuitem id="menu_pharmacy_hospitals" name="Hospitals" parent="menu_pharmacy_setup" sequence="60"/>
+    <menuitem id="menu_pharmacy_drugs" name="Drugs" parent="menu_pharmacy_setup" sequence="70"/>
+
+    <!-- Operations Menu -->
+    <menuitem id="menu_pharmacy_patients" name="Patients / Customers" parent="menu_pharmacy_operations" sequence="10"/>
+    <menuitem id="menu_pharmacy_prescriptions" name="Prescriptions" parent="menu_pharmacy_operations" sequence="30"/>
+    <menuitem id="menu_pharmacy_claims" name="Insurance Claims" parent="menu_pharmacy_operations" sequence="40"/>
+
+    <!-- Reporting Menu -->
+    <menuitem id="menu_pharmacy_rx_kpis" name="RX KPIs" parent="menu_pharmacy_reporting" sequence="10" action="pharmacy_management_system.action_prescription_rx_kpis"/>
+    <!-- Appointment KPIs removed; appointments model no longer used -->
+    <menuitem id="menu_pharmacy_availability_report" name="Availability" parent="menu_pharmacy_reporting" sequence="20" action="pharmacy_management_system.action_availability_report"/>
+    <menuitem id="menu_pharmacy_controlled" name="Controlled Logs" parent="menu_pharmacy_reporting" sequence="30" action="pharmacy_management_system.action_controlled_logs_report"/>
+    <menuitem id="menu_pharmacy_treatment_report" name="Treatment Report" parent="menu_pharmacy_reporting" sequence="35" action="pharmacy_management_system.action_treatment_report"/>
+    <menuitem id="menu_pharmacy_insurance_report" name="Insurance Claims Report" parent="menu_pharmacy_reporting" sequence="40" action="pharmacy_management_system.action_insurance_report"/>
+    <menuitem id="menu_pharmacy_shortage_expiry" name="Shortage &amp; Expiry Reports" parent="menu_pharmacy_reporting" sequence="50"/>
+    <menuitem id="menu_pharmacy_shortage_alerts" name="Shortage Alerts" parent="menu_pharmacy_shortage_expiry" sequence="10" action="pharmacy_management_system.action_pharmacy_shortage_alerts"/>
+    <menuitem id="menu_pharmacy_expiring_lots" name="Expiring Lots" parent="menu_pharmacy_shortage_expiry" sequence="20" action="pharmacy_management_system.action_pharmacy_expiring_lots_from_branch"/>
+
+</odoo>
+
+

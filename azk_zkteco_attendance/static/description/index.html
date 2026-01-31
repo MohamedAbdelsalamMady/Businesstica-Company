@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ZKTeco Attendance machine integration</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<header style="margin-bottom: 2rem;">
+    <div class="image full" style="border:solid 1px #ddd;border-radius:10px;overflow:hidden;">
+        <img src="header.png" alt="header" style="display: block;width: 100%;">
+    </div>
+</header>
+
+<!-- Main -->
+<div class="container" style="font-size: 18px;font-family: 'Open Sans', 'Helvetica', sans-serif;color: #212529;">
+    <section style="padding-top: 1em;">
+        <div>
+            <h3 style="color: #fcaf2a;margin-bottom: .75em;font-size: 1.75rem;">Introduction</h3>
+            <p>
+                This integration of Odoo attendance with ZKTeco attendance machine will help in managing your HR work
+                more efficiently, from tracking the worked hours along with automated and dynamic creation of the
+                employees into the ability to download the attendance data and check in/out of your employees in a few
+                clicks with its multiple verification modes and access features.
+            </p>
+            <p>
+                If your get the error "ModuleNotFoundError: No module named 'zk'" then make sure to do the following:
+            </p>
+            <ul style="padding-left: 2rem;line-height: 30px;">
+                <li>
+                    Open shell window:
+                    <ul style="padding-left: 2rem;line-height: 30px;">
+                        <li>if on odoo.sh then select your environment and press on "Shell"</li>
+                        <li>
+                            if on premises then open an ssh window and make sure to activate your python environment
+                        </li>
+                    </ul>
+                </li>
+                <li>Run: pip3 install pyzk</li>
+            </ul>
+            <p>
+                <span style="text-decoration: underline">Notes:</span>
+            </p>
+            <ul style="padding-left: 2rem;line-height: 30px;">
+                <li>
+                    Before purchasing this module, make sure that your machine is compatible via this ZKTeco
+                    Compatibility
+                    tester<br/>
+                    <a href="https://drive.google.com/drive/folders/1butFR0-_7lWh0OL5N63PELL2-d5UH35E?usp=sharing">https://drive.google.com/drive/folders/1butFR0-_7lWh0OL5N63PELL2-d5UH35E?usp=sharing</a>
+                    <br/>
+                    If not supported get in touch with us
+                </li>
+                <li>
+                    Users in each machines must be different from other
+                    machine users, i.e : user cant not use multiple machine to check-in, out
+                </li>
+            </ul>
+        </div>
+    </section>
+    <hr>
+    <section style="padding-top: 1em;">
+        <h3 style="color: #fcaf2a;margin-bottom: .75em;font-size: 1.75rem;">Key Features</h3>
+        <ul style="padding-left: 2rem;line-height: 30px;">
+            <li>This module integrates Odoo attendance with ZKTeco attendance machines</li>
+            <li>This integration was tested with ZKTeco Biopro MV30. For other devices get in touch with us to give you
+                a quick test
+            </li>
+            <li>Integrates biometric device(Face+Thumb) with HR attendance. Tested with ZKTeco Biopro MV30</li>
+            <li>Managing attendance automatically</li>
+            <li>Keeps zk machine history in Odoo</li>
+            <li>Support multiple devices in different locations</li>
+            <li>Clear attendance history on machine from Odoo</li>
+        </ul>
+    </section>
+    <hr>
+    <section style="padding-top: 1em;">
+        <h3 style="color: #fcaf2a;margin-bottom: .75em;font-size: 1.75rem;">How it Works</h3>
+        <div>
+            <ul style="padding-left: 2rem;line-height: 30px;">
+                <li>
+                    Select attendance machine >> machine configuration
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="image5.png" alt="image5">
+                </li>
+                <li style="margin-top: 1em">Define the machine configuration
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="image7.png" alt="image7">
+                </li>
+                <li style="margin-top: 1em">Add the real IP address of the machine, the port number
+                    and password (if exists), then use the action of testing connection to make sure that the IP and
+                    port are working.
+                </li>
+                <li>
+                    Note: you can use another IP which redirect to an internal IP inside your network. This IP could
+                    be obtained by Ngrok account.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="ip.png" alt="ip">
+                </li>
+                <li style="margin-top: 1em">Test the connection</li>
+                <li>Specify the connection time out
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="image8.png" alt="image8">
+                </li>
+                <li style="margin-top: 1em">
+                    Auto Create the Employee: The application will create the employee on Odoo if the employee ID on
+                    the machine is not linked to any Employee card (Device ID)
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="image9.png" alt="image9">
+                </li>
+                <li style="margin-top: 1em">
+                    Download Attendance: This action is used to synchronize the attendance from the machine to the
+                    system.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="image10.png" alt="image10">
+                </li>
+                <li style="margin-top: 1em">
+                    Clear Device Data: This action will delete the attendance records from the machine database.
+                </li>
+                <li>
+                    Add Multiple Integrated Machines:
+                    User can define multiple machines to import that data from
+                    <br>
+                    <span style="text-decoration: underline">Note:</span>
+                    users in each machines must be different from other machine users, i.e : user cant not use multiple
+                    machine to check-in, out.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="image6.png" alt="image6">
+                </li>
+            </ul>
+        </div>
+    </section>
+    <hr>
+    <section style="padding-top: 1em;">
+        <h3 style="color: #fcaf2a;margin-bottom: .75em;font-size: 1.75rem;">Configuration</h3>
+
+        <div>
+            <ul style="padding-left: 2rem;line-height: 30px;">
+                <li>ZKteco working hours</li>
+                <li>Make sure employee working hours are correctly configured.</li>
+                <li>The system will use the Day of week, hour from, hour to to detect checkin/checkout.</li>
+                <li>If no day of week found then takes by default the first one.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="12.jpg" alt="12">
+                </li>
+                <li style="margin-top: 1em">ZKTeco Attendance</li>
+                <li>Intelligent system that automatically detect check-in/checkout from working hours configured as per
+                    above
+                </li>
+                <li>In case of conflict, a record will not be imported thus preventing errors with Odoo attendance
+                    rules.
+                </li>
+                <li>Possible to re-import many times the same data, this module will detect it and skip them</li>
+                <li>Fast to import: it just processes the records that was not yet import (since ZKTeco machines returns
+                    all data stored on them)
+                </li>
+                <li>Create / Delete machine users.</li>
+                <li>It just works.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="11.jpg" alt="11">
+                </li>
+                <li style="margin-top: 1em">ZKTeco Users Creation On Attendance Machine</li>
+                <li>If employee has device ID which not exists on machine, the user will be created successfully
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="create-1.png" alt="create-1">
+                </li>
+                <li style="margin-top: 1em">If employee does not have device ID, the machine will assign an auto
+                    generated Device ID and the
+                    user will be created successfully
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="create-2.png" alt="create-2">
+                </li>
+                <li style="margin-top: 1em">If employee has device ID used for another employee,
+                    an error will pop up indicating that the device ID is bound to another employee
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="create-3.png" alt="create-3">
+                </li>
+                <li style="margin-top: 1em">If employee hase device ID and there is a machine user
+                    with same device ID and name, an error will pop up indicating that employee is already
+                    created.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="create-4.png" alt="create-4">
+                </li>
+                <li style="margin-top: 1em">User can select multiple employees from the list and perform creation
+                    action.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="create-5.png" alt="create-5">
+                </li>
+                <li>ZKTeco Users Deletion On Attendance Machine</li>
+                <li>If employee has device ID which exists on machine, the user will be deleted successfully
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="del-1.png" alt="del-1">
+                </li>
+                <li style="margin-top: 1em">If employee has device ID which not exists on machine, an error will pop up
+                    indicating that the user
+                    does not exists.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="del-2.png" alt="del-2">
+                </li>
+                <li style="margin-top: 1em">If employee does not have device ID , an error will pop up indicating that device Id is not set.
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="del-3.png" alt="del-3">
+                </li>
+				<li style="margin-top: 1em">In order to download employees on the ZKteco device, select the employees and "Create User On Machine".
+                    <img style="width: 100%;display: block;border: solid 1px #ddd;border-radius: 10px;margin-top: 1em;"
+                         src="CreateUseronMachine.png" alt="del-3">
+                </li>
+            </ul>
+        </div>
+    </section>
+    <hr>
+    <section style="padding-top: 1em;">
+        <h3 style="color: #fcaf2a;margin-bottom: .75em;font-size: 1.75rem;">Suggested Apps </h3>
+        <div class="apps-slider row">
+            <div class="col-md-3">
+                <div class="card">
+                    <a href="https://apps.odoo.com/apps/modules/17.0/cc_payment_commissions/"
+                       style="color: inherit !important">
+                        <img style="width:100%;height: 16vh;max-height: 200px;min-height: 150px;object-fit: cover;border: unset;border-radius: 3px 3px 0 0;"
+                             src="others/odoo-theme.png" alt="Credit Card Payment Commissions"/>
+                        <div style="flex: 1 1 auto;min-height: 100px;padding: 1.25rem;display: flex;align-items: center;">
+                            Odoo theme customization
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <a href="https://apps.odoo.com/apps/modules/18.0/azk_ai_extract_fill_hr_applicant"
+                       style="color: inherit !important">
+                        <img style="width:100%;height: 16vh;max-height: 200px;min-height: 150px;object-fit: cover;border: unset;border-radius: 3px 3px 0 0;"
+                             src="others/aianalyzer.png" alt="CC POS Commission">
+                        <div style="flex: 1 1 auto;min-height: 100px;padding: 1.25rem;display: flex;align-items: center;">
+                            AI CV Analyzer
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <a href="https://apps.odoo.com/apps/modules/18.0/azk_ai_helpdesk_tools"
+                       style="color: inherit !important">
+                        <img style="width:100%;height: 16vh;max-height: 200px;min-height: 150px;object-fit: cover;border: unset;border-radius: 3px 3px 0 0;"
+                             src="others/helpdesk.png" alt="Ottu payment gateway for Credit Card and KNET">
+                        <div style="flex: 1 1 auto;min-height: 100px;padding: 1.25rem;display: flex;align-items: center;">
+                            All in One Helpdesk Tickets Assistant
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card">
+                    <a href="https://apps.odoo.com/apps/modules/18.0/azk_ai_split_fill_lead"
+                       style="color: inherit !important">
+                        <img style="width:100%;height: 16vh;max-height: 200px;min-height: 150px;object-fit: cover;border: unset;border-radius: 3px 3px 0 0;"
+                             src="others/leads.png" alt="Web Ajax Add To CartCard image cap">
+                        <div style="flex: 1 1 auto;min-height: 100px;padding: 1.25rem;display: flex;align-items: center;">
+                            Fill CRM Lead Info
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <hr>
+    <section style="padding-top: 1em;">
+        <h3 style="color: #fcaf2a;margin-bottom: .75em;font-size: 1.75rem;">Our Services</h3>
+        <div class="row mt-5">
+            <div class="col-md-3 d-flex justify-content-center text-center">
+                <a href="https://azka.tech/erp-system-implementation/" target="_new" style="color: inherit !important">
+                    <img src="service-3.png" alt="odoo consultancy" style="max-width: 50px;">
+                    <p>Odoo <br>Consultancy</p>
+                </a>
+            </div>
+
+            <div class="col-md-3 d-flex justify-content-center text-center">
+                <a href="https://azka.tech/erp-system-implementation/" target="_new" style="color: inherit !important">
+                    <img src="service-1.png" alt="odoo implementation" style="max-width: 50px;">
+                    <p>Odoo <br>Implementation</p>
+                </a>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center text-center">
+                <a href="https://azka.tech/odoo-implementation-lebanon-partner/" target="_new"
+                   style="color: inherit !important">
+                    <img src="service-2.png" alt="odoo customization" style="max-width: 50px;">
+                    <p>Odoo <br>Customization</p>
+                </a>
+            </div>
+
+            <div class="col-md-3 d-flex justify-content-center text-center">
+                <a href="https://azka.tech/erp-system-implementation/" target="_new" style="color: inherit !important">
+                    <img src="service-5.png" alt="odoo integration" style="max-width: 50px;">
+                    <p>Odoo <br>Integration</p>
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center mt-5">
+            <div class="col-md-3 d-flex justify-content-center text-center">
+                <a href="https://azka.tech/erp-system-implementation/" target="_new" style="color: inherit !important">
+                    <img src="service-6.png" alt="odoo data migration" style="max-width: 50px;">
+                    <p>Odoo <br>Data Migration</p>
+                </a>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center text-center">
+                <a href="https://azka.tech/erp-system-implementation/" target="_new" style="color: inherit !important">
+                    <img src="service-8.png" alt="odoo training" style="max-width: 50px;">
+                    <p>Odoo <br>Training</p>
+                </a>
+            </div>
+            <div class="col-md-3 d-flex justify-content-center text-center">
+                <a href="https://azka.tech/erp-system-implementation/" target="_new" style="color: inherit !important">
+                    <img src="service-7.png" alt="odoo support" style="max-width: 50px;">
+                    <p>Odoo <br>Support</p>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+<footer style="background-color: #dddddd6b;margin-top: 3em;padding: 2em 0;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3">
+                <a href="http://www.azka.tech" target="_new">
+                    <img src="azkatech-logo.png" alt="azkatech-logo" style="height: auto;width: 100%">
+                    <div style="text-align: right">
+                        <img src="gold-partner.png" alt="gold-partner" style="height: auto;width: 25%">
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-3" style="padding-left: 3rem">
+                <h4 style="font-size: 1.5rem;margin-bottom: .75em;">
+                    <a href="https://azka.tech/contact-us/" target="_new" style="color: #656565;">
+                        Lebanon
+                    </a>
+                </h4>
+                <p style="display: flex;align-items: center;gap: 5px;">
+                    <img src="phone.png" alt="phone" style="width:19px; height:18px"/>
+                    <a href="tel:+96170504898" style="font-size: 15px;color: #656565;">
+                        +961 70 504 898
+                    </a>
+                </p>
+                <p style="display: flex;align-items: center;gap: 5px;">
+                    <img src="mail.png" alt="mail" style="width:20px; height:14px"/>
+                    <a href="mailto:info@azka.tech" style="font-size: 15px;color: #656565;">
+                        info@azka.tech
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-3" style="padding-left: 1rem;">
+                <h4 style="font-size: 1.5rem;margin-bottom: .75em;">
+                    <a href="https://azka.tech/contact-us/" target="_new" style="color: #656565;">
+                        Saudi Arabia
+                    </a>
+                </h4>
+                <p style="display: flex;align-items: center;gap: 5px;">
+                    <img src="phone.png" alt="phone" style="width:19px; height:18px"/>
+                    <a href="tel:+966597663616" style="font-size: 15px;color: #656565;">
+                        +966 59 766 3616
+                    </a>
+                </p>
+                <p style="display: flex;align-items: center;gap: 5px;">
+                    <img src="mail.png" alt="mail" style="width:20px; height:14px"/>
+                    <a href="mailto:info+saudi@azka.tech" style="font-size: 15px;color: #656565;">
+                        info+saudi@azka.tech
+                    </a>
+                </p>
+            </div>
+            <div class="col-md-3">
+                <h4 style="font-size: 1.5rem;margin-bottom: .75em;">
+                    <a href="https://azka.tech/contact-us/" target="_new" style="color: #656565;">
+                        UAE
+                    </a>
+                </h4>
+                <p style="display: flex;align-items: center;gap: 5px;">
+                    <img src="phone.png" alt="phone" style="width:19px; height:18px"/>
+                    <a href="tel:+971502286440" style="font-size: 15px;color: #656565;">
+                        +971 50 228 6440
+                    </a>
+                </p>
+                <p style="display: flex;align-items: center;gap: 5px;">
+                    <img src="mail.png" alt="mail" style="width:20px; height:14px"/>
+                    <a href="mailto:info@azka.tech" style="font-size: 15px;color: #656565;">
+                        info@azka.tech
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

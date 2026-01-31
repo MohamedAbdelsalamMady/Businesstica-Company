@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_zk_device_user,zk.device.user,model_zk_device,,1,0,0,0
+access_zk_device_manager,zk.device.manager,model_zk_device,,1,1,1,1
+access_zk_sync_log_user,zk.sync.log.user,model_zk_sync_log,,1,0,0,0
+access_zk_sync_log_manager,zk.sync.log.manager,model_zk_sync_log,,1,1,1,1

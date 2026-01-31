@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="workshop_mechanics_report_template">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+
+
+                        <table class="table">
+
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Repair Order Number:</th>
+
+                                    <td>
+                                        <span t-field="o.repair_order_number"/>
+                                    </td>
+                                    <th scope="row">
+                                        Customer Response:
+                                    </th>
+
+                                    <td>
+                                        <span t-field="o.customer_response"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+                                    <th scope="row">
+                                        Customer:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.partner_id.name"/>
+                                    </td>
+                                    <th scope="row">
+                                        Spare Parts:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.spare_parts"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Model:</th>
+
+                                    <td>
+                                        <span t-field="o.car_model.name"/>
+                                    </td>
+                                    <th scope="row">
+                                        Under Construction:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.under_construction"/>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <th scope="row">
+                                        Plate Number:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.plate_number"/>
+                                    </td>
+                                    <th scope="row">Experience:</th>
+
+                                    <td>
+                                        <span t-field="o.experience"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+                                    <th scope="row">
+                                        Date Entry:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.date_entry"/>
+                                    </td>
+                                    <th scope="row">Delivery:</th>
+
+                                    <td>
+                                        <span t-field="o.delivery"/>
+                                    </td>
+
+                                </tr>
+                                <tr>
+
+                                    <th scope="row">
+                                        Reception Engineer:
+                                    </th>
+                                    <td>
+                                        <span t-field="o.reception_engineer"/>
+                                    </td>
+                                    <th scope="row"></th>
+
+                                    <td>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+
+</odoo>
+

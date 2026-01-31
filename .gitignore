@@ -1,0 +1,11 @@
+odoo.conf
+*.log
+*.pyc
+__pycache__/
+.env
+.idea/
+.vscode/
+filestore/
+*.sqlite
+*.dump
+*.sql

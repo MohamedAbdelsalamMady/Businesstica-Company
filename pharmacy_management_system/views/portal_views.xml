@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_pharmacy_portal_request_tree" model="ir.ui.view">
+        <field name="name">pharmacy.portal.request.tree</field>
+        <field name="model">pharmacy.portal.request</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="type"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_pharmacy_portal_request_form" model="ir.ui.view">
+        <field name="name">pharmacy.portal.request.form</field>
+        <field name="model">pharmacy.portal.request</field>
+        <field name="arch" type="xml">
+            <form string="Portal Request">
+                <header>
+                    <field name="state" widget="statusbar" options="{'clickable': '1'}"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="partner_id"/>
+                            <field name="hospital_id"/>
+                            <field name="pharmacy_id"/>
+                            <field name="type"/>
+                        </group>
+                        <group>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_portal_request_kanban" model="ir.ui.view">
+        <field name="name">pharmacy.portal.request.kanban</field>
+        <field name="model">pharmacy.portal.request</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban o_kanban_small_column pharmacy-portal-request-kanban" default_order="id asc">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="type"/>
+                <field name="state"/>
+                <field name="attachment_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click pharmacy-portal-request-card pharma-card">
+                            <!-- Header with icon, title, status -->
+                            <div class="o_kanban_record_top">
+                                <div class="kanban-header-left">
+                                    <div class="kanban-icon-wrapper">
+                                        <i class="fa fa-envelope kanban-icon" title="Portal Request"></i>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <div class="o_kanban_record_title">
+                                            <strong><field name="name"/></strong>
+                                            <div class="o_kanban_record_subtitle">
+                                                <span class="status-dot" 
+                                                      t-attf-class="status-dot status-#{record.state.raw_value}"></span>
+                                                <field name="state" 
+                                                       decoration-success="state == 'done'" 
+                                                       decoration-info="state == 'processing'" 
+                                                       decoration-muted="state == 'new'"/>
+                                            </div>
+                                        </div>
+                                </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="oe_kanban_content">
+                                <!-- Patient Info -->
+                                <div class="o_kanban_record_body">
+                                    <div class="config-tag" t-if="record.partner_id.value">
+                                        <i class="fa fa-user" title="Customer"></i>
+                                        <field name="partner_id"/>
+                                    </div>
+                                </div>
+                                
+                                <!-- Configuration Tags -->
+                                <div class="o_kanban_record_bottom config-tags">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- Hospital -->
+                                        <div class="config-tag" t-if="record.hospital_id.value">
+                                            <i class="fa fa-hospital-o" title="Hospital"></i>
+                                            <field name="hospital_id"/>
+                                        </div>
+                                        
+                                        <!-- Pharmacy -->
+                                        <div class="config-tag" t-if="record.pharmacy_id.value">
+                                            <i class="fa fa-home" title="Pharmacy"></i>
+                                            <field name="pharmacy_id"/>
+                                        </div>
+                                        
+                                        <!-- Type -->
+                                        <div class="config-tag" t-if="record.type.value">
+                                            <i class="fa fa-tag" title="Type"></i>
+                                            <field name="type"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Statistics -->
+                                <div class="o_kanban_record_bottom stats-section">
+                                    <div class="stats-column stats-left">
+                                        <!-- Attachments -->
+                                        <div class="stat-item" t-if="record.attachment_ids and record.attachment_ids.raw_value and record.attachment_ids.raw_value.length">
+                                            <i class="fa fa-paperclip text-info"></i>
+                                            <span class="stat-value">
+                                                <t t-esc="record.attachment_ids.raw_value.length"/> Files
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_portal_request" model="ir.actions.act_window">
+        <field name="name">Portal Requests</field>
+        <field name="res_model">pharmacy.portal.request</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+    <record id="search_pharmacy_portal_request" model="ir.ui.view">
+        <field name="name">pharmacy.portal.request.search</field>
+        <field name="model">pharmacy.portal.request</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="type"/>
+                <filter string="New" name="state_new" domain="[('state','=','new')]"/>
+                <filter string="Processing" name="state_processing" domain="[('state','=','processing')]"/>
+                <filter string="Done" name="state_done" domain="[('state','=','done')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Hospital" name="grp_hospital" context="{'group_by':'hospital_id'}"/>
+                    <filter string="Pharmacy" name="grp_pharmacy" context="{'group_by':'pharmacy_id'}"/>
+                    <filter string="Type" name="grp_type" context="{'group_by':'type'}"/>
+                    <filter string="State" name="grp_state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <menuitem id="menu_pharmacy_portal_request" parent="pharmacy_management_system.menu_pharmacy_operations" action="action_pharmacy_portal_request"/>
+
+    <!-- Patient form view with smart buttons -->
+    <record id="view_res_partner_patient_form" model="ir.ui.view">
+        <field name="name">res.partner.patient.form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button class="oe_stat_button" type="object" name="action_view_prescriptions" icon="fa-file-text-o"
+                        invisible="not is_patient">
+                    <field name="prescription_count" widget="statinfo" string="Prescriptions"/>
+                </button>
+                <button class="oe_stat_button" type="object" name="action_view_treatments"
+                        icon="fa-stethoscope" invisible="not is_patient">
+                    <field name="treatment_count" widget="statinfo" string="Treatments"/>
+                </button>
+                <button class="oe_stat_button" type="object" name="action_view_doctor_prescriptions"
+                        icon="fa-user-md" invisible="not is_doctor">
+                    <field name="rx_count_total" widget="statinfo" string="Total RX"/>
+                </button>
+            </xpath>
+            <xpath expr="//field[@name='vat']" position="after">
+                <field name="is_patient"/>
+                <field name="is_doctor"/>
+                <field name="is_pharmacy_customer"/>
+                <field name="preferred_pharmacy_id"/>
+                <field name="loyalty_card"/>
+                <field name="prescription_count" invisible="1"/>
+                <field name="treatment_count" invisible="1"/>
+                <field name="purchase_count" invisible="1"/>
+                <field name="license_number"/>
+                <field name="specialty"/>
+                <field name="default_pharmacy_id"/>
+                <field name="rx_count_total" invisible="1"/>
+                <field name="rx_count_by_pharmacy" invisible="1"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page string="Pharmacy">
+                    <group>
+                        <group string="Profile">
+                            <field name="is_pharmacy_customer"/>
+                            <field name="preferred_pharmacy_id"/>
+                            <field name="loyalty_card"/>
+                        </group>
+                        <group string="Health">
+                            <field name="blood_type"/>
+                            <field name="allergy_note"/>
+                            <field name="chronic_conditions"/>
+                        </group>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Contact search view extensions -->
+    <record id="view_res_partner_pharmacy_search" model="ir.ui.view">
+        <field name="name">res.partner.pharmacy.search</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter string="Pharmacy Customers" name="pharmacy_customers" domain="[('is_pharmacy_customer','=',True)]"/>
+                <filter string="Preferred Pharmacy" name="preferred_pharmacy" context="{'group_by':'preferred_pharmacy_id'}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Portal Message Configuration -->
+    <record id="view_portal_message_config_tree" model="ir.ui.view">
+        <field name="name">portal.message.config.tree</field>
+        <field name="model">portal.message.config</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Portal Message Configuration">
+                <field name="name"/>
+                <field name="channel"/>
+                <field name="template_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_portal_message_config_form" model="ir.ui.view">
+        <field name="name">portal.message.config.form</field>
+        <field name="model">portal.message.config</field>
+        <field name="arch" type="xml">
+            <form string="Portal Message Configuration">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="channel"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="template_id" domain="[('model', 'in', ['pharmacy.portal.request', 'pharmacy.prescription'])]"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="search_portal_message_config" model="ir.ui.view">
+        <field name="name">portal.message.config.search</field>
+        <field name="model">portal.message.config</field>
+        <field name="arch" type="xml">
+            <search string="Portal Message Configuration">
+                <field name="name"/>
+                <field name="channel"/>
+                <field name="template_id"/>
+                <filter string="Active" name="active" domain="[('active','=',True)]"/>
+                <filter string="Email" name="email" domain="[('channel','=','email')]"/>
+                <filter string="SMS" name="sms" domain="[('channel','=','sms')]"/>
+                <filter string="Portal" name="portal" domain="[('channel','=','portal')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Channel" name="group_channel" context="{'group_by':'channel'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_portal_message_config" model="ir.actions.act_window">
+        <field name="name">Portal Message Configuration</field>
+        <field name="res_model">portal.message.config</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_portal_message_config" parent="pharmacy_management_system.menu_pharmacy_setup" action="action_portal_message_config" sequence="80"/>
+
+</odoo>
+
+

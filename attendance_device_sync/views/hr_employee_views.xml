@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_inherit_device" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.device</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='hr_settings']" position="inside">
+                <group string="Attendance Device">
+                    <group>
+                        <field name="device_user_id" readonly="1"/>
+                        <field name="synced_to_device" widget="boolean_toggle"/>
+                    </group>
+                    <group>
+                        <field name="last_device_sync"/>
+                    </group>
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_employee_list_inherit_device" model="ir.ui.view">
+        <field name="name">hr.employee.list.inherit.device</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_phone']" position="after">
+                <field name="device_user_id"/>
+                <field name="synced_to_device" widget="boolean_toggle"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

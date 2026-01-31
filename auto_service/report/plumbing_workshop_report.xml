@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <report id="report_plumbing_workshop_report"
+            model="report.plumbing.workshop"
+            string="Report Plumbing Workshop"
+            report_type="qweb-pdf"
+            name="auto_service.report_plumbing_workshop_template"
+            file="auto_service.report_plumbing_workshop_template"
+    />
+
+
+
+</odoo>

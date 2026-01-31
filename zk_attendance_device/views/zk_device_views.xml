@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Tree View (Updated for Odoo 18) -->
+    <record id="view_zk_device_tree" model="ir.ui.view">
+        <field name="name">zk.device.tree</field>
+        <field name="model">zk.device</field>
+        <field name="arch" type="xml">
+            <list string="Fingerprint Devices">
+                <field name="name"/>
+                <field name="ip_address"/>
+                <field name="port"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'connected'"
+                       decoration-danger="state == 'error'"
+                       decoration-warning="state == 'syncing'"
+                       decoration-muted="state == 'disconnected'"/>
+                <field name="last_sync_time"/>
+                <field name="total_users"/>
+                <field name="active" widget="boolean_toggle"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View (Updated for Odoo 18) -->
+    <record id="view_zk_device_form" model="ir.ui.view">
+        <field name="name">zk.device.form</field>
+        <field name="model">zk.device</field>
+        <field name="arch" type="xml">
+            <form string="Fingerprint Device">
+
+                <!-- HEADER -->
+                <header>
+                    <button name="action_test_connection" type="object"
+                            string="Test Connection"
+                            class="oe_highlight"
+                            icon="fa-plug"/>
+
+                    <button name="action_sync_users" type="object"
+                            string="Sync Users"
+                            class="btn-primary"
+                            icon="fa-users"
+                            invisible="sync_users == False"/>
+
+                    <button name="action_sync_attendance" type="object"
+                            string="Sync Attendance"
+                            class="btn-primary"
+                            icon="fa-calendar-check-o"
+                            invisible="sync_attendance == False"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="disconnected,connected,syncing"/>
+                </header>
+
+                <sheet>
+
+<!--                     Button Box -->
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_sync_logs" type="object"
+                                class="oe_stat_button" icon="fa-history">
+                            <field name="sync_log_count" widget="statinfo"
+                                   string="Sync Logs"/>
+                        </button>
+                    </div>
+
+                    <widget name="web_ribbon" title="Inactive"
+                            bg_color="text-bg-danger"
+                            invisible="active == True"/>
+
+                    <!-- Main Groups -->
+                    <group>
+                        <group string="Device Information">
+                            <field name="name" placeholder="Example: Main Entrance Device"/>
+                            <field name="ip_address" placeholder="192.168.1.201"/>
+                            <field name="port"/>
+                            <field name="timeout"/>
+                            <field name="timezone"/>
+                            <field name="active"/>
+                        </group>
+
+                        <group string="Device Status">
+<!--                            <field name="device_name" readonly="1"/>-->
+<!--                            <field name="serial_number" readonly="1"/>-->
+<!--                            <field name="firmware_version" readonly="1"/>-->
+                            <field name="total_users" readonly="1"/>
+                            <field name="last_sync_time" readonly="1"/>
+                            <field name="last_user_sync_time" readonly="1"/>
+                        </group>
+                    </group>
+
+                    <!-- NOTEBOOK -->
+                    <notebook>
+
+                        <page string="Sync Settings">
+                            <group>
+                                <group string="User Sync">
+                                    <field name="sync_users"/>
+                                    <field name="sync_users_interval"
+                                           invisible="sync_users == False"
+                                           widget="integer"/>
+                                </group>
+
+                                <group string="Attendance Sync">
+                                    <field name="sync_attendance"/>
+                                    <field name="sync_attendance_interval"
+                                           invisible="sync_attendance == False"
+                                           widget="integer"/>
+                                </group>
+                            </group>
+
+<!--                            <group string="Status Settings">-->
+<!--                                <field name="checkin_status"/>-->
+<!--                                <field name="checkout_status"/>-->
+<!--                            </group>-->
+                        </page>
+
+                        <page string="Last Error" invisible="last_error == False">
+                            <field name="last_error" readonly="1" nolabel="1"/>
+                        </page>
+
+                    </notebook>
+
+                </sheet>
+
+                <!-- Chatter (Updated for Odoo 18) -->
+                <chatter/>
+
+            </form>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_zk_device" model="ir.actions.act_window">
+        <field name="name">Fingerprint Devices</field>
+        <field name="res_model">zk.device</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Add a new fingerprint device
+            </p>
+            <p>
+                Add your ZK biometric devices to sync employees and attendance logs.
+            </p>
+        </field>
+    </record>
+
+</odoo>
+
+<!--<?xml version="1.0" encoding="utf-8"?>-->
+<!--<odoo>-->
+<!--    &lt;!&ndash; Tree View &ndash;&gt;-->
+<!--    <record id="view_zk_device_tree" model="ir.ui.view">-->
+<!--        <field name="name">zk.device.tree</field>-->
+<!--        <field name="model">zk.device</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <list string="أجهزة البصمة">-->
+<!--                <field name="name"/>-->
+<!--                <field name="ip_address"/>-->
+<!--                <field name="port"/>-->
+<!--                <field name="state" widget="badge"-->
+<!--                       decoration-success="state == 'connected'"-->
+<!--                       decoration-danger="state == 'error'"-->
+<!--                       decoration-warning="state == 'syncing'"-->
+<!--                       decoration-muted="state == 'disconnected'"/>-->
+<!--                <field name="last_sync_time"/>-->
+<!--                <field name="total_users"/>-->
+<!--                <field name="active" widget="boolean_toggle"/>-->
+<!--            </list>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Form View &ndash;&gt;-->
+<!--    <record id="view_zk_device_form" model="ir.ui.view">-->
+<!--        <field name="name">zk.device.form</field>-->
+<!--        <field name="model">zk.device</field>-->
+<!--        <field name="arch" type="xml">-->
+<!--            <form string="جهاز البصمة">-->
+<!--                <header>-->
+<!--                    <button name="action_test_connection" type="object"-->
+<!--                            string="اختبار الاتصال"-->
+<!--                            class="oe_highlight"-->
+<!--                            icon="fa-plug"/>-->
+<!--                    <button name="action_sync_users" type="object"-->
+<!--                            string="مزامنة المستخدمين"-->
+<!--                            class="btn-primary"-->
+<!--                            icon="fa-users"-->
+<!--                            invisible="not sync_users"/>-->
+<!--                    <button name="action_sync_attendance" type="object"-->
+<!--                            string="مزامنة الحضور"-->
+<!--                            class="btn-primary"-->
+<!--                            icon="fa-calendar-check-o"-->
+<!--                            invisible="not sync_attendance"/>-->
+<!--                    <field name="state" widget="statusbar"-->
+<!--                           statusbar_visible="disconnected,connected,syncing"/>-->
+<!--                </header>-->
+<!--                <sheet>-->
+<!--                    <div class="oe_button_box" name="button_box">-->
+<!--                        <button name="action_view_sync_logs" type="object"-->
+<!--                                class="oe_stat_button" icon="fa-history">-->
+<!--                            <field name="sync_log_count" widget="statinfo"-->
+<!--                                   string="سجلات المزامنة"/>-->
+<!--                        </button>-->
+<!--                    </div>-->
+<!--                    <widget name="web_ribbon" title="غير نشط"-->
+<!--                            bg_color="text-bg-danger"-->
+<!--                            invisible="active"/>-->
+<!--                    <group>-->
+<!--                        <group string="معلومات الجهاز">-->
+<!--                            <field name="name" placeholder="مثال: جهاز البصمة - المدخل الرئيسي"/>-->
+<!--                            <field name="ip_address" placeholder="192.168.1.201"/>-->
+<!--                            <field name="port"/>-->
+<!--                            <field name="timeout"/>-->
+<!--                            <field name="active"/>-->
+<!--                        </group>-->
+<!--                        <group string="حالة الجهاز">-->
+<!--                            <field name="device_name" readonly="1"/>-->
+<!--                            <field name="serial_number" readonly="1"/>-->
+<!--                            <field name="firmware_version" readonly="1"/>-->
+<!--                            <field name="total_users" readonly="1"/>-->
+<!--                            <field name="last_sync_time" readonly="1"/>-->
+<!--                            <field name="last_user_sync_time" readonly="1"/>-->
+<!--                        </group>-->
+<!--                    </group>-->
+<!--                    <notebook>-->
+<!--                        <page string="إعدادات المزامنة">-->
+<!--                            <group>-->
+<!--                                <group string="مزامنة المستخدمين">-->
+<!--                                    <field name="sync_users"/>-->
+<!--                                    <field name="sync_users_interval"-->
+<!--                                           invisible="not sync_users"-->
+<!--                                           widget="integer"/>-->
+<!--                                </group>-->
+<!--                                <group string="مزامنة الحضور">-->
+<!--                                    <field name="sync_attendance"/>-->
+<!--                                    <field name="sync_attendance_interval"-->
+<!--                                           invisible="not sync_attendance"-->
+<!--                                           widget="integer"/>-->
+<!--                                </group>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <group string="إعدادات الحالة">-->
+<!--                                    <field name="checkin_status"/>-->
+<!--                                    <field name="checkout_status"/>-->
+<!--                                </group>-->
+<!--                            </group>-->
+<!--                        </page>-->
+<!--                        <page string="آخر خطأ" invisible="not last_error">-->
+<!--                            <field name="last_error" readonly="1" nolabel="1"/>-->
+<!--                        </page>-->
+<!--                    </notebook>-->
+<!--                </sheet>-->
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids"/>-->
+<!--                    <field name="message_ids"/>-->
+<!--                </div>-->
+<!--            </form>-->
+<!--        </field>-->
+<!--    </record>-->
+
+<!--    &lt;!&ndash; Action &ndash;&gt;-->
+<!--    <record id="action_zk_device" model="ir.actions.act_window">-->
+<!--        <field name="name">أجهزة البصمة</field>-->
+<!--        <field name="res_model">zk.device</field>-->
+<!--        <field name="view_mode">list,form</field>-->
+<!--        <field name="help" type="html">-->
+<!--            <p class="o_view_nocontent_smiling_face">-->
+<!--                إضافة جهاز بصمة جديد-->
+<!--            </p>-->
+<!--            <p>-->
+<!--                قم بإضافة أجهزة البصمة ZK الخاصة بك لمزامنة الموظفين وسجلات الحضور-->
+<!--            </p>-->
+<!--        </field>-->
+<!--    </record>-->
+<!--</odoo>-->

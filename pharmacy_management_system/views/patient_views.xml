@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Patient Tree View -->
+    <record id="view_hospital_patient_tree" model="ir.ui.view">
+        <field name="name">hospital.patient.tree</field>
+        <field name="model">hospital.patient</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="patient_code"/>
+                <field name="name"/>
+                <field name="patient_type"/>
+                <field name="gender"/>
+                <field name="birth_date"/>
+                <field name="phone"/>
+                <field name="mobile"/>
+                <field name="email"/>
+                <field name="insurance_id"/>
+                <field name="responsible_id"/>
+                <field name="company_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Patient Form View -->
+    <record id="view_hospital_patient_form" model="ir.ui.view">
+        <field name="name">hospital.patient.form</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <form string="Patient">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="patient_code" readonly="1"/>
+                            <field name="name"/>
+                            <field name="patient_type"/>
+                            <field name="gender"/>
+                            <field name="birth_date"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="company_id"/>
+                            <field name="responsible_id"/>
+                            <field name="insurance_id"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Profile">
+                            <group>
+                                <group string="Contact">
+                                    <field name="email"/>
+                                    <field name="phone"/>
+                                    <field name="mobile"/>
+                                </group>
+                                <group string="Clinical">
+                                    <field name="blood_type"/>
+                                    <field name="allergy_note"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Medical">
+                            <group>
+                                <field name="medical_history"/>
+                            </group>
+                        </page>
+                        <page string="Contacts">
+                            <group string="Emergency Contact">
+                                <field name="emergency_contact_name"/>
+                                <field name="emergency_contact_phone"/>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Patient Kanban View -->
+    <record id="view_hospital_patient_kanban" model="ir.ui.view">
+        <field name="name">hospital.patient.kanban</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban o_kanban_small_column hospital-patient-kanban" default_group_by="patient_type">
+                <field name="name"/>
+                <field name="patient_code"/>
+                <field name="patient_type"/>
+                <field name="gender"/>
+                <field name="birth_date"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="mobile"/>
+                <field name="insurance_id"/>
+                <field name="responsible_id"/>
+                <field name="company_id"/>
+                <field name="active"/>
+                <field name="treatment_count"/>
+                <field name="prescription_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click hospital-patient-card pharma-card">
+                            <!-- Header with icon, title, status -->
+                            <div class="o_kanban_record_top">
+                                <div class="kanban-header-left">
+                                    <div class="kanban-icon-wrapper">
+                                        <i class="fa fa-user kanban-icon" title="Patient"></i>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <div class="o_kanban_record_title">
+                                            <strong><field name="name"/></strong>
+                                            <div class="o_kanban_record_subtitle">
+                                                <span class="status-dot" 
+                                                      t-attf-class="status-dot status-#{record.patient_type.raw_value}"></span>
+                                                <field name="patient_code"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="oe_kanban_content">
+                                <!-- Patient Type and Gender -->
+                                <div class="o_kanban_record_body">
+                                    <div class="config-tag">
+                                        <i class="fa fa-tag" title="Type"></i>
+                                        <field name="patient_type"/>
+                                    </div>
+                                    <div class="config-tag" t-if="record.gender.raw_value">
+                                        <i class="fa fa-venus-mars" title="Gender"></i>
+                                        <field name="gender"/>
+                                    </div>
+                                </div>
+                                
+                                <!-- Configuration Tags -->
+                                <div class="o_kanban_record_bottom config-tags">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- Birth Date -->
+                                        <div class="config-tag" t-if="record.birth_date.raw_value">
+                                            <i class="fa fa-birthday-cake" title="Birth Date"></i>
+                                            <field name="birth_date"/>
+                                        </div>
+                                        
+                                        <!-- Insurance -->
+                                        <div class="config-tag" t-if="record.insurance_id.raw_value">
+                                            <i class="fa fa-shield" title="Insurance"></i>
+                                            <field name="insurance_id"/>
+                                        </div>
+                                        
+                                        <!-- Responsible -->
+                                        <div class="config-tag" t-if="record.responsible_id.raw_value">
+                                            <i class="fa fa-user-md" title="Responsible"></i>
+                                            <field name="responsible_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Statistics -->
+                                <div class="o_kanban_record_bottom stats-section">
+                                    <div class="stats-column stats-left">
+                                        <!-- Treatments -->
+                                        <div class="stat-item">
+                                            <i class="fa fa-stethoscope text-primary"></i>
+                                            <span class="stat-value">
+                                                <field name="treatment_count"/> Treatments
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- Prescriptions -->
+                                        <div class="stat-item">
+                                            <i class="fa fa-file-text text-info"></i>
+                                            <span class="stat-value">
+                                                <field name="prescription_count"/> Prescriptions
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stats-column stats-right">
+                                        <!-- Contact Info -->
+                                        <div class="stat-item" t-if="record.phone.raw_value or record.mobile.raw_value">
+                                            <i class="fa fa-phone text-success"></i>
+                                            <span class="stat-value">
+                                                <t t-esc="record.phone.raw_value or record.mobile.raw_value or ''"/>
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- Email -->
+                                        <div class="stat-item" t-if="record.email.raw_value">
+                                            <i class="fa fa-envelope text-info"></i>
+                                            <span class="stat-value" t-att-title="record.email.raw_value">
+                                                <t t-esc="record.email.raw_value.length > 20 ? record.email.raw_value.substring(0, 20) + '...' : record.email.raw_value"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Patient Search View -->
+    <record id="search_hospital_patient" model="ir.ui.view">
+        <field name="name">hospital.patient.search</field>
+        <field name="model">hospital.patient</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="patient_code"/>
+                <field name="patient_type"/>
+                <field name="gender"/>
+                <field name="insurance_id"/>
+                <field name="responsible_id"/>
+                <field name="company_id"/>
+                <filter string="Active" name="active_true" domain="[('active','=',True)]"/>
+                <filter string="Archived" name="active_false" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Type" name="grp_patient_type" context="{'group_by':'patient_type'}"/>
+                    <filter string="Doctor" name="grp_responsible" context="{'group_by':'responsible_id'}"/>
+                    <filter string="Insurance" name="grp_insurance" context="{'group_by':'insurance_id'}"/>
+                    <filter string="Company" name="grp_company" context="{'group_by':'company_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Patient Action -->
+    <record id="action_hospital_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">hospital.patient</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Patient Menu -->
+    <menuitem id="menu_hospital_patient" parent="pharmacy_management_system.menu_pharmacy_operations" action="action_hospital_patient" sequence="5"/>
+</odoo>
+
+

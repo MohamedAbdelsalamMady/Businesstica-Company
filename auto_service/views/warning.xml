@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="warning_reception_form" model="ir.ui.view">
+        <field name="name">warning.reception.form</field>
+        <field name="model">warning.reception</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <span>
+                            Are you want run all
+                        </span>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="run_all_reception" type="object" string="Confirm" class="oe_highlight" />
+                    <button string="Cancel" special="cancel" />
+                </footer>
+
+            </form>
+        </field>
+    </record>
+
+<act_window id="warning_reception_action"
+            name="Warning Reception"
+            res_model="warning.reception"
+            view_mode="form"
+            target="new"
+/>
+
+
+
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="send_to_pricing_form" model="ir.ui.view">
+        <field name="name">send.to.pricing.form</field>
+        <field name="model">send.to.pricing</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="send_to_pricing_line_ids"
+                           nolable="1"  options="{'not_delete': False}">               <!-- add  context="{'default_field' : field}" to set default value -->
+                        <list editable="bottom" create="0" delete="0">
+                            <field name="send_to_pricing_id"
+                                   invisible="1"/>       <!-- add  domain="[('id','=',parent.field)]" to set default domain -->
+                            <field name="spare_parts_diagnoses_id" invisible="1"/>
+                            <field name="product_id" options="{'no_create': True, 'no_open': True}" force_save="1"/>
+                            <field name="uom_id"/>
+                            <field name="planned_quantity"/>
+                            <field name="unit_cost_price"/>
+                            <field name="sending_done"/>
+                            <field name="car_diagnoses_id" invisible="1"/>
+                            <field name="currency_id" invisible="1"/>
+                            
+                        </list>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="create_pricing" type="object" string="Confirm" class="oe_highlight" />
+                    <button string="Cancel" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <act_window id="send_to_pricing_action"
+                name="Send To Pricing"
+                res_model="send.to.pricing"
+                view_mode="form"
+                target="new"
+    />
+
+</odoo>

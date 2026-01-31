@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Treatment Progress Graph -->
+    <record id="view_treatment_progress_graph" model="ir.ui.view">
+        <field name="name">treatment.progress.graph</field>
+        <field name="model">hospital.treatment</field>
+        <field name="arch" type="xml">
+            <graph string="Treatment Progress" type="bar">
+                <field name="state" type="row"/>
+                <field name="id" type="measure" string="Count"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_treatment_progress_graph" model="ir.actions.act_window">
+        <field name="name">Treatment Progress Graph</field>
+        <field name="res_model">hospital.treatment</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_treatment_progress_graph"/>
+    </record>
+
+    <!-- Prescription Volume Graph -->
+    <record id="view_prescription_volume_graph" model="ir.ui.view">
+        <field name="name">prescription.volume.graph</field>
+        <field name="model">pharmacy.prescription</field>
+        <field name="arch" type="xml">
+            <graph string="Prescription Volume" type="bar">
+                <field name="date_prescribed" type="row" interval="month"/>
+                <field name="id" type="measure" string="Count"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_prescription_volume_graph" model="ir.actions.act_window">
+        <field name="name">Prescription Volume Graph</field>
+        <field name="res_model">pharmacy.prescription</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_prescription_volume_graph"/>
+    </record>
+
+    <!-- Insurance Claims Graph -->
+    <record id="view_insurance_claims_graph" model="ir.ui.view">
+        <field name="name">insurance.claims.graph</field>
+        <field name="model">pharmacy.insurance.claim</field>
+        <field name="arch" type="xml">
+            <graph string="Insurance Claims Status" type="bar">
+                <field name="state" type="row"/>
+                <field name="amount_claimed" type="measure" string="Total Amount"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_insurance_claims_graph" model="ir.actions.act_window">
+        <field name="name">Insurance Claims Graph</field>
+        <field name="res_model">pharmacy.insurance.claim</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_insurance_claims_graph"/>
+    </record>
+
+    <!-- Controlled Substance Activity Graph -->
+    <record id="view_controlled_activity_graph" model="ir.ui.view">
+        <field name="name">controlled.activity.graph</field>
+        <field name="model">pharmacy.controlled.log</field>
+        <field name="arch" type="xml">
+            <graph string="Controlled Substance Activity" type="bar">
+                <field name="action_type" type="row"/>
+                <field name="qty" type="measure" string="Total Quantity"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_controlled_activity_graph" model="ir.actions.act_window">
+        <field name="name">Controlled Substance Activity Graph</field>
+        <field name="res_model">pharmacy.controlled.log</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_controlled_activity_graph"/>
+    </record>
+
+    <!-- Drug Coverage Analysis Graph -->
+    <record id="view_drug_coverage_graph" model="ir.ui.view">
+        <field name="name">drug.coverage.graph</field>
+        <field name="model">pharmacy.drug.coverage</field>
+        <field name="arch" type="xml">
+            <graph string="Drug Coverage Analysis" type="bar">
+                <field name="hospital_id" type="row"/>
+                <field name="current_qty" type="measure" string="Current Quantity"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_drug_coverage_graph" model="ir.actions.act_window">
+        <field name="name">Drug Coverage Graph</field>
+        <field name="res_model">pharmacy.drug.coverage</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_drug_coverage_graph"/>
+    </record>
+
+    <!-- Treatment Progress by Stage Graph -->
+    <record id="view_treatment_stage_graph" model="ir.ui.view">
+        <field name="name">treatment.stage.graph</field>
+        <field name="model">hospital.treatment</field>
+        <field name="arch" type="xml">
+            <graph string="Treatment Progress by Stage" type="line">
+                <field name="start_datetime" type="row" interval="month"/>
+                <field name="stage_id" type="col"/>
+                <field name="id" type="measure" string="Count"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_treatment_stage_graph" model="ir.actions.act_window">
+        <field name="name">Treatment Progress by Stage</field>
+        <field name="res_model">hospital.treatment</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_treatment_stage_graph"/>
+    </record>
+
+    <!-- Prescription by Doctor Graph -->
+    <record id="view_prescription_doctor_graph" model="ir.ui.view">
+        <field name="name">prescription.doctor.graph</field>
+        <field name="model">pharmacy.prescription</field>
+        <field name="arch" type="xml">
+            <graph string="Prescription Volume by Doctor" type="bar">
+                <field name="doctor_id" type="row"/>
+                <field name="id" type="measure" string="Count"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="action_prescription_doctor_graph" model="ir.actions.act_window">
+        <field name="name">Prescription Volume by Doctor</field>
+        <field name="res_model">pharmacy.prescription</field>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="view_prescription_doctor_graph"/>
+    </record>
+
+    <!-- Pivot Views for Store-Centric Reporting -->
+    <!-- Prescription Pivot by Pharmacy, Drug, Prescriber, Company -->
+    <record id="view_prescription_pharmacy_pivot" model="ir.ui.view">
+        <field name="name">prescription.pharmacy.pivot</field>
+        <field name="model">pharmacy.prescription</field>
+        <field name="arch" type="xml">
+            <pivot string="Prescriptions by Pharmacy">
+                <field name="date_prescribed" type="row" interval="month"/>
+                <field name="pharmacy_id" type="row"/>
+                <field name="doctor_id" type="col"/>
+                <field name="state" type="col"/>
+                <field name="count_field" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_prescription_pharmacy_graph" model="ir.ui.view">
+        <field name="name">prescription.pharmacy.graph</field>
+        <field name="model">pharmacy.prescription</field>
+        <field name="arch" type="xml">
+            <graph string="Prescriptions by Pharmacy" type="bar">
+                <field name="pharmacy_id" type="row"/>
+                <field name="date_prescribed" type="col" interval="month"/>
+                <field name="count_field" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+
+    <!-- Controlled Log Pivot by Pharmacy, Drug, Action Type -->
+    <record id="view_controlled_pharmacy_pivot" model="ir.ui.view">
+        <field name="name">controlled.pharmacy.pivot</field>
+        <field name="model">pharmacy.controlled.log</field>
+        <field name="arch" type="xml">
+            <pivot string="Controlled Logs by Pharmacy">
+                <field name="timestamp" type="row" interval="month"/>
+                <field name="pharmacy_id" type="row"/>
+                <field name="drug_id" type="col"/>
+                <field name="action_type" type="col"/>
+                <field name="qty" type="measure"/>
+                <field name="count_field" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Treatment Pivot by Pharmacy -->
+    <record id="view_treatment_pharmacy_pivot" model="ir.ui.view">
+        <field name="name">treatment.pharmacy.pivot</field>
+        <field name="model">hospital.treatment</field>
+        <field name="arch" type="xml">
+            <pivot string="Treatments by Pharmacy">
+                <field name="start_datetime" type="row" interval="month"/>
+                <field name="pharmacy_id" type="row"/>
+                <field name="stage_id" type="col"/>
+                <field name="count_field" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Insurance Claim Pivot by Pharmacy -->
+    <record id="view_insurance_pharmacy_pivot" model="ir.ui.view">
+        <field name="name">insurance.pharmacy.pivot</field>
+        <field name="model">pharmacy.insurance.claim</field>
+        <field name="arch" type="xml">
+            <pivot string="Insurance Claims by Pharmacy">
+                <field name="create_date" type="row" interval="month"/>
+                <field name="pharmacy_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="amount_claimed" type="measure"/>
+                <field name="count_field" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <!-- Store Manager Dashboard Actions -->
+    <record id="action_prescription_rx_kpis" model="ir.actions.act_window">
+        <field name="name">RX KPIs</field>
+        <field name="res_model">pharmacy.prescription</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="view_id" ref="view_prescription_pharmacy_pivot"/>
+        <!-- No domain filter - show all prescriptions for demo data visibility -->
+    </record>
+
+    <record id="action_controlled_logs_report" model="ir.actions.act_window">
+        <field name="name">Controlled Logs Report</field>
+        <field name="res_model">pharmacy.controlled.log</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="view_id" ref="view_controlled_pharmacy_pivot"/>
+    </record>
+
+    <record id="action_treatment_report" model="ir.actions.act_window">
+        <field name="name">Treatment Report</field>
+        <field name="res_model">hospital.treatment</field>
+        <field name="view_mode">pivot,graph,kanban,list</field>
+        <field name="view_id" ref="view_treatment_pharmacy_pivot"/>
+    </record>
+
+    <record id="action_insurance_report" model="ir.actions.act_window">
+        <field name="name">Insurance Claims Report</field>
+        <field name="res_model">pharmacy.insurance.claim</field>
+        <field name="view_mode">pivot,graph,list</field>
+        <field name="view_id" ref="view_insurance_pharmacy_pivot"/>
+    </record>
+
+    <!-- Shortage Alerts Report -->
+    <record id="view_shortage_alerts_tree" model="ir.ui.view">
+        <field name="name">shortage.alerts.tree</field>
+        <field name="model">pharmacy.drug.coverage</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Shortage Alerts" decoration-danger="shortage_flag == True">
+                <field name="drug_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="current_qty"/>
+                <field name="min_qty"/>
+                <field name="target_qty"/>
+                <field name="shortage_flag"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_shortage_alerts_search" model="ir.ui.view">
+        <field name="name">shortage.alerts.search</field>
+        <field name="model">pharmacy.drug.coverage</field>
+        <field name="arch" type="xml">
+            <search string="Shortage Alerts">
+                <field name="drug_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <filter string="Shortages Only" name="shortage" domain="[('shortage_flag','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Drug" name="group_drug" context="{'group_by':'drug_id'}"/>
+                    <filter string="Hospital" name="group_hospital" context="{'group_by':'hospital_id'}"/>
+                    <filter string="Pharmacy" name="group_pharmacy" context="{'group_by':'pharmacy_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_shortage_alerts" model="ir.actions.act_window">
+        <field name="name">Shortage Alerts</field>
+        <field name="res_model">pharmacy.drug.coverage</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_shortage_alerts_tree"/>
+        <field name="domain">[('shortage_flag','=',True)]</field>
+        <field name="context">{'search_default_shortage': 1}</field>
+    </record>
+
+    <!-- Expiring Lots Report (Branch-specific) -->
+    <record id="view_expiring_lots_tree" model="ir.ui.view">
+        <field name="name">expiring.lots.tree</field>
+        <field name="model">stock.lot</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Expiring Lots" decoration-warning="expiry_date != False">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="expiry_date"/>
+                <field name="product_qty"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_expiring_lots_search" model="ir.ui.view">
+        <field name="name">expiring.lots.search</field>
+        <field name="model">stock.lot</field>
+        <field name="arch" type="xml">
+            <search string="Expiring Lots">
+                <field name="name"/>
+                <field name="product_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <filter string="Has Expiry Date" name="has_expiry" domain="[('expiry_date', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Product" name="group_product" context="{'group_by':'product_id'}"/>
+                    <filter string="Hospital" name="group_hospital" context="{'group_by':'hospital_id'}"/>
+                    <filter string="Pharmacy" name="group_pharmacy" context="{'group_by':'pharmacy_id'}"/>
+                    <filter string="Expiry Date" name="group_expiry" context="{'group_by':'expiry_date'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_expiring_lots_from_branch" model="ir.actions.act_window">
+        <field name="name">Expiring Lots</field>
+        <field name="res_model">stock.lot</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_expiring_lots_tree"/>
+        <field name="domain">[('expiry_date', '!=', False)]</field>
+        <field name="context">{'search_default_has_expiry': 1}</field>
+    </record>
+
+    <!-- Availability Report -->
+    <record id="view_availability_report_tree" model="ir.ui.view">
+        <field name="name">availability.report.tree</field>
+        <field name="model">pharmacy.resource.availability</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list string="Staff Availability">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="resource_type"/>
+                <field name="pharmacy_id"/>
+                <field name="date"/>
+                <field name="start_time"/>
+                <field name="end_time"/>
+                <field name="state"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_availability_report_search" model="ir.ui.view">
+        <field name="name">availability.report.search</field>
+        <field name="model">pharmacy.resource.availability</field>
+        <field name="arch" type="xml">
+            <search string="Staff Availability">
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="resource_type"/>
+                <field name="pharmacy_id"/>
+                <field name="date"/>
+                <filter string="Published" name="published" domain="[('state','=','published')]"/>
+                <filter string="Draft" name="draft" domain="[('state','=','draft')]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Resource Type" name="group_type" context="{'group_by':'resource_type'}"/>
+                    <filter string="Pharmacy" name="group_pharmacy" context="{'group_by':'pharmacy_id'}"/>
+                    <filter string="User" name="group_user" context="{'group_by':'user_id'}"/>
+                    <filter string="Date" name="group_date" context="{'group_by':'date'}"/>
+                    <filter string="State" name="group_state" context="{'group_by':'state'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_availability_report" model="ir.actions.act_window">
+        <field name="name">Availability Report</field>
+        <field name="res_model">pharmacy.resource.availability</field>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_availability_report_tree"/>
+    </record>
+
+</odoo>

@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pet,access_pet,model_vet_pet,,1,1,1,1
+access_appointment,access_appointment,model_vet_appointment,,1,1,1,1
+access_vaccination,access_vaccination,model_vet_vaccination,,1,1,1,1
+access_treatment,access_treatment,model_vet_treatment,,1,1,1,1
+access_prescription,access_prescription,model_vet_prescription,,1,1,1,1
+access_vaccine,access_vaccine,model_vet_vaccine,,1,1,1,1
+access_medicine,access_medicine,model_vet_medicine,,1,1,1,1
+access_prescription_line,access_prescription_line,model_vet_prescription_line,,1,1,1,1

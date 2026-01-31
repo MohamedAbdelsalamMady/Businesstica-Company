@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="pricing_form" model="ir.ui.view">
+        <field name="name">pricing.form</field>
+        <field name="model">pricing</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_pricing_orders" type="object"
+                            string="Create Pricing Orders"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,pricing_done"/>
+                </header>
+                <sheet>
+
+
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_view_pricing_orders" type="object"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o" invisible="count_pricing_orders == 0">
+                            <field name="count_pricing_orders"
+                                   widget="statinfo" />
+                        </button>
+                    </div>
+
+                    <div class="float-left">
+                        <label for="name" class="oe_inline"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="user_id" readonly="state != 'draft'"/>
+                            <field name="date_end" readonly="state != 'draft'"/>
+                        </group>
+                        <group>
+                            <field name="car_diagnoses_id"/>
+                            <field name="reception_information_id" readonly="state != 'draft'"/>
+                        </group>
+
+                    </group>
+                    <notebook>
+                        <page string="Initial Products">
+                            <field name="initial_products_ids" readonly="state != 'draft'">               <!-- add  context="{'default_field' : field}" to set default value -->
+                                <list editable="bottom" create="0" edit="0">
+                                    <field name="spare_parts_diagnoses_id"
+                                           invisible="1"/>
+                                    <field name="pricing_id"
+                                           invisible="1"/>       <!-- add  domain="[('id','=',parent.field)]" to set default domain -->
+                                    <field name="product_id"/>
+                                    <field name="uom_id"/>
+                                    <field name="qty_ordered"/>
+                                    <field name="initial_unit_price"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                    <notebook>
+                        <page string="Pricing Orders">
+                            <field name="lines_confirm_pricing_ids" readonly="state != 'draft'">               <!-- add  context="{'default_field' : field}" to set default value -->
+                                <list editable="bottom" create="0" edit="0">
+                                    <field name="pricing_id"
+                                           invisible="1"/>       <!-- add  domain="[('id','=',parent.field)]" to set default domain -->
+                                    <field name="pricing_orders_id"/>
+                                    <field name="partner_id"/>
+                                    <field name="delivery_days"/>
+                                    <field name="subtotal"/>
+                                    <field name="note"/>
+                                    <field name="currency_id" invisible="1"/>
+                                    <field name="state" invisible="1"/>
+                                    <button name="button_done_pricing"
+                                            string="Done"
+                                            type="object"
+                                            invisible="state != 'draft'"
+                                            icon="fa-icon_you_like" width="0.1"
+                                            options='{"warn": true}'/>
+
+                                </list>
+                            </field>
+
+                        </page>
+                    </notebook>
+
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+    <record id="pricing_list" model="ir.ui.view">
+        <field name="name">pricing.list</field>
+        <field name="model">pricing</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date_end"/>
+                <field name="car_diagnoses_id"/>
+                <field name="reception_information_id"/>
+
+            </list>
+        </field>
+    </record>
+
+    <record id="pricing_search" model="ir.ui.view">
+        <field name="name">pricing.search</field>
+        <field name="model">pricing</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="date_end"/>
+                <field name="car_diagnoses_id"/>
+                <field name="reception_information_id"/>
+            </search>
+        </field>
+    </record>
+
+
+
+    <record id="pricing_sequence" model="ir.sequence">
+        <field name="name">pricing</field>
+        <field name="code">pricing</field>
+        <field name="prefix">pricing/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="pricing_orders_sequence" model="ir.sequence">
+        <field name="name">pricing.orders</field>
+        <field name="code">pricing.orders</field>
+        <field name="prefix">BRO/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="pricing_action" model="ir.actions.act_window">
+        <field name="name">Pricing</field>
+        <field name="res_model">pricing</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Pricing
+            </p>
+        </field>
+    </record>
+
+    <record id="pricing_orders_form" model="ir.ui.view">
+        <field name="name">pricing.orders.form</field>
+        <field name="model">pricing.orders</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="button_confirm" type="object"
+                            string="Confirm" class="oe_highlight"
+                            invisible="state != 'draft'"/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,confirm"/>
+                </header>
+                <sheet>
+                    <div class="float-left">
+                        <label for="name" class="oe_inline"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="partner_ref"/>
+                            <field name="pricing_id"/>
+                        </group>
+                        <group>
+                            <field name="delivery_days"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Order Lines">
+                            <field name="pricing_order_lines_ids">               <!-- add  context="{'default_field' : field}" to set default value -->
+                                <list editable="bottom">
+                                    <field name="pricing_orders_id"
+                                           invisible="1"/>
+                                    <field name="product_id"/>
+                                    <field name="name"/>
+                                    <field name="uom_id"/>
+                                    <field name="product_qty"/>
+                                    <field name="price_unit"/>
+                                    <field name="tax_ids"
+                                           widget="many2many_tags"/>
+                                    <field name="price_subtotal"/>
+                                    <field name="currency_id" invisible="1"/>
+                                </list>
+                            </field>
+                            <group name="note_group" col="6"
+                                   class="mt-2 mt-md-0">
+
+                                <group class="oe_subtotal_footer oe_right"
+                                       colspan="2" name="sale_total">
+                                    <field name="amount_untaxed"
+                                           force_save="1"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <field name="amount_tax"
+                                           force_save="1"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                    <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                        <label for="totals"/>
+                                    </div>
+                                    <field name="totals"
+                                           nolabel="1"
+                                           force_save="1"
+                                           class="oe_subtotal_footer_separator"
+                                           options="{'currency_field': 'currency_id'}"/>
+                                </group>
+                                <group colspan="4">
+                                    <field name="note" nolabel="1"
+                                           placeholder="Terms and conditions..."/>
+                                </group>
+                                <div class="oe_clear"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="pricing_orders_list" model="ir.ui.view">
+        <field name="name">pricing.orders.list</field>
+        <field name="model">pricing.orders</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="partner_ref"/>
+                <field name="pricing_id"/>
+                <field name="delivery_days"/>
+
+            </list>
+        </field>
+    </record>
+
+    <record id="pricing_orders_search" model="ir.ui.view">
+        <field name="name">pricing.orders.search</field>
+        <field name="model">pricing.orders</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="partner_ref"/>
+                <field name="pricing_id"/>
+                <field name="delivery_days"/>
+            </search>
+        </field>
+    </record>
+
+
+
+    <record id="pricing_orders_action" model="ir.actions.act_window">
+        <field name="name">Pricing Orders</field>
+        <field name="res_model">pricing.orders</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Pricing Orders
+            </p>
+        </field>
+    </record>
+
+
+</odoo>

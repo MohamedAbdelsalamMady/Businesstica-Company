@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Pharmacy Branch Kanban -->
+    <record id="view_pharmacy_pharmacy_kanban" model="ir.ui.view">
+        <field name="name">pharmacy.pharmacy.kanban</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban o_kanban_small_column pharmacy-pharmacy-kanban">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="hospital_id"/>
+                <field name="warehouse_id"/>
+                <field name="location_id"/>
+                <field name="pricelist_id"/>
+                <field name="active"/>
+                <field name="rx_count_today"/>
+                <field name="expiring_lots_count"/>
+                <field name="daily_sales_count"/>
+                <field name="shortage_alerts_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click pharmacy-pharmacy-card pharma-card">
+                            <!-- Header with icon, title, status -->
+                            <div class="o_kanban_record_top">
+                                <div class="kanban-header-left">
+                                    <div class="kanban-icon-wrapper">
+                                        <i class="fa fa-home kanban-icon" title="Pharmacy"></i>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <div class="o_kanban_record_title">
+                                            <strong>
+                                                <field name="name"/>
+                                            </strong>
+                                            <div class="o_kanban_record_subtitle">
+                                                <field name="code"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Content Section -->
+                            <div class="oe_kanban_content">
+                                <!-- Configuration Tags -->
+                                <div class="o_kanban_record_bottom config-tags">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- Hospital -->
+                                        <div class="config-tag" t-if="record.hospital_id.value">
+                                            <i class="fa fa-hospital-o" title="Hospital"></i>
+                                            <field name="hospital_id"/>
+                                        </div>
+
+                                        <!-- Warehouse -->
+                                        <div class="config-tag" t-if="record.warehouse_id.value">
+                                            <i class="fa fa-industry" title="Warehouse"></i>
+                                            <field name="warehouse_id"/>
+                                        </div>
+
+                                        <!-- Location -->
+                                        <div class="config-tag" t-if="record.location_id.value">
+                                            <i class="fa fa-map-marker" title="Location"></i>
+                                            <field name="location_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Statistics in Two Columns -->
+                                <div class="o_kanban_record_bottom stats-section">
+                                    <div class="stats-column stats-left">
+                                        <!-- RX Today -->
+                                        <div class="stat-item">
+                                            <i class="fa fa-file-text text-primary"></i>
+                                            <span class="stat-value">
+                                                <field name="rx_count_today"/>
+                                                RX Today
+                                            </span>
+                                        </div>
+
+                                        <!-- Expiring Lots -->
+                                        <div class="stat-item">
+                                            <i class="fa fa-exclamation-triangle text-warning"></i>
+                                            <span class="stat-value">
+                                                <field name="expiring_lots_count"/>
+                                                Expiring
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                    <div class="stats-column stats-right">
+                                        <!-- Sales Today -->
+                                        <div class="stat-item" t-if="record.daily_sales_count.value">
+                                            <i class="fa fa-line-chart text-success"></i>
+                                            <span class="stat-value">
+                                                <field name="daily_sales_count"/>
+                                                Sales
+                                            </span>
+                                        </div>
+
+                                        <!-- Shortages -->
+                                        <div class="stat-item" t-if="record.shortage_alerts_count.value">
+                                            <i class="fa fa-bell text-danger"></i>
+                                            <span class="stat-value">
+                                                <field name="shortage_alerts_count"/>
+                                                Shortages
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Status Badge -->
+                                <div class="o_kanban_record_bottom actions-section" t-if="!record.active.raw_value">
+                                    <div class="oe_kanban_bottom_right">
+                                        <span class="badge badge-secondary">Archived</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_pharmacy_form" model="ir.ui.view">
+        <field name="name">pharmacy.pharmacy.form</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <form string="Pharmacy">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_prescriptions">
+                            <field name="rx_count_today" widget="statinfo" string="RX Today"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_treatments" invisible="1">
+                            <field name="daily_sales_count" widget="statinfo" string="Sales Today"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_controlled_logs" invisible="1">
+                            <field name="shortage_alerts_count" widget="statinfo" string="Shortages"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_expiring_lots" invisible="1">
+                            <field name="expiring_lots_count" widget="statinfo" string="Expiring Lots"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="company_id"/>
+                            <field name="active"/>
+                        </group>
+                        <group>
+                            <field name="warehouse_id"/>
+                            <field name="location_id"/>
+                            <field name="pricelist_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group>
+                            <field name="address_id"/>
+                            <field name="parent_pharmacy_id"/>
+                        </group>
+                        <group>
+                            <field name="compliance_cert_no"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_pharmacy_tree" model="ir.ui.view">
+        <field name="name">pharmacy.pharmacy.tree</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="hospital_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_pharmacy" model="ir.actions.act_window">
+        <field name="name">Pharmacies</field>
+        <field name="res_model">pharmacy.pharmacy</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <record id="search_pharmacy_pharmacy" model="ir.ui.view">
+        <field name="name">pharmacy.pharmacy.search</field>
+        <field name="model">pharmacy.pharmacy</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="hospital_id"/>
+                <field name="company_id"/>
+                <filter string="Active" name="active_true" domain="[('active','=',True)]"/>
+                <filter string="Archived" name="active_false" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Hospital" name="grp_hospital" context="{'group_by':'hospital_id'}"/>
+                    <filter string="Company" name="grp_company" context="{'group_by':'company_id'}"/>
+                    <filter string="Active" name="grp_active" context="{'group_by':'active'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="menu_pharmacy_pharmacy" parent="pharmacy_management_system.menu_pharmacy_branches"
+              action="action_pharmacy_pharmacy"/>
+
+    <!-- Pharmacy Config Views -->
+    <record id="view_pharmacy_config_tree" model="ir.ui.view">
+        <field name="name">pharmacy.config.tree</field>
+        <field name="model">pharmacy.config</field>
+        <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="localization_code"/>
+                <field name="tax_included"/>
+                <field name="allow_substitution"/>
+                <field name="default_expiry_days"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pharmacy_config_form" model="ir.ui.view">
+        <field name="name">pharmacy.config.form</field>
+        <field name="model">pharmacy.config</field>
+        <field name="arch" type="xml">
+            <form string="Pharmacy Configuration">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name" readonly="1"/>
+                            <field name="localization_code"/>
+                            <field name="tax_included"/>
+                            <field name="allow_substitution"/>
+                        </group>
+                        <group>
+
+                            <field name="substitution_policy_id"/>
+                            <field name="default_expiry_days"/>
+
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="search_pharmacy_config" model="ir.ui.view">
+        <field name="name">pharmacy.config.search</field>
+        <field name="model">pharmacy.config</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="localization_code"/>
+                <filter string="Tax Included" name="tax_included" domain="[('tax_included','=',True)]"/>
+                <filter string="Substitution Allowed" name="allow_substitution"
+                        domain="[('allow_substitution','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Localization" name="grp_localization" context="{'group_by':'localization_code'}"/>
+                    <filter string="Tax" name="grp_tax" context="{'group_by':'tax_included'}"/>
+                    <filter string="Substitution" name="grp_sub" context="{'group_by':'allow_substitution'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_pharmacy_config" model="ir.actions.act_window">
+        <field name="name">Pharmacy Configuration</field>
+        <field name="res_model">pharmacy.config</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{"default_localization_code": "other"}</field>
+    </record>
+
+    <menuitem id="menu_pharmacy_config" parent="pharmacy_management_system.menu_pharmacy_setup" action="action_pharmacy_config"
+              sequence="10"/>
+
+</odoo>
+
+
+
+

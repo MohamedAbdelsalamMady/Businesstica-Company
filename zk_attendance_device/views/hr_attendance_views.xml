@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Override hr.attendance list view to remove colors -->
+    <record id="hr_attendance_view_list_inherit_zk" model="ir.ui.view">
+        <field name="name">hr.attendance.list.inherit.zk</field>
+        <field name="model">hr.attendance</field>
+        <field name="inherit_id" ref="hr_attendance.view_attendance_tree"/>
+        <field name="arch" type="xml">
+            <!-- Remove color decorations from the list -->
+            <xpath expr="//list[@decoration-success]" position="attributes">
+                <attribute name="decoration-danger"/>
+                <attribute name="decoration-success"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

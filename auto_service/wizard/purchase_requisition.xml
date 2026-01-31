@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    
+    <record id="auto_purchase_requisition_form" model="ir.ui.view">
+        <field name="name">auto.purchase.requisition.form</field>
+        <field name="model">auto.purchase.requisition</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="purchase_requisition_lines_ids">
+                        <list editable="bottom" create="0" edit="0">
+                                <field name="requisition_purchase_id" invisible="1"/>
+                            <field name="product_id"/>
+                            <field name="uom_id"/>
+                            <field name="quantity"/>
+                            <field name="select"/>
+                        </list>
+                    </field>
+                </sheet>
+                <footer>
+                    <button name="purchase_requisition" type="object" string="Confirm" class="oe_highlight" />
+                    <button string="Cancel" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="auto_purchase_requisition_action"
+                name="Auto Purchase Requisition"
+                res_model="auto.purchase.requisition"
+                view_mode="form"
+                target="new"
+    />
+
+
+</odoo>

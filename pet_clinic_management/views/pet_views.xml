@@ -1,0 +1,85 @@
+<odoo>
+    <record id="vet_pet_kanban" model="ir.ui.view">
+        <field name="name">vet.pet.kanban</field>
+        <field name="model">vet.pet</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_example">
+                <field name="name"/>
+                <field name="pet_type"/>
+                <field name="breed"/>
+                <field name="owner_id"/>
+                <field name="image"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card">
+                            <div class="o_kanban_image">
+                                <img t-att-src="kanban_image('vet.pet', 'image', record.id.value)"
+                                     class="img img-fluid rounded-circle" alt="Pet Image"
+                                     style="max-height: 80px; max-width: 80px;"/>
+                            </div>
+                            <div class="o_kanban_details">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                                <div>
+                                    <span>Type:</span>
+                                    <field name="pet_type"/>
+                                </div>
+                                <div>
+                                    <span>Breed:</span>
+                                    <field name="breed"/>
+                                </div>
+                                <div>
+                                    <span>Owner:</span>
+                                    <field name="owner_id"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="vet_pet_form" model="ir.ui.view">
+        <field name="name">vet.pet.form</field>
+        <field name="model">vet.pet</field>
+        <field name="arch" type="xml">
+            <form string="Pet">
+                <sheet>
+                    <group>
+                        <field name="image"/>
+                        <field name="name"/>
+                        <field name="pet_type"/>
+                        <field name="breed"/>
+                        <field name="age"/>
+                        <field name="owner_id"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="vet_pet_tree" model="ir.ui.view">
+        <field name="name">vet.pet.tree</field>
+        <field name="model">vet.pet</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="pet_type"/>
+                <field name="breed"/>
+                <field name="owner_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="vet_pet_action" model="ir.actions.act_window">
+        <field name="name">Pets</field>
+        <field name="res_model">vet.pet</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <menuitem id="vet_clinic_root" name="Pet Clinic" groups="base.group_user"/>
+    <menuitem id="vet_pet_menu" name="Pets" parent="vet_clinic_root" action="vet_pet_action" groups="base.group_user"/>
+</odoo>

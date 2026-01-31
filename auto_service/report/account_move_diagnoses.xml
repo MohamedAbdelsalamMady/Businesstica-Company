@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_move_diagnoses_report" model="ir.actions.report">
+            <field name="name">Diagnoses Invoice</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">auto_service.account_move_car_diagnoses_template</field>
+            <field name="report_file">auto_service.account_move_car_diagnoses_template</field>
+            <field name="print_report_name">'Diagnoses Invoice- %s' % (object.name).replace('/', '')</field>
+            <field name="binding_model_id" ref="model_account_move"/>
+            <field name="binding_type">report</field>
+        </record>
+    </data>
+
+
+</odoo>

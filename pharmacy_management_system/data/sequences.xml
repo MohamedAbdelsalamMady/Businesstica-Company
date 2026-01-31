@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="seq_pharmacy_prescription" model="ir.sequence">
+        <field name="name">Prescription</field>
+        <field name="code">pharmacy.prescription</field>
+        <field name="prefix">RX%(y)s/</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_pharmacy_insurance_claim" model="ir.sequence">
+        <field name="name">Insurance Claim</field>
+        <field name="code">pharmacy.insurance.claim</field>
+        <field name="prefix">CLM%(y)s/</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_pharmacy_return_quarantine" model="ir.sequence">
+        <field name="name">Return Quarantine</field>
+        <field name="code">pharmacy.return.quarantine</field>
+        <field name="prefix">RTN%(y)s/</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_pharmacy_portal_request" model="ir.sequence">
+        <field name="name">Portal Request</field>
+        <field name="code">pharmacy.portal.request</field>
+        <field name="prefix">PRQ%(y)s/</field>
+        <field name="padding">5</field>
+    </record>
+    <record id="seq_hospital_treatment" model="ir.sequence">
+        <field name="name">Treatment</field>
+        <field name="code">hospital.treatment</field>
+        <field name="prefix">TRT%(y)s/</field>
+        <field name="padding">5</field>
+    </record>
+
+    <!-- Sequence for hospital.patient codes used by HospitalPatient.create -->
+    <record id="seq_hospital_patient" model="ir.sequence">
+        <field name="name">Hospital Patient</field>
+        <field name="code">pharmacy_management_system.seq_patient</field>
+        <field name="prefix">PAT%(y)s/</field>
+        <field name="padding">5</field>
+    </record>
+</odoo>
+
+

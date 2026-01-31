@@ -1,0 +1,85 @@
+
+<odoo>
+
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.hr.fleet</field>
+        <field name="model">res.config.settings</field>
+        <field name="priority" eval="90"/>
+        <field name="inherit_id" ref="base.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+       <xpath expr="//form" position="inside">
+            <app data-string="Auto Service" string="Auto Service" name="auto_service">
+               <block title="Auto Service" name="auto_service">
+              <setting id="auto_service" string="Auto Service Deadline" >   
+                    
+
+
+                                <table class="table thead-light">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col"></th>
+                                            <th scope="col">Hours</th>
+                                            <th scope="col">Minute</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+
+                                            <td colspan="5">Reception Information Deadline</td>
+
+                                            <td><field name="reception_information_deadline_hours"/></td>
+                                            <td><field name="reception_information_deadline_minute"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="5">Car Diagnoses Deadline</td>
+
+                                            <td><field name="car_diagnoses_hours"/></td>
+                                            <td><field name="car_diagnoses_minute"/></td>
+                                        </tr>
+                                        <tr>
+
+                                            <td colspan="5">Wait to Deliver Deadline</td>
+
+                                            <td><field name="wait_to_deliver_hours"/></td>
+                                            <td><field name="wait_to_deliver_minute"/></td>
+                                        </tr>
+
+                                        <tr>
+
+                                            <td colspan="5">Manager Deadline</td>
+
+                                            <td><field name="section_manager_hours"/></td>
+                                            <td><field name="section_manager_minute"/></td>
+                                        </tr>
+                                        <tr>
+
+                                            <td colspan="5">Owner Deadline</td>
+
+                                            <td><field name="manager_hours"/></td>
+                                            <td><field name="manager_minute"/></td>
+                                        </tr>
+
+                                    </tbody>
+                                </table>
+                           
+                 </setting>
+                </block>
+           </app>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="auto_service_config_settings_action" model="ir.actions.act_window">
+        <field name="name">Settings</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.config.settings</field>
+        <field name="view_mode">form</field>
+        <field name="target">inline</field>
+        <field name="context">{'module' : 'auto_service', 'bin_size': False}</field>
+    </record>
+
+</odoo>

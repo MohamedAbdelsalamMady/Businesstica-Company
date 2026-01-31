@@ -1,0 +1,1593 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <record id="reception_information_form" model="ir.ui.view">
+        <field name="name">reception.information.form</field>
+        <field name="model">reception.information</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="create_diagnoses" type="object"
+                            string="Create Diagnoses" class="oe_highlight"
+                            invisible="state != '1'" groups="auto_service.group_reception_edit"/>
+                    <button name="confirm" type="object" string="Confirm" class="oe_highlight"
+                            invisible="(type_of_service not in ['2', '3']) or (state in ['8', '9'])"/>
+                    <button name="finished" type="object"
+                            string="Finished" class="oe_highlight"
+                            invisible="is_finished == False"
+                            groups="auto_service.group_reception_edit"/>
+                    <button name="cancel" type="object" string="Cancel"
+                            class="oe_highlight"
+                            invisible="state == '6'" groups="auto_service.group_reception_edit"/>
+                    <button name="action_timer_pause" type="object"
+                            string="Pause" class="fa o_button_icon fa-clock-o"
+                            invisible="show_pause != True"
+                            groups="auto_service.group_reception_edit"/>
+                    <button name="action_timer_resume" type="object"
+                            string="Resume" class="fa o_button_icon fa-clock-o"
+                            invisible="show_resume != True"
+                            groups="auto_service.group_reception_edit"/>
+                    <button name="memo" type="object" string="Memo" class="oe_highlight" invisible="1"/>
+                    <!--                    <button name="auto_service.warning_reception_action" type="action" string="Run"-->
+                    <!--                            class="oe_highlight"/>-->
+                    <button name="test_dead" type="object" string="Test Dead" class="oe_highlight" invisible="1"/>
+                    <field name="timer_start" widget="timer_timer"
+                           class="text-success ml-auto h2 ml-4 font-weight-bold"
+                           readonly="1" invisible="s == True"/>
+                    <field name="timer_start" widget="timer_timer"
+                           class="text-danger ml-auto h2 ml-4 font-weight-bold"
+                           readonly="1" invisible="s != True"/>
+
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="1,2,3,4,6,5"/>
+
+
+                </header>
+                <sheet>
+                    <div name="button_box" class="oe_button_box">
+
+                        <button name="action_view_car_diagnoses" type="object"
+                                invisible="count_car_diagnoses == 0"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                            <field name="count_car_diagnoses"
+                                   widget="statinfo"/>
+                        </button>
+                        <button name="action_view_car_sale_orders" type="object"
+                                invisible="count_sale_orders == 0"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                            <field name="count_sale_orders"
+                                   widget="statinfo"/>
+                        </button>
+                        <button name="action_view_car_account_move"
+                                type="object"
+                                invisible="count_invoices == 0"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                            <field name="count_invoices"
+                                   widget="statinfo"/>
+                        </button>
+                        <button name="action_view_car_project_task"
+                                type="object"
+                                invisible="count_tasks == 0"
+                                class="oe_stat_button"
+                                icon="fa-pencil-square-o">
+                            <field name="count_tasks"
+                                   widget="statinfo"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+
+                    <group string="Reception Information">
+                        <group>
+                            <field name="user_id"/>
+                            <field name="service_team_id"/>
+                            <field name="notes"/>
+
+
+                        </group>
+                        <group>
+                            <field name="res_users_id"/>
+                            <field name="arriving_time"/>
+                            <field name="is_finished" invisible="1"/>
+                        </group>
+                    </group>
+                    <group string="Customer Information">
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="phone_number"/>
+                        </group>
+                        <group>
+                            <field name="email"/>
+                            <field name="address"/>
+                            <field name="success_timer" invisible="1"/>
+                            <field name="check_pause_time" force_save="1" invisible="1"/>
+                            <field name="s" invisible="1"/>
+                            <field name="under_progress_case" invisible="1"/>
+                            <field name="draft_time" invisible="1"/>
+                            <field name="auto_service_timers_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Car Information And Semi History">
+                            <group>
+                                <group>
+                                    <field name="car_creations_id"/>
+                                    <field name="license_plate_no"/>
+                                    <field name="motor_number"/>
+                                    <field name="top_number"/>
+                                    <field name="last_date_service"/>
+                                    <field name="last_service_name"
+                                           invisible="0"/>
+                                    <field name="last_km"/>
+                                    <field name="now_km"/>
+                                    <field name="traveled_distance"/>
+                                    <span class="text-danger" invisible="distance_check == False">
+                                        لقد تخطيت حد الصيانه
+                                    </span>
+                                    <br/>
+
+
+                                    <field name="service_description"/>
+                                    <field name="final_inspection"
+                                           invisible="1"/>
+
+                                </group>
+                                <group>
+                                    <field name="show_state" invisible="1"/>
+                                    <field name="task_status" invisible="1"/>
+                                    <field name="car_brand_id"/>
+                                    <field name="car_model_id"/>
+                                    <field name="car_agent_id"/>
+                                    <field name="car_body_style_id"/>
+                                    <field name="transmission_type_id"/>
+                                    <field name="engine_type_id"/>
+                                    <field name="engine_capacity_id"/>
+                                    <field name="car_cylinders_id"/>
+                                    <field name="car_generation_id"/>
+                                    <field name="type_of_service" widget="radio"
+                                           options="{'vertical': True}"/>
+                                    <field name="request_ordinary_service"
+                                           invisible="type_of_service != '1'"/>
+                                    <field name="distance_check" invisible="1"/>
+                                    <field name="service_name_id"
+                                           widget="many2many_tags"
+                                           invisible="request_ordinary_service != True"/>
+                                    <field name="service_type_id"
+                                           invisible="1"/>
+                                    <field name="stop_timer" invisible="1"/>
+                                    <field name="start_timer" invisible="1"/>
+                                    <!--                            <field name="timer_stop" widget="float_time" class="text-danger ml-auto h2 ml-4 font-weight-bold" readonly="1"/>-->
+                                    <field name="timer_pause" invisible="1"/>
+                                    <field name="is_timer_running"
+                                           invisible="1"/>
+                                    <field name="res_model" invisible="1"/>
+                                    <field name="res_id" invisible="1"/>
+                                    <field name="user_id" invisible="1"/>
+                                    <field name="show_pause" invisible="1"/>
+                                    <field name="show_resume" invisible="1"/>
+
+                                </group>
+                            </group>
+                            <lable>Do you want to receive old spare parts?
+                            </lable>
+                            <field name="old_spare_parts"/>
+                            <br/>
+                            <span invisible="old_spare_parts != True">
+                                قطع الغيار التي تحتوي علي ضمان لا يتم تسليمها
+                            </span>
+                            <br/>
+                            <br/>
+                            <lable>Do you want to wash the car inside and out?
+                            </lable>
+                            <field name="wash_car"/>
+                            <br/>
+                            <span invisible="wash_car != True">
+                                سيتسغرق
+                                30 دقيقة
+                            </span>
+
+                        </page>
+                        <page string="First inspection of the car">
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Old Spare Parts
+                                    </div>
+                                    <div class="col">
+                                        <field name="check_old_spare_parts" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="old_spare_parts_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Calf Bolts
+                                    </div>
+                                    <div class="col">
+                                        <field name="calf_bolts" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="calf_bolts_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Vehicle license and history
+                                    </div>
+                                    <div class="col">
+                                        <field name="vehicle_license_history" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="vehicle_license_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Car Sumps
+                                    </div>
+                                    <div class="col">
+                                        <field name="car_sumps" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="car_sumps_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Dashboard messages
+                                    </div>
+                                    <div class="col">
+                                        <field name="dashboard_messages" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="dashboard_messages_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Conditioning review
+                                    </div>
+                                    <div class="col">
+                                        <field name="conditioning_review" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="conditioning_review_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Radio review
+                                    </div>
+                                    <div class="col">
+                                        <field name="radio" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="radio_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Wiper blades
+                                    </div>
+                                    <div class="col">
+                                        <field name="wiper_blades" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="wiper_blades_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Front windshield review
+                                    </div>
+                                    <div class="col">
+                                        <field name="front_windshield_review" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="front_windshield_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        North front seat movement
+                                    </div>
+                                    <div class="col">
+                                        <field name="north_seat_movement" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="north_seat_movement_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Adaptation hobbies movement
+                                    </div>
+                                    <div class="col">
+                                        <field name="adaptation_hobbies_movement" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="adaptation_hobbies_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        General glass switch
+                                    </div>
+                                    <div class="col">
+                                        <field name="general_glass_switch" widget="radio"
+                                               options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="general_glass_switch_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Mirror movement
+                                    </div>
+                                    <div class="col">
+                                        <field name="mirror_movement" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="mirror_movement_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Watch the rest of the glass
+                                    </div>
+                                    <div class="col">
+                                        <field name="watch_rest_glass" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="watch_rest_glass_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Lighter
+                                    </div>
+                                    <div class="col">
+                                        <field name="lighter_glass" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="lighter_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Sunroof
+                                    </div>
+                                    <div class="col">
+                                        <field name="sunroof" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="sunroof_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Console mat
+                                    </div>
+                                    <div class="col">
+                                        <field name="console_mat" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="console_mat_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Mouse movement
+                                    </div>
+                                    <div class="col">
+                                        <field name="mouse_movement" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="mouse_movement_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Center lock
+                                    </div>
+                                    <div class="col">
+                                        <field name="center_lock" widget="radio" options="{'horizontal': True}"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="center_lock_note"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </page>
+                        <page string="Car Images">
+                            <group>
+                                <group>
+                                    <field name="img1" string="Image 1"
+                                           widget="image" class="oe_avatar"
+                                           width="304" height="236"/>
+                                    <field name="img3" string="Image 3"
+                                           widget="image" class="oe_avatar"
+                                           width="304" height="236"/>
+                                    <field name="img5" string="Image 5"
+                                           widget="image" class="oe_avatar"
+                                           width="304" height="236"/>
+                                </group>
+                                <group>
+                                    <field name="img2" string="Image 2"
+                                           widget="image" class="oe_avatar"
+                                           width="304" height="236"/>
+                                    <field name="img4" string="Image 4"
+                                           widget="image" class="oe_avatar"
+                                           width="304" height="236"/>
+                                    <field name="img6" string="Image 4"
+                                           widget="image" class="oe_avatar"
+                                           width="304" height="236"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Final Inspection Before Delivery"
+                              invisible="final_inspection != True">
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        The car has been cleaned inside and out
+                                    </div>
+                                    <div class="col">
+                                        <field name="cleaned_inside_out" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="note_cleaned_inside" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Interior and exterior lights and spaces
+                                    </div>
+                                    <div class="col">
+                                        <field name="exterior_light_spaces" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="exterior_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Mirrors
+                                    </div>
+                                    <div class="col">
+                                        <field name="mirrors" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="note_mirrors" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        HVAC system
+                                    </div>
+                                    <div class="col">
+                                        <field name="hvac_system" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="hvac_system_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Brake system and parking brake
+                                    </div>
+                                    <div class="col">
+                                        <field name="system_parking_brake" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="parking_brake_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Guidance system
+                                    </div>
+                                    <div class="col">
+                                        <field name="guidance_system" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="guidance_system_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Gearbox and Differential
+                                    </div>
+                                    <div class="col">
+                                        <field name="gearbox_differential" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="gearbox_differential_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Front Suspension(The front furniture)
+                                    </div>
+                                    <div class="col">
+                                        <field name="front_suspension" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="front_suspension_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Rear Suspension(Background Furniture)
+                                    </div>
+                                    <div class="col">
+                                        <field name="rear_suspension" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="rear_suspension_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        The next maintenance appointment has
+                                        been reactivated in the dashboard
+                                    </div>
+                                    <div class="col">
+                                        <field name="maintenance_appointment_reactivated" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="appointment_reactivated_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Ensure that there are no warning
+                                        messages on the dashboard and that there
+                                        is sufficient water in the car's tank
+                                    </div>
+                                    <div class="col">
+                                        <field name="ensure_sufficient_tank" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="sufficient_tank_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Verify all works mentioned in the repair
+                                        order
+                                    </div>
+                                    <div class="col">
+                                        <field name="verify_repair" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="verify_repair_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Verify all works mentioned in the repair
+                                        order appendix
+                                    </div>
+                                    <div class="col">
+                                        <field name="mentioned_repair_appendix" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="repair_appendix_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Ensure that the customer's complaint is
+                                        similar to the repair process
+                                    </div>
+                                    <div class="col">
+                                        <field name="ensure_similar_repair" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="similar_repair_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Check oil and fluid levels
+                                    </div>
+                                    <div class="col">
+                                        <field name="oil_fluid_levels" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="oil_fluid_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Ensure that the calf is connected to the
+                                        torque
+                                    </div>
+                                    <div class="col">
+                                        <field name="ensure_calf_torque" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="calf_torque_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row bg-light border">
+                                    <div class="col">
+                                        Examination of the spare tire and the
+                                        kit
+                                    </div>
+                                    <div class="col">
+                                        <field name="examination_tire_kit" readonly="1"/>
+                                    </div>
+                                    <div class="col">
+                                        Note
+                                    </div>
+                                    <div class="col">
+                                        <field name="tire_kit_note" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </page>
+                        <page string="Timers" invisible="1">
+                            <!--                            <group>-->
+                            <!--                                <group>-->
+                            <!--&lt;!&ndash;                                    <button name="toto" type="object" string="Toto" class="oe_highlight"/>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                    <field name="diagnosis_timer"/>&ndash;&gt;-->
+                            <!--&lt;!&ndash;                                    <field name="draft_time2" widget="timer_timer"/>&ndash;&gt;-->
+                            <!--                                    <field name="start"/>-->
+                            <!--                                    <field name="end"/>-->
+                            <!--                                    <field name="duration"/>-->
+                            <!--                                </group>-->
+                            <!--                                <group>-->
+
+                            <!--                                </group>-->
+
+                            <!--                            </group>-->
+
+                            <field name="auto_service_timers_ids">               <!-- add  context="{'default_field' : field}" to set default value -->
+                                <list editable="bottom">
+                                    <field name="reception_information_id"
+                                           invisible="1"/>       <!-- add  domain="[('id','=',parent.field)]" to set default domain -->
+                                    <field name="state"/>
+                                    <field name="start"/>
+                                    <field name="end"/>
+                                    <field name="hours"/>
+                                </list>
+                            </field>
+
+                        </page>
+                        <page string="Timers">
+                            <div class="container p-3 mb-2 bg-light font-weight-bold">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        Status
+                                    </div>
+                                    <div class="col-sm">
+                                        Start
+                                    </div>
+                                    <div class="col-sm">
+                                        End
+                                    </div>
+                                    <div class="col-sm">
+                                        Time Out
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <field name="reception_state" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="reception_start" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="reception_end" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="reception_hours" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <field name="under_diagnose_state" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="under_diagnose_start" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="under_diagnose_end" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="under_diagnose_hours" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <field name="working_progress_state" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="under_progress_start" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="under_progress_end" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="under_progress_hours" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <field name="wait_deliver_state" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="wait_deliver_start" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="wait_deliver_end" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="wait_deliver_hours" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <field name="finish_state" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="finish_start" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="finish_end" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="finish_hours" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <br/>
+
+
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                    </div>
+                                    <div class="col-sm">
+
+                                    </div>
+
+                                    <div class="col-sm font-weight-bold">
+
+                                    </div>
+                                    <hr class="mt4 mb4"/>
+                                    <div class="col-sm font-weight-bold">
+                                        <label for="total_hours"/>
+                                        <div class="d-flex font-weight-bold">
+                                            <field name="total_hours"
+                                                   force_save="1" nolable="1"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <hr class="mt4 mb4"/>
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-sm">
+                                        <field name="full_time_state" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="full_time_start" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="full_time_end" readonly="1"/>
+                                    </div>
+                                    <div class="col-sm">
+                                        <field name="full_time_hours" readonly="1"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </page>
+
+                    </notebook>
+
+
+                </sheet>
+                <!-- <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div> -->
+            </form>
+        </field>
+    </record>
+
+
+    <record id="reception_information_kanban" model="ir.ui.view">
+        <field name="name">reception.information.kanban</field>
+        <field name="model">reception.information</field>
+        <field name="arch" type="xml">
+            <kanban class="o_res_partner_kanban" default_group_by="state" edit="false" no_open="1" records_draggable="0"
+                    on_create="quick_create" quick_create_view="auto_service.quick_create_reception_information_form">
+                <header>
+                    <button name="memo" type="object" string="memo" class="btn-danger"/>
+                </header>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="state"/>
+                <field name="user_id"/>
+                <field name="car_creations_id"/>
+                <field name="type_of_service" widget="radio"
+                       options="{'vertical': True}"/>
+                <field name="partner_id"/>
+                <field name="s"/>
+                <field name="under_progress_case"/>
+                <templates>
+                    <header>
+                        <button name="memo" type="object" string="memo" class="btn-danger"/>
+                    </header>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_global_click">
+
+
+                            <div class="oe_kanban_details">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-4 font-weight-bold">
+                                            Status:
+                                        </div>
+
+                                        <div class="col-8">
+                                            <div>
+                                                <field name="state" widget="badge"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <hr class="mt4 mb4" invisible="state != '3'"/>
+
+                                    <div class="row" invisible="state != '3'">
+                                        <div class="col-4 font-weight-bold">
+                                            Case
+                                        </div>
+                                        <div class="col-8">
+                                            <span>
+                                                <field name="under_progress_case" widget="badge"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <hr class="mt4 mb4"/>
+
+                                    <div class="row">
+                                        <div class="col-6 font-weight-bold">
+                                            Customer:
+                                        </div>
+
+                                        <div class="col-4">
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div>
+                                                <field name="partner_id"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+                                        </div>
+                                    </div>
+                                    <hr class="mt4 mb4"/>
+
+
+                                    <div class="row">
+                                        <div class="col-8 font-weight-bold">
+                                            Reception Employee:
+
+                                        </div>
+
+                                        <div class="col-4">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <div t-if="record.user_id.value">
+                                                <t t-esc="record.user_id.value"/>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-4">
+
+                                        </div>
+                                    </div>
+                                    <hr class="mt4 mb4"/>
+
+                                    <div class="row">
+                                        <div class="col-8 font-weight-bold">
+                                            Chassis Number:
+
+                                        </div>
+
+                                        <div class="col-4">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8">
+
+                                            <div t-if="record.user_id.value">
+                                                <t t-esc="record.car_creations_id.value"/>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-4">
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="container" invisible="state != '5'">
+                                    <div class="container p-3 mb-2 bg-light font-weight-bold">
+                                        <div class="row">
+                                            <div class="col-8">
+                                                Status
+                                            </div>
+
+                                            <div class="col-4">
+                                                Time Out
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <field name="reception_state"/>
+                                        </div>
+
+
+                                        <div class="col-sm">
+                                            <field name="reception_hours"/>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <field name="under_diagnose_state"/>
+                                        </div>
+
+
+                                        <div class="col-sm">
+                                            <field name="under_diagnose_hours"/>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <field name="working_progress_state"/>
+                                        </div>
+
+
+                                        <div class="col-sm">
+                                            <field name="under_progress_hours"/>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <field name="wait_deliver_state"/>
+                                        </div>
+
+
+                                        <div class="col-sm">
+                                            <field name="wait_deliver_hours"/>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <div class="row">
+                                        <div class="col-8">
+                                            <field name="finish_state"/>
+                                        </div>
+
+
+                                        <div class="col-sm">
+                                            <field name="finish_hours"/>
+                                        </div>
+                                    </div>
+
+                                    <br/>
+                                    <hr class="mt4 mb4"/>
+                                    <div class="row">
+
+                                        <div class="col-8">
+                                            Total
+                                        </div>
+                                        <div class="col-sm">
+                                            <field name="total_hours"/>
+                                        </div>
+                                    </div>
+                                    <hr class="mt4 mb4"/>
+                                    <div class="row">
+
+                                        <div class="col-8">
+                                            <field name="full_time_state"/>
+                                        </div>
+                                        <div class="col-sm">
+                                            <field name="full_time_hours"/>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <hr class="mt4 mb4"/>
+                            <div class="container" invisible="state == '5'">
+                                <div class="row">
+                                    <div class="col-sm">
+
+
+                                        <a name="action_view_car_project_task"
+                                           invisible="state != '3'"
+                                           type="object"
+                                           class="oe_stat_button d-flex justify-content-around"
+                                           icon="fa-wrench"
+                                           context="{'xml_id':'project.act_project_project_2_project_task_all'}"
+                                           help="show the services logs for this vehicle">
+                                            <field name="count_tasks" widget="statinfo" string="Task(s)"/>
+                                        </a>
+                                    </div>
+
+                                    <div class="col-sm">
+
+                                        <div class="text-success ml-auto  ml-4 font-weight-bold"
+                                            invisible="(s == True) or (state in ['5', '7'])">
+                                            <field name="timer_start" widget="timer_timer"
+                                                   class="text-success ml-auto h2 ml-4 font-weight-bold"
+                                                   readonly="1" invisible="s == True"/>
+
+                                        </div>
+                                        <div class="text-danger ml-auto  ml-4 font-weight-bold"
+                                             invisible="not (s != True) and (state in ['5', '7'])">
+                                            <field name="timer_start" widget="timer_timer"
+                                                   class="text-danger ml-auto h2 ml-4 font-weight-bold"
+                                                   readonly="1" invisible="s != True"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm">
+                                        <div>
+
+                                            <field name="task_status" widget="badge"
+                                                   decoration-danger="task_status == '2'"
+                                                   decoration-success="task_status == '1'"/>
+                                            <!--                                    <span title="On Track">-->
+                                            <!--                                        <field name="task_status" invisible="1"/>-->
+                                            <!--                                    </span>-->
+                                            <!--                                    -->
+
+                                            <!--                                    <field name="user_id" widget="many2one_avatar_user" t-if="record.user_id.raw_value"/>-->
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="quick_create_reception_information_form" model="ir.ui.view">
+        <field name="name">reception.information.form.quick_create</field>
+        <field name="model">reception.information</field>
+        <field name="priority">1000</field>
+        <field name="arch" type="xml">
+            <form edit="false">
+                <group>
+                    <field name="user_id"/>
+                    <field name="partner_id" required="1"/>
+                    <field name="car_creations_id" required="1"/>
+                    <field name="type_of_service" widget="radio"
+                           options="{'vertical': True}"/>
+
+                </group>
+                <group string="Customer Information" invisible="1">
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="phone_number"/>
+                    </group>
+                    <group>
+                        <field name="email"/>
+                        <field name="address"/>
+                        <field name="success_timer" invisible="1"/>
+                        <field name="check_pause_time" force_save="1" invisible="1"/>
+                        <field name="s" invisible="1"/>
+                        <field name="under_progress_case" invisible="1"/>
+                        <field name="draft_time" invisible="1"/>
+                        <field name="auto_service_timers_id" invisible="1"/>
+                    </group>
+                </group>
+                <notebook invisible="1">
+                    <page string="Car Information And Semi History">
+                        <group>
+                            <group>
+                                <field name="car_creations_id"/>
+                                <field name="license_plate_no"/>
+                                <field name="motor_number"/>
+                                <field name="top_number"/>
+                                <field name="last_date_service"/>
+                                <field name="last_service_name"
+                                       invisible="0"/>
+                                <field name="last_km"/>
+                                <field name="now_km"/>
+                                <field name="traveled_distance"/>
+                                <span class="text-danger" invisible="distance_check == False">
+                                    لقد تخطيت حد الصيانه
+                                </span>
+                                <br/>
+
+
+                                <field name="service_description"/>
+                                <field name="final_inspection"
+                                       invisible="1"/>
+
+                            </group>
+                            <group>
+                                <field name="show_state" invisible="1"/>
+                                <field name="task_status" invisible="1"/>
+                                <field name="car_brand_id"/>
+                                <field name="car_model_id"/>
+                                <field name="car_agent_id"/>
+                                <field name="car_body_style_id"/>
+                                <field name="transmission_type_id"/>
+                                <field name="engine_type_id"/>
+                                <field name="engine_capacity_id"/>
+                                <field name="car_cylinders_id"/>
+                                <field name="car_generation_id"/>
+                                <field name="request_ordinary_service"/>
+                                <field name="distance_check" invisible="1"/>
+                                <field name="service_name_id"
+                                       widget="many2many_tags"
+                                       invisible="request_ordinary_service != True"/>
+                                <field name="service_type_id"
+                                       invisible="1"/>
+                                <field name="stop_timer" invisible="1"/>
+                                <field name="start_timer" invisible="1"/>
+                                <!--                            <field name="timer_stop" widget="float_time" class="text-danger ml-auto h2 ml-4 font-weight-bold" readonly="1"/>-->
+                                <field name="timer_pause" invisible="1"/>
+                                <field name="is_timer_running"
+                                       invisible="1"/>
+                                <field name="res_model" invisible="1"/>
+                                <field name="res_id" invisible="1"/>
+                                <field name="user_id" invisible="1"/>
+                                <field name="show_pause" invisible="1"/>
+                                <field name="show_resume" invisible="1"/>
+
+                            </group>
+                        </group>
+                        <lable>Do you want to receive old spare parts?
+                        </lable>
+                        <field name="old_spare_parts"/>
+                        <br/>
+                        <span invisible="old_spare_parts != True">
+                            قطع الغيار التي تحتوي علي ضمان لا يتم تسليمها
+                        </span>
+                        <br/>
+                        <br/>
+                        <lable>Do you want to wash the car inside and out?
+                        </lable>
+                        <field name="wash_car"/>
+                        <br/>
+                        <span invisible="wash_car != True">
+                            سيتسغرق
+                            30 دقيقة
+                        </span>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="reception_information_search" model="ir.ui.view">
+        <field name="name">reception.information.search</field>
+        <field name="model">reception.information</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="service_team_id"/>
+                <field name="res_users_id"/>
+                <field name="arriving_time"/>
+                <field name="partner_id"/>
+                <field name="phone_number"/>
+                <field name="email"/>
+                <field name="address"/>
+                <field name="car_creations_id"/>
+                <field name="license_plate_no"/>
+                <field name="motor_number"/>
+                <field name="top_number"/>
+                <field name="last_date_service"/>
+                <field name="last_service_name"/>
+                <field name="car_brand_id"/>
+                <field name="car_model_id"/>
+                <field name="car_agent_id"/>
+                <field name="car_body_style_id"/>
+                <field name="transmission_type_id"/>
+                <field name="engine_type_id"/>
+                <field name="engine_capacity_id"/>
+                <field name="car_cylinders_id"/>
+                <field name="car_generation_id"/>
+                <field name="request_ordinary_service"/>
+                <group expand="0" string="Group By">
+                    <filter string="Tasks status" name="group_task_status" context="{'group_by':'task_status'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record forcecreate="True" id="ir_cron_kanban_deadline_color_action" model="ir.cron">
+        <field name="name">Reception Information</field>
+        <field name="model_id" ref="model_reception_information"/>
+        <field name="state">code</field>
+        <field name="code">model.test_dead()</field>
+        <field name="interval_number">30</field>
+        <field name="interval_type">minutes</field>
+        <!-- <field name="numbercall">-1</field>
+        <field name="doall" eval="False"/> -->
+    </record>
+
+
+    <record id="reception_information_list" model="ir.ui.view">
+        <field name="name">reception.information.list</field>
+        <field name="model">reception.information</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="user_id"/>
+                <field name="partner_id"/>
+                <field name="car_creations_id"/>
+                <field name="state"
+                       widget="badge"/>
+            </list>
+        </field>
+    </record>
+
+
+    <record id="model_action_auto_service" model="ir.actions.server">
+        <field name="name">Run</field>
+        <field name="model_id" ref="auto_service.model_reception_information"/>
+        <field name="binding_model_id" ref="auto_service.model_reception_information"/>
+        <field name="binding_view_types">list,form,kanban</field>
+        <field name="state">code</field>
+        <field name="code">test_dead()</field>
+    </record>
+
+
+    <record id="reception_information_sequence" model="ir.sequence">
+        <field name="name">reception.information</field>
+        <field name="code">reception.information</field>
+        <field name="prefix">RI/</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+    <record id="reception_information_action" model="ir.actions.act_window">
+        <field name="name">Reception Information</field>
+        <field name="res_model">reception.information</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Reception Information
+            </p>
+        </field>
+    </record>
+
+    <record id="reception_information_action2" model="ir.actions.act_window">
+        <field name="name">Reception Information</field>
+        <field name="res_model">reception.information</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('state', '=', '1')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Reception Information
+            </p>
+        </field>
+    </record>
+
+    <record id="reception_information_action3" model="ir.actions.act_window">
+        <field name="name">Workshop</field>
+        <field name="res_model">reception.information</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('state', 'in', ['2','3'])]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Reception Information
+            </p>
+        </field>
+    </record>
+
+
+    <record id="reception_information_action4" model="ir.actions.act_window">
+        <field name="name">Manager</field>
+        <field name="res_model">reception.information</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('show_state', '=', ['3','4']),('task_status', '=', '2')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Reception Information
+            </p>
+        </field>
+    </record>
+
+    <record id="reception_information_action6" model="ir.actions.act_window">
+        <field name="name">Section Manager</field>
+        <field name="res_model">reception.information</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('show_state', 'in', ['2','3','4']),('task_status', '=', '2')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Reception Information
+            </p>
+        </field>
+    </record>
+
+
+    <record id="reception_information_action5" model="ir.actions.act_window">
+        <field name="name">OWNER</field>
+        <field name="res_model">reception.information</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="domain">[('show_state', '=', '4'),('task_status', '=', '2')]</field>
+        <field name="help" type="html">
+            <p class="oe_view_nocontent_create">
+                Reception Information
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Treatment Stages -->
+    <record id="view_hospital_treatment_stage_tree" model="ir.ui.view">
+        <field name="name">hospital.treatment.stage.tree</field>
+        <field name="model">hospital.treatment.stage</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence"/>
+                <field name="name"/>
+                <field name="is_default"/>
+                <field name="is_closed"/>
+                <field name="fold"/>
+                <field name="company_id"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hospital_treatment_stage_form" model="ir.ui.view">
+        <field name="name">hospital.treatment.stage.form</field>
+        <field name="model">hospital.treatment.stage</field>
+        <field name="arch" type="xml">
+            <form string="Treatment Stage">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="sequence"/>
+                        <field name="company_id"/>
+                    </group>
+                    <group>
+                        <field name="is_default"/>
+                        <field name="is_closed"/>
+                        <field name="fold"/>
+                    </group>
+                    <group>
+                        <field name="description"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hospital_treatment_stage" model="ir.actions.act_window">
+        <field name="name">Treatment Stages</field>
+        <field name="res_model">hospital.treatment.stage</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{}</field>
+    </record>
+
+    <!-- Treatment -->
+    <record id="view_hospital_treatment_tree" model="ir.ui.view">
+        <field name="name">hospital.treatment.tree</field>
+        <field name="model">hospital.treatment</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="stage_id"/>
+                <field name="state"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="duration_hours"/>
+                <field name="responsible_id"/>
+                <field name="compliance_flagged"/>
+                <field name="telemedicine_enabled"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hospital_treatment_kanban" model="ir.ui.view">
+        <field name="name">hospital.treatment.kanban</field>
+        <field name="model">hospital.treatment</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban o_kanban_small_column hospital-treatment-kanban" default_group_by="stage_id">
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="hospital_id"/>
+                <field name="pharmacy_id"/>
+                <field name="stage_id"/>
+                <field name="state"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="duration_hours"/>
+                <field name="telemedicine_enabled"/>
+                <field name="compliance_flagged"/>
+                <field name="responsible_id"/>
+                <field name="prescription_count"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_card oe_kanban_global_click hospital-treatment-card pharma-card">
+                            <!-- Header with icon, title, status -->
+                            <div class="o_kanban_record_top">
+                                <div class="kanban-header-left">
+                                    <div class="kanban-icon-wrapper">
+                                        <i class="fa fa-stethoscope kanban-icon" title="Treatment"></i>
+                                    </div>
+                                    <div class="o_kanban_record_headings">
+                                        <div class="o_kanban_record_title">
+                                            <strong><field name="name"/></strong>
+                                            <div class="o_kanban_record_subtitle">
+                                                <span class="status-dot" 
+                                                      t-attf-class="status-dot status-#{record.state.raw_value}"></span>
+                                                <field name="state" 
+                                                       decoration-success="state == 'done'" 
+                                                       decoration-info="state == 'active'" 
+                                                       decoration-danger="state == 'cancelled'"
+                                                       decoration-muted="state == 'draft'"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Content Section -->
+                            <div class="oe_kanban_content">
+                                <!-- Patient Info -->
+                                <div class="o_kanban_record_body">
+                                    <div class="config-tag" t-if="record.patient_id.value">
+                                        <i class="fa fa-user" title="Patient"></i>
+                                        <field name="patient_id"/>
+                                    </div>
+                                    <div class="config-tag" t-if="record.responsible_id.value">
+                                        <i class="fa fa-user-md" title="Responsible"></i>
+                                        <field name="responsible_id"/>
+                                    </div>
+                                </div>
+                                
+                                <!-- Configuration Tags -->
+                                <div class="o_kanban_record_bottom config-tags">
+                                    <div class="oe_kanban_bottom_left">
+                                        <!-- Hospital -->
+                                        <div class="config-tag" t-if="record.hospital_id.value">
+                                            <i class="fa fa-hospital-o" title="Hospital"></i>
+                                            <field name="hospital_id"/>
+                                        </div>
+                                        
+                                        <!-- Pharmacy -->
+                                        <div class="config-tag" t-if="record.pharmacy_id.value">
+                                            <i class="fa fa-home" title="Pharmacy"></i>
+                                            <field name="pharmacy_id"/>
+                                        </div>
+                                        
+                                        <!-- Start Date -->
+                                        <div class="config-tag" t-if="record.start_datetime.value">
+                                            <i class="fa fa-calendar" title="Start Date"></i>
+                                            <field name="start_datetime"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Statistics in Two Columns -->
+                                <div class="o_kanban_record_bottom stats-section">
+                                    <div class="stats-column stats-left">
+                                        <!-- Duration -->
+                                        <div class="stat-item" t-if="record.duration_hours.value">
+                                            <i class="fa fa-clock-o text-info"></i>
+                                            <span class="stat-value">
+                                                <field name="duration_hours"/>h
+                                            </span>
+                                        </div>
+                                        
+                                        <!-- Prescriptions -->
+                                        <div class="stat-item" t-if="record.prescription_count.value">
+                                            <i class="fa fa-file-text text-primary"></i>
+                                            <span class="stat-value">
+                                                <field name="prescription_count"/> RX
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="stats-column stats-right">
+                                        <!-- Telemedicine -->
+                                        <div class="stat-item" t-if="record.telemedicine_enabled.raw_value">
+                                            <i class="fa fa-video-camera text-info"></i>
+                                            <span class="stat-value">Telemed</span>
+                                        </div>
+                                        
+                                        <!-- Compliance Flag -->
+                                        <div class="stat-item" t-if="record.compliance_flagged.raw_value">
+                                            <i class="fa fa-flag text-danger"></i>
+                                            <span class="stat-value">Flagged</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Quick Actions -->
+                                <div class="o_kanban_record_bottom actions-section">
+                                    <div class="oe_kanban_bottom_right">
+                                        <button name="action_mark_done" type="object" 
+                                                class="btn-icon btn-publish" 
+                                                invisible="state not in ['draft', 'active']"
+                                                title="Mark Done">
+                                            <i class="fa fa-check"></i>
+                                        </button>
+                                        <button name="action_mark_cancelled" type="object" 
+                                                class="btn-icon btn-duplicate"
+                                                invisible="state not in ['draft', 'active']"
+                                                title="Cancel">
+                                            <i class="fa fa-times"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="view_hospital_treatment_form" model="ir.ui.view">
+        <field name="name">hospital.treatment.form</field>
+        <field name="model">hospital.treatment</field>
+        <field name="arch" type="xml">
+            <form string="Treatment">
+                <header>
+                    <button name="action_mark_active" type="object" string="Active" class="btn-primary"
+                            invisible="state != 'draft'"/>
+                    <button name="action_mark_done" type="object" string="Mark Done" class="btn-primary"
+                            invisible="state != 'active'"/>
+                    <button name="action_mark_cancelled" type="object" string="Cancel" class="btn-secondary"
+                            invisible="state not in ['draft', 'active']"/>
+                    <button name="action_toggle_portal_visibility" type="object" string="Toggle Portal"
+                            class="btn-secondary" invisible="portal_visible or state == 'cancelled'"/>
+                    <button name="action_flag_compliance" type="object" string="Flag Compliance" class="btn-danger"
+                            invisible="compliance_flagged or state == 'cancelled'"/>
+                    <button name="action_clear_compliance" type="object" string="Clear Compliance" class="btn-secondary"
+                            invisible="not compliance_flagged or state == 'cancelled'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,done"
+                           statusbar_colors="{'done':'success','cancelled':'danger'}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_open_prescriptions"
+                                icon="fa-file-text-o">
+                            <field name="prescription_count" widget="statinfo" string="Prescriptions"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="patient_id"/>
+                            <field name="hospital_id"/>
+                            <field name="pharmacy_id" domain="[('hospital_id','=',hospital_id)]"/>
+                            <field name="responsible_id"/>
+                            <field name="state" readonly="1"/>
+                            <field name="compliance_flagged" readonly="1"/>
+                        </group>
+                        <group>
+                            <field name="start_datetime"/>
+                            <field name="end_datetime"/>
+                            <field name="duration_hours" readonly="1"/>
+                            <field name="telemedicine_enabled"/>
+                            <field name="telemedicine_last_access" readonly="1"/>
+                            <field name="portal_visible"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Prescriptions">
+                            <field name="prescription_ids"
+                                   context="{'default_hospital_id': hospital_id, 'default_patient_id': patient_id}">
+                                <list editable="bottom">
+                                    <field name="name" readonly="1"/>
+                                    <field name="hospital_id" readonly="1"/>
+                                    <field name="pharmacy_id"/>
+                                    <field name="state" readonly="1"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Telemedicine" invisible="['=', 'telemedicine_enabled', False]">
+                            <group>
+                                <field name="telemedicine_session_id"/>
+                                <field name="telemedicine_session_url"/>
+                                <field name="telemedicine_join_token"/>
+                            </group>
+                            <group>
+                                <field name="activity_log"
+                                       placeholder="Use this log for quick notes about remote session events."/>
+                            </group>
+                        </page>
+                        <page string="Vitals &amp; Notes">
+                            <group>
+                                <field name="vitals_snapshot" placeholder='{"bp": "120/80", "pulse": 72}'/>
+                                <field name="notes"/>
+                            </group>
+                        </page>
+                        <page string="Attachments">
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hospital_treatment_search" model="ir.ui.view">
+        <field name="name">hospital.treatment.search</field>
+        <field name="model">hospital.treatment</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="patient_id"/>
+                <field name="hospital_id"/>
+                <field name="responsible_id"/>
+                <filter string="Active" name="active_state" domain="[('state','=','active')]"/>
+                <filter string="Completed" name="completed_state" domain="[('state','=','done')]"/>
+                <filter string="Flagged" name="flagged_compliance" domain="[('compliance_flagged','=',True)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Hospital" name="grp_hospital" context="{'group_by':'hospital_id'}"/>
+                    <filter string="Pharmacy" name="grp_pharmacy" context="{'group_by':'pharmacy_id'}"/>
+                    <filter string="Responsible" name="grp_responsible" context="{'group_by':'responsible_id'}"/>
+                    <filter string="Stage" name="grp_stage" context="{'group_by':'stage_id'}"/>
+                    <filter string="State" name="grp_state" context="{'group_by':'state'}"/>
+                    <filter string="Start Date" name="grp_start_date" context="{'group_by':'start_datetime:day'}"/>
+                    <filter string="Month" name="grp_month" context="{'group_by':'start_datetime:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="view_treatment_progress_pivot" model="ir.ui.view">
+        <field name="name">treatment.progress.pivot</field>
+        <field name="model">hospital.treatment</field>
+        <field name="arch" type="xml">
+            <pivot string="Treatment Progress Analysis">
+                <field name="hospital_id" type="row"/>
+                <field name="state" type="row"/>
+                <field name="start_datetime" type="col" interval="month"/>
+                <field name="count_field" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_hospital_treatment" model="ir.actions.act_window">
+        <field name="name">Treatments</field>
+        <field name="res_model">hospital.treatment</field>
+        <field name="view_mode">kanban,list,form,pivot,graph</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="menu_hospital_treatment_root" parent="pharmacy_management_system.menu_pharmacy_operations" name="Treatments"
+              action="action_hospital_treatment" sequence="25"/>
+    <menuitem id="menu_hospital_treatment_stage" parent="pharmacy_management_system.menu_pharmacy_setup"
+              action="action_hospital_treatment_stage" sequence="35"/>
+</odoo>
+

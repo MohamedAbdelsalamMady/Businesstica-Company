@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_attendance_device_user,attendance.device.user,model_attendance_device,,1,0,0,0
+access_attendance_device_manager,attendance.device.manager,model_attendance_device,,1,1,1,1

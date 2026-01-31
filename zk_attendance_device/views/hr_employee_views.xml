@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Inherit Employee Form View -->
+    <record id="view_employee_form_zk_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.form.zk.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='work_phone']" position="after">
+                <field name="device_user_id"
+                       />
+            </xpath>
+        </field>
+    </record>
+
+    <!-- Inherit Employee Tree View -->
+    <record id="view_employee_tree_zk_inherit" model="ir.ui.view">
+        <field name="name">hr.employee.tree.zk.inherit</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="device_user_id" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

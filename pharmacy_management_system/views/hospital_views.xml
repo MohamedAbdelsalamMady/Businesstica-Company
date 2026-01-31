@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_hospital_hospital_form" model="ir.ui.view">
+        <field name="name">hospital.hospital.form</field>
+        <field name="model">hospital.hospital</field>
+        <field name="arch" type="xml">
+            <form string="Hospital">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button class="oe_stat_button" type="object" name="action_view_pharmacies" icon="fa-home">
+                            <field name="pharmacy_count" widget="statinfo" string="Pharmacies"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_prescriptions" icon="fa-file-text-o">
+                            <field name="prescription_count" widget="statinfo" string="Prescriptions"/>
+                        </button>
+                        <button class="oe_stat_button" type="object" name="action_view_treatments" icon="fa-stethoscope">
+                            <field name="treatment_count" widget="statinfo" string="Treatments"/>
+                        </button>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="company_id"/>
+                            <field name="partner_id"/>
+                        </group>
+                        <group>
+                            <field name="warehouse_id"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                    <group invisible="1">
+                        <field name="pharmacy_count"/>
+                        <field name="prescription_count"/>
+                        <field name="treatment_count"/>
+                    </group>
+                    <notebook>
+                        <page string="Pharmacies">
+                            <field name="pharmacy_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="API Configs">
+                            <field name="api_config_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="endpoint_url"/>
+                                    <field name="enabled"/>
+                                    <field name="last_sync"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_hospital_hospital_tree" model="ir.ui.view">
+        <field name="name">hospital.hospital.tree</field>
+        <field name="model">hospital.hospital</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="company_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_hospital_hospital_kanban" model="ir.ui.view">
+        <field name="name">hospital.hospital.kanban</field>
+        <field name="model">hospital.hospital</field>
+        <field name="arch" type="xml">
+            <kanban class="pharma-kanban">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="company_id"/>
+                <field name="partner_id"/>
+                <field name="warehouse_id"/>
+                <field name="active"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="pharma-card oe_kanban_global_click">
+                            <div class="pharma-header">
+                                <div class="pharma-title">
+                                    <strong t-esc="record.name.value"/>
+                                    <span class="pharma-sub"><t t-esc="record.code.value or ''"/></span>
+                                </div>
+                                <div class="pharma-badge">
+                                    <span t-if="!record.active.raw_value" class="badge badge-secondary">Archived</span>
+                                </div>
+                            </div>
+                            <div class="pharma-content">
+                                <div class="pharma-row"><i class="fa fa-building"></i> <t t-esc="record.company_id.value or '-'"/></div>
+                                <div class="pharma-row"><i class="fa fa-map-marker"></i> <t t-esc="record.partner_id.value or '-'"/></div>
+                                <div class="pharma-row"><i class="fa fa-industry"></i> <t t-esc="record.warehouse_id.value or '-'"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record id="action_hospital_hospital" model="ir.actions.act_window">
+        <field name="name">Hospitals</field>
+        <field name="res_model">hospital.hospital</field>
+        <field name="view_mode">kanban,list,form</field>
+    </record>
+
+    <record id="search_hospital_hospital" model="ir.ui.view">
+        <field name="name">hospital.hospital.search</field>
+        <field name="model">hospital.hospital</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="company_id"/>
+                <filter string="Active" name="active_true" domain="[('active','=',True)]"/>
+                <filter string="Archived" name="active_false" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Company" name="grp_company" context="{'group_by':'company_id'}"/>
+                    <filter string="Active" name="grp_active" context="{'group_by':'active'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <menuitem id="menu_hospital_hospital" parent="pharmacy_management_system.menu_pharmacy_hospitals" action="action_hospital_hospital"/>
+
+    <!-- Hospital Department Views -->
+    <record id="view_hospital_department_tree" model="ir.ui.view">
+        <field name="name">hospital.department.tree</field>
+        <field name="model">hospital.department</field>
+                <field name="type">list</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="hospital_id"/>
+                <field name="manager_id"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+    <record id="view_hospital_department_form" model="ir.ui.view">
+        <field name="name">hospital.department.form</field>
+        <field name="model">hospital.department</field>
+        <field name="arch" type="xml">
+            <form string="Department">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="hospital_id"/>
+                        </group>
+                        <group>
+                            <field name="manager_id"/>
+                            <field name="active"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    <record id="search_hospital_department" model="ir.ui.view">
+        <field name="name">hospital.department.search</field>
+        <field name="model">hospital.department</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="hospital_id"/>
+                <field name="manager_id"/>
+                <filter string="Active" name="active_true" domain="[('active','=',True)]"/>
+                <filter string="Archived" name="active_false" domain="[('active','=',False)]"/>
+                <group expand="0" string="Group By">
+                    <filter string="Hospital" name="grp_hospital" context="{'group_by':'hospital_id'}"/>
+                    <filter string="Manager" name="grp_manager" context="{'group_by':'manager_id'}"/>
+                    <filter string="Active" name="grp_active" context="{'group_by':'active'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="action_hospital_department" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="res_model">hospital.department</field>
+        <field name="view_mode">list,form</field>
+    </record>
+    <menuitem id="menu_hospital_department" parent="pharmacy_management_system.menu_pharmacy_setup" action="action_hospital_department" sequence="15"/>
+
+</odoo>
+
+

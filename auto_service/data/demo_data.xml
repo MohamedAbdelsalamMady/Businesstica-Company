@@ -1,0 +1,21 @@
+<odoo>
+    <data noupdate="1">
+
+        <!-- Pre-travel Vehicle Inspection Product -->
+        <record id="product_pre_travel_vehicle_inspection" model="product.product">
+            <field name="name">منتج فحص السفر</field>
+            <field name="sale_ok">true</field>
+            <field name="purchase_ok">false</field>
+            <field name="type">service</field> <!-- Use 'type' if 'detailed_type' doesn't work -->
+        </record>
+
+        <!-- Inspection Transfer Ownership Product -->
+        <record id="product_inspection_transfer_ownership" model="product.product">
+            <field name="name">منتج الكشف العام</field>
+            <field name="sale_ok">true</field>
+            <field name="purchase_ok">false</field>
+            <field name="type">service</field> <!-- Use 'type' if 'detailed_type' doesn't work -->
+        </record>
+
+    </data>
+</odoo>
