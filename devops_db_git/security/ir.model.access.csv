@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_devops_project_admin,access.devops.project.admin,model_devops_project,devops_db_git.group_devops_admin,1,1,1,1
+access_devops_deploy_log_admin,access.devops.deploy.log.admin,model_devops_deploy_log,devops_db_git.group_devops_admin,1,0,0,0

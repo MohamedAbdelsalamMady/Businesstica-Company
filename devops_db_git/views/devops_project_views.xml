@@ -1,0 +1,72 @@
+<odoo>
+    <record id="view_devops_project_tree" model="ir.ui.view">
+        <field name="name">devops.project.tree</field>
+        <field name="model">devops.project</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="database_name"/>
+                <field name="repository_url"/>
+                <field name="branch"/>
+                <field name="addons_path"/>
+                <field name="last_pull"/>
+                <field name="status" widget="badge"/>
+                <field name="auto_pull"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_devops_project_form" model="ir.ui.view">
+        <field name="name">devops.project.form</field>
+        <field name="model">devops.project</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="action_validate_project" type="object" string="Validate" class="oe_highlight"/>
+                    <button name="action_pull" type="object" string="Pull"/>
+                    <button name="action_push" type="object" string="Push"/>
+                    <button name="action_checkout_branch" type="object" string="Checkout Branch"/>
+                    <field name="status" widget="statusbar" statusbar_visible="draft,ready,error"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="database_name" readonly="1"/>
+                            <field name="repository_url"/>
+                            <field name="branch"/>
+                        </group>
+                        <group>
+                            <field name="addons_path"/>
+                            <field name="auto_pull"/>
+                            <field name="auto_upgrade"/>
+                            <field name="last_pull" readonly="1"/>
+                            <field name="git_token" password="True" placeholder="Paste token (stored encrypted)"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Logs">
+                            <field name="deploy_log_ids" readonly="1">
+                                <tree>
+                                    <field name="datetime"/>
+                                    <field name="database_name"/>
+                                    <field name="operation"/>
+                                    <field name="result" widget="badge"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_devops_project" model="ir.actions.act_window">
+        <field name="name">DevOps Projects</field>
+        <field name="res_model">devops.project</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_devops_root" name="DevOps" sequence="100" groups="devops_db_git.group_devops_admin"/>
+    <menuitem id="menu_devops_project" name="Projects" parent="menu_devops_root" action="action_devops_project" sequence="10"/>
+</odoo>
