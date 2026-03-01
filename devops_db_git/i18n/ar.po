@@ -1,0 +1,50 @@
+# Translation for devops_db_git
+msgid ""
+msgstr ""
+"Project-Id-Version: devops_db_git 18.0\n"
+"POT-Creation-Date: 2026-03-01 00:00+0000\n"
+"PO-Revision-Date: 2026-03-01 00:00+0000\n"
+"Language: ar\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 && n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+
+msgid "DevOps"
+msgstr "ديف أوبس"
+
+msgid "DevOps Projects"
+msgstr "مشاريع ديف أوبس"
+
+msgid "Deployment Logs"
+msgstr "سجلات النشر"
+
+msgid "Validate"
+msgstr "تحقق"
+
+msgid "Pull"
+msgstr "سحب"
+
+msgid "Push"
+msgstr "دفع"
+
+msgid "Checkout Branch"
+msgstr "تبديل الفرع"
+
+msgid "Logs"
+msgstr "السجلات"
+
+msgid "Repository URL"
+msgstr "رابط المستودع"
+
+msgid "Branch"
+msgstr "الفرع"
+
+msgid "Addons path does not exist: %s"
+msgstr "مسار الإضافات غير موجود: %s"
+
+msgid "Cross-database operation is blocked for safety."
+msgstr "تم حظر العملية بين قواعد البيانات لأسباب أمنية."
+
+msgid "Only one DevOps project can exist per database."
+msgstr "يسمح بمشروع ديف أوبس واحد فقط لكل قاعدة بيانات."
