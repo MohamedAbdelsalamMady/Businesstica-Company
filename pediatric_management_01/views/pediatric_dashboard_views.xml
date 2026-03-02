@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pediatric_patient_graph_dashboard" model="ir.ui.view">
+        <field name="name">pediatric.patient.graph</field>
+        <field name="model">pediatric.patient</field>
+        <field name="arch" type="xml">
+            <graph string="Répartition des Patients" type="pie" sample="1">
+                <field name="age_group"/> <field name="gender"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_pediatric_patient_pivot_dashboard" model="ir.ui.view">
+        <field name="name">pediatric.patient.pivot</field>
+        <field name="model">pediatric.patient</field>
+        <field name="arch" type="xml">
+            <pivot string="Statistiques Médicales" sample="1">
+                <field name="age_group" type="row"/>
+                <field name="gender" type="col"/>
+                <field name="weight" type="measure"/>
+                <field name="height" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="action_pediatric_dashboard" model="ir.actions.act_window">
+        <field name="name">Tableau de Bord</field>
+        <field name="res_model">pediatric.patient</field>
+        <field name="view_mode">graph,pivot</field>
+        <field name="view_id" ref="view_pediatric_patient_graph_dashboard"/>
+    </record>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="cron_send_appointment_reminders" model="ir.cron">
+            <field name="name">Cabinet : Envoyer rappels RDV</field>
+            <field name="model_id" ref="model_pediatric_appointment"/>
+            <field name="state">code</field>
+            <field name="code">model.send_reminders()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_check_overdue_vaccines" model="ir.cron">
+            <field name="name">Cabinet : Vérifier vaccins en retard</field>
+            <field name="model_id" ref="model_pediatric_vaccination"/>
+            <field name="state">code</field>
+            <field name="code">model.check_overdue_vaccines()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">weeks</field>
+            <field name="active" eval="True"/>
+        </record>
+
+        <record id="cron_check_overdue_invoices" model="ir.cron">
+            <field name="name">Cabinet : Vérifier factures impayées</field>
+            <field name="model_id" ref="account.model_account_move"/>
+            <field name="state">code</field>
+            <field name="code">
+# Rechercher les factures en retard
+overdue_invoices = env['account.move'].search([
+    ('move_type', '=', 'out_invoice'),
+    ('state', '=', 'posted'),
+    ('payment_state', 'in', ['not_paid', 'partial']),
+    ('invoice_date_due', '&lt;', datetime.date.today())
+])
+
+for invoice in overdue_invoices:
+    invoice.activity_schedule(
+        'mail.mail_activity_data_call',
+        summary=f'Relance facture impayée {invoice.name}',
+        note=f'Facture échue depuis le {invoice.invoice_date_due}',
+        user_id=env.user.id
+    )
+            </field>
+            <field name="interval_number">3</field>
+            <field name="interval_type">days</field>
+            <field name="active" eval="True"/>
+        </record>
+    </data>
+</odoo>

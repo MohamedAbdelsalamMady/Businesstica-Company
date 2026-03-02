@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo noupdate="0">
+    <!--    Hotel Management Module Category-->
+    <record id="module_category_hotel_management" model="ir.module.category">
+        <field name="name">Hotel Management</field>
+        <field name="description">Hotel Access Groups</field>
+        <field name="sequence">20</field>
+    </record>
+</odoo>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pediatric_growth_chart_graph" model="ir.ui.view">
+        <field name="name">pediatric.growth.chart.graph</field>
+        <field name="model">pediatric.growth.chart</field>
+        <field name="arch" type="xml">
+            <graph string="Courbe de croissance" type="line" sample="1">
+                <field name="age_months"/> 
+                <field name="weight" type="measure"/>
+                <field name="height" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_pediatric_growth_chart_tree" model="ir.ui.view">
+        <field name="name">pediatric.growth.chart.list</field>
+        <field name="model">pediatric.growth.chart</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="measurement_date"/>
+                <field name="age_months"/>
+                <field name="weight"/>
+                <field name="height"/>
+                <field name="bmi"/>
+                <field name="head_circumference"/>
+            </list>
+        </field>
+    </record>
+<record id="action_pediatric_growth_chart" model="ir.actions.act_window">
+        <field name="name">Courbe de Croissance</field>
+        <field name="res_model">pediatric.growth.chart</field>
+        <field name="view_mode">list,graph,form</field>
+        <field name="domain">[('patient_id', '=', active_id)]</field>
+        <field name="context">{'default_patient_id': active_id}</field>
+    </record>
+</odoo>

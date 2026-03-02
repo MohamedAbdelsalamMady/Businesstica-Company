@@ -6,7 +6,7 @@
         <field name="code">model.cron_auto_pull()</field>
         <field name="interval_number">10</field>
         <field name="interval_type">minutes</field>
-        <field name="numbercall">-1</field>
+<!--        <field name="numbercall">-1</field>-->
         <field name="active">True</field>
     </record>
 </odoo>

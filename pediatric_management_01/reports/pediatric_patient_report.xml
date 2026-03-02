@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_patient" model="ir.actions.report">
+        <field name="name">Fiche Patient</field>
+        <field name="model">pediatric.patient</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">pediatric_management.report_patient_document</field>
+        <field name="report_file">pediatric_management.report_patient_document</field>
+        <field name="binding_model_id" ref="model_pediatric_patient"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="report_patient_document">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="patient">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <div class="text-center">
+                            <h2>FICHE PATIENT</h2>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h3 t-field="patient.name"/>
+                                <p><strong>Âge:</strong> <span t-field="patient.age_display"/></p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-6">
+                                <h4>Informations Patient</h4>
+                                <p><strong>Date de naissance:</strong> <span t-field="patient.birth_date"/></p>
+                                <p><strong>Lieu de naissance:</strong> <span t-field="patient.birth_place"/></p>
+                                <p><strong>Sexe:</strong> <span t-field="patient.gender"/></p>
+                                <p><strong>Poids actuel:</strong> <span t-field="patient.current_weight"/> kg</p>
+                                <p><strong>Taille actuelle:</strong> <span t-field="patient.current_height"/> cm</p>
+                                <p><strong>Groupe sanguin:</strong> <span t-field="patient.blood_group"/></p>
+                            </div>
+                            <div class="col-6">
+                                <h4>Parents/Tuteurs</h4>
+                                <p><strong>Père:</strong> <span t-field="patient.father_name"/></p>
+                                <p><strong>Tél père:</strong> <span t-field="patient.father_phone"/></p>
+                                <p><strong>Email père:</strong> <span t-field="patient.father_email"/></p>
+                                <p><strong>Mère:</strong> <span t-field="patient.mother_name"/></p>
+                                <p><strong>Tél mère:</strong> <span t-field="patient.mother_phone"/></p>
+                                <p><strong>Email mère:</strong> <span t-field="patient.mother_email"/></p>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3">
+                            <div class="col-12">
+                                <h4>Adresse</h4>
+                                <p t-field="patient.address"/>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-3" t-if="patient.allergies">
+                            <div class="col-12">
+                                <h4>Allergies</h4>
+                                <div class="alert alert-warning">
+                                    <p t-field="patient.allergies"/>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h4>Historique des Consultations</h4>
+                                <table class="table table-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Date</th>
+                                            <th>Type</th>
+                                            <th>Diagnostic</th>
+                                            <th>Poids</th>
+                                            <th>Taille</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="patient.consultation_ids.filtered(lambda c: c.state == 'done')[:10]" t-as="consultation">
+                                            <tr>
+                                                <td><span t-field="consultation.consultation_date"/></td>
+                                                <td><span t-field="consultation.consultation_type"/></td>
+                                                <td><span t-field="consultation.diagnosis"/></td>
+                                                <td><span t-field="consultation.weight"/> kg</td>
+                                                <td><span t-field="consultation.height"/> cm</td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-4">
+                            <div class="col-12">
+                                <h4>Vaccinations</h4>
+                                <table class="table table-bordered table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th>Vaccin</th>
+                                            <th>Date</th>
+                                            <th>Prochaine dose</th>
+                                            <th>État</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="patient.vaccination_ids" t-as="vaccination">
+                                            <tr>
+                                                <td><span t-field="vaccination.vaccine_id.name"/></td>
+                                                <td><span t-field="vaccination.vaccination_date"/></td>
+                                                <td><span t-field="vaccination.next_dose_date"/></td>
+                                                <td><span t-field="vaccination.state"/></td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>

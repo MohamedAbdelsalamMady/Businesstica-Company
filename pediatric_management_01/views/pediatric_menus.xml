@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_pediatric_main" 
+              name="Cabinet Pédiatrique" 
+              sequence="1" 
+              web_icon="pediatric_management,static/description/icon.png"/>
+
+<menuitem id="menu_pediatric_patients" 
+              name="Patients" 
+              parent="menu_pediatric_main" 
+              action="action_pediatric_patient" 
+              sequence="1"/>
+
+<menuitem id="menu_pediatric_dashboard" 
+              name="Tableau de Bord" 
+              parent="menu_pediatric_main" 
+              action="action_pediatric_dashboard" 
+              sequence="2"/>
+
+    <menuitem id="menu_pediatric_appointments" 
+              name="Planning" 
+              parent="menu_pediatric_main" 
+              action="action_pediatric_appointment" 
+              sequence="20"/>
+
+    <menuitem id="menu_pediatric_consultations" 
+              name="Consultations" 
+              parent="menu_pediatric_main" 
+              action="action_pediatric_consultation" 
+              sequence="30"/>
+
+    <menuitem id="menu_pediatric_prescriptions" 
+              name="Prescriptions" 
+              parent="menu_pediatric_main" 
+              action="action_pediatric_prescription" 
+              sequence="40"/>
+
+    <menuitem id="menu_pediatric_vaccinations" 
+              name="Vaccinations" 
+              parent="menu_pediatric_main" 
+              action="action_pediatric_vaccination" 
+              sequence="50"/>
+
+    <menuitem id="menu_pediatric_reports" 
+              name="Rapports" 
+              parent="menu_pediatric_main" 
+              sequence="60"/>
+
+    <menuitem id="menu_pediatric_config" 
+              name="Configuration" 
+              parent="menu_pediatric_main" 
+              sequence="100"/>
+
+    <menuitem id="menu_pediatric_config_cabinet" 
+              name="Cabinet" 
+              parent="menu_pediatric_config" 
+              action="action_pediatric_config" 
+              sequence="10"/>
+
+    <menuitem id="menu_pediatric_medications" 
+              name="Médicaments" 
+              parent="menu_pediatric_config" 
+              action="action_pediatric_medication" 
+              sequence="20"/>
+
+    <menuitem id="menu_pediatric_vaccines" 
+              name="Vaccins" 
+              parent="menu_pediatric_config" 
+              action="action_pediatric_vaccine" 
+              sequence="30"/>
+</odoo>

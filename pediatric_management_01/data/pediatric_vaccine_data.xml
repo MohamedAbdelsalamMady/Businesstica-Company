@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Vaccins obligatoires -->
+        <record id="vaccine_dtpolio" model="pediatric.vaccine">
+            <field name="name">DT Polio</field>
+            <field name="disease">Diphtérie, Tétanos, Poliomyélite</field>
+            <field name="age_months">2</field>
+            <field name="doses_required">3</field>
+            <field name="interval_months">2</field>
+            <field name="mandatory">True</field>
+        </record>
+
+        <record id="vaccine_coqueluche" model="pediatric.vaccine">
+            <field name="name">Coqueluche</field>
+            <field name="disease">Coqueluche</field>
+            <field name="age_months">2</field>
+            <field name="doses_required">3</field>
+            <field name="interval_months">2</field>
+            <field name="mandatory">True</field>
+        </record>
+
+        <record id="vaccine_hib" model="pediatric.vaccine">
+            <field name="name">Haemophilus b</field>
+            <field name="disease">Haemophilus influenzae b</field>
+            <field name="age_months">2</field>
+            <field name="doses_required">3</field>
+            <field name="interval_months">2</field>
+            <field name="mandatory">True</field>
+        </record>
+
+        <record id="vaccine_hepatite_b" model="pediatric.vaccine">
+            <field name="name">Hépatite B</field>
+            <field name="disease">Hépatite B</field>
+            <field name="age_months">2</field>
+            <field name="doses_required">3</field>
+            <field name="interval_months">2</field>
+            <field name="mandatory">True</field>
+        </record>
+
+        <record id="vaccine_pneumocoque" model="pediatric.vaccine">
+            <field name="name">Pneumocoque</field>
+            <field name="disease">Infections à pneumocoque</field>
+            <field name="age_months">2</field>
+            <field name="doses_required">3</field>
+            <field name="interval_months">2</field>
+            <field name="mandatory">True</field>
+        </record>
+
+        <record id="vaccine_meningocoque_c" model="pediatric.vaccine">
+            <field name="name">Méningocoque C</field>
+            <field name="disease">Méningite à méningocoque C</field>
+            <field name="age_months">5</field>
+            <field name="doses_required">1</field>
+            <field name="mandatory">True</field>
+        </record>
+
+        <record id="vaccine_ror" model="pediatric.vaccine">
+            <field name="name">ROR</field>
+            <field name="disease">Rougeole, Oreillons, Rubéole</field>
+            <field name="age_months">12</field>
+            <field name="doses_required">2</field>
+            <field name="interval_months">6</field>
+            <field name="mandatory">True</field>
+        </record>
+
+        <!-- Vaccins recommandés -->
+        <record id="vaccine_rotavirus" model="pediatric.vaccine">
+            <field name="name">Rotavirus</field>
+            <field name="disease">Gastro-entérite à rotavirus</field>
+            <field name="age_months">2</field>
+            <field name="doses_required">2</field>
+            <field name="interval_months">2</field>
+            <field name="mandatory">False</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pediatric_consultation_form" model="ir.ui.view">
+        <field name="name">pediatric.consultation.form</field>
+        <field name="model">pediatric.consultation</field>
+        <field name="arch" type="xml">
+            <form string="Consultation">
+                <header>
+                    <button name="action_create_prescription" string="Prescrire" type="object" 
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_schedule_next_appointment" string="RDV Contrôle" type="object" 
+                            invisible="not next_appointment_needed"/>
+                    <button name="action_create_invoice" string="Facturer" type="object"/>
+                    <button name="action_done" string="Terminer" type="object" 
+                            invisible="state != 'draft'" class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id" options="{'no_create': True}"/>
+                            <field name="patient_age" readonly="1"/>
+                            <field name="consultation_date"/>
+                            <field name="consultation_type"/>
+                        </group>
+                        <group>
+                            <field name="appointment_id" readonly="1"/>
+                            <field name="prescription_id" readonly="1" invisible="not prescription_id"/>
+                            <field name="invoice_id" readonly="1" invisible="not invoice_id"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Examen Clinique" name="examination">
+                            <group>
+                                <group string="Mesures">
+                                    <field name="weight"/>
+                                    <field name="height"/>
+                                    <field name="temperature"/>
+                                    <field name="blood_pressure"/>
+                                    <field name="bmi" readonly="1"/>
+                                </group>
+                                <group string="Motif">
+                                    <field name="reason" nolabel="1" placeholder="Motif de consultation..."/>
+                                </group>
+                            </group>
+                            <group string="Symptômes">
+                                <field name="symptoms" nolabel="1" placeholder="Décrire les symptômes..."/>
+                            </group>
+                            <group string="Diagnostic">
+                                <field name="diagnosis" nolabel="1" placeholder="Diagnostic..."/>
+                            </group>
+                        </page>
+                        <page string="Prochain RDV" name="next_appointment">
+                            <group>
+                                <field name="next_appointment_needed"/>
+                                <field name="next_appointment_date" invisible="not next_appointment_needed"/>
+                                <field name="next_appointment_type" invisible="not next_appointment_needed"/>
+                            </group>
+                            <field name="next_appointment_notes" placeholder="Instructions..." invisible="not next_appointment_needed"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pediatric_consultation_tree" model="ir.ui.view">
+        <field name="name">pediatric.consultation.list</field>
+        <field name="model">pediatric.consultation</field>
+        <field name="arch" type="xml">
+            <list string="Consultations">
+                <field name="consultation_date"/>
+                <field name="patient_id"/>
+                <field name="consultation_type"/>
+                <field name="state" widget="badge" decoration-info="state == 'draft'" decoration-success="state == 'done'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_pediatric_consultation" model="ir.actions.act_window">
+        <field name="name">Consultations</field>
+        <field name="res_model">pediatric.consultation</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créez votre première consultation.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pediatric_prescription_form" model="ir.ui.view">
+        <field name="name">pediatric.prescription.form</field>
+        <field name="model">pediatric.prescription</field>
+        <field name="arch" type="xml">
+            <form string="Prescription">
+                <header>
+                    <button name="action_prescribe" string="Prescrire" type="object" 
+                           invisible="state != 'draft'" class="oe_highlight"/>
+                    <button name="action_print" string="Imprimer" type="object" 
+                           invisible="state != 'prescribed'"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="patient_id" options="{'no_create': True}"/>
+                            <field name="patient_age" readonly="1"/>
+                            <field name="patient_weight" readonly="1"/>
+                            <field name="prescription_date"/>
+                        </group>
+                        <group>
+                            <field name="consultation_id" readonly="1"/>
+                            <field name="diagnosis"/>
+                            <field name="medication_count" readonly="1"/>
+                        </group>
+                    </group>
+                    
+                    <notebook>
+                        <page string="Médicaments" name="medications">
+                            <field name="medication_line_ids">
+                                <list editable="bottom">
+                                    <field name="medication_id"/>
+                                    <field name="medication_form" readonly="1"/>
+                                    <field name="medication_concentration" readonly="1"/>
+                                    <field name="dosage"/>
+                                    <field name="frequency"/>
+                                    <field name="duration"/>
+                                    <field name="calculated_dose" readonly="1"/>
+                                </list>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="medication_id"/>
+                                            <field name="medication_form" readonly="1"/>
+                                            <field name="medication_concentration" readonly="1"/>
+                                            <field name="dosage"/>
+                                            <field name="frequency"/>
+                                            <field name="duration"/>
+                                        </group>
+                                        <group>
+                                            <field name="calculated_dose" readonly="1"/>
+                                        </group>
+                                    </group>
+                                    <group string="Instructions spéciales">
+                                        <field name="instructions" nolabel="1"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        
+                        <page string="Recommandations" name="recommendations">
+                            <field name="recommendations" nolabel="1" 
+                                  placeholder="Recommandations générales, conseils aux parents..."/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_pediatric_prescription_tree" model="ir.ui.view">
+        <field name="name">pediatric.prescription.list</field>
+        <field name="model">pediatric.prescription</field>
+        <field name="arch" type="xml">
+            <list string="Prescriptions" decoration-success="state=='prescribed'">
+                <field name="prescription_date"/>
+                <field name="patient_id"/>
+                <field name="diagnosis"/>
+                <field name="medication_count"/>
+                <field name="state" widget="badge"/>
+                <button name="action_print" string="Imprimer" type="object" icon="fa-print"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="action_pediatric_prescription" model="ir.actions.act_window">
+        <field name="name">Prescriptions</field>
+        <field name="res_model">pediatric.prescription</field>
+        <field name="view_mode">list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Créer votre première prescription !
+            </p>
+            <p>
+                Gérez vos ordonnances avec calcul automatique des dosages.
+            </p>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Séquences pour les différents modèles -->
+	<record id="seq_pediatric_patient" model="ir.sequence">
+            <field name="name">Séquence Patient</field>
+            <field name="code">pediatric.patient</field>
+            <field name="prefix">PAT/</field>
+            <field name="padding">5</field>
+            <field name="number_next">1</field>
+            <field name="number_increment">1</field>
+        </record>
+
+        <record id="seq_pediatric_appointment" model="ir.sequence">
+            <field name="name">Rendez-vous</field>
+            <field name="code">pediatric.appointment</field>
+            <field name="prefix">RDV-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_pediatric_consultation" model="ir.sequence">
+            <field name="name">Consultation</field>
+            <field name="code">pediatric.consultation</field>
+            <field name="prefix">CONS-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_pediatric_prescription" model="ir.sequence">
+            <field name="name">Prescription</field>
+            <field name="code">pediatric.prescription</field>
+            <field name="prefix">ORD-%(year)s-</field>
+            <field name="padding">4</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

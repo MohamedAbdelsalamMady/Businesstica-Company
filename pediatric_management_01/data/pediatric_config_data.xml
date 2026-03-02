@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="default_pediatric_config" model="pediatric.config" forcecreate="True">
+            <field name="name">Cabinet Pédiatrique</field>
+            <field name="specialty">Pédiatrie</field>
+            <field name="consultation_price">50.0</field>
+            <field name="control_price">40.0</field>
+            <field name="vaccination_price">25.0</field>
+            <field name="emergency_price">80.0</field>
+            <field name="default_appointment_duration">30</field>
+            <field name="lunch_break_start">12:00</field>
+            <field name="lunch_break_end">14:00</field>
+            <field name="reminder_enabled">True</field>
+            <field name="email_notifications">True</field>
+            <field name="sms_notifications">False</field>
+        </record>
+
+        <record id="seq_pediatric_patient" model="ir.sequence">
+            <field name="name">Patient Pédiatrique</field>
+            <field name="code">pediatric.patient</field>
+            <field name="prefix">PAT-</field>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="seq_pediatric_appointment" model="ir.sequence">
+            <field name="name">Rendez-vous</field>
+            <field name="code">pediatric.appointment</field>
+            <field name="prefix">RDV-</field>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="seq_pediatric_consultation" model="ir.sequence">
+            <field name="name">Consultation</field>
+            <field name="code">pediatric.consultation</field>
+            <field name="prefix">CONS-</field>
+            <field name="padding">4</field>
+        </record>
+
+        <record id="seq_pediatric_prescription" model="ir.sequence">
+            <field name="name">Prescription</field>
+            <field name="code">pediatric.prescription</field>
+            <field name="prefix">ORD-</field>
+            <field name="padding">4</field>
+        </record>
+    </data>
+</odoo>

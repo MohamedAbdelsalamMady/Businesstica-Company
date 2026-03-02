@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_pediatric_patient_tree" model="ir.ui.view">
+        <field name="name">pediatric.patient.list</field>
+        <field name="model">pediatric.patient</field>
+        <field name="arch" type="xml">
+            <list string="Liste des Patients">
+                <field name="ref" decoration-bf="1"/>
+                <field name="name"/>
+                <field name="date_of_birth"/>
+                <field name="age" sum="Moyenne d'âge"/>
+                <field name="gender"/>
+                <field name="mobile"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="view_pediatric_patient_form" model="ir.ui.view">
+        <field name="name">pediatric.patient.form</field>
+        <field name="model">pediatric.patient</field>
+        <field name="arch" type="xml">
+            <form string="Fiche Patient">
+                <sheet>
+<div class="oe_button_box" name="button_box">
+    <button name="%(action_pediatric_growth_chart)d" 
+            type="action" 
+            class="oe_stat_button" 
+            icon="fa-line-chart" 
+            context="{'default_patient_id': id}">
+        <div class="o_stat_info">
+            <span class="o_stat_text">Croissance</span>
+        </div>
+    </button>
+</div>
+
+                    <field name="photo" widget="image" class="oe_avatar" options='{"preview_image": "photo"}'/>
+                    
+                    <div class="oe_title">
+                        <h1>
+                            <field name="ref" readonly="1"/>
+                        </h1>
+                        <label for="name" string="Nom Complet de l'enfant"/>
+                        <h1>
+                            <field name="name" placeholder="Le nom se générera automatiquement..."/>
+                        </h1>
+                    </div>
+
+                    <group>
+                        <group string="État Civil">
+                            <field name="last_name" placeholder="Nom de famille"/>
+                            <field name="first_name" placeholder="Prénom"/>
+                            <field name="gender" widget="radio" options="{'horizontal': true}"/>
+                            <field name="date_of_birth"/>
+                            <field name="age" readonly="1"/>
+                        </group>
+                        <group string="Coordonnées">
+                            <field name="parent_id" widget="res_partner_many2one" context="{'show_address': 1}" options='{"always_reload": True}'/>
+                            <field name="mobile" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="blood_group"/>
+                        </group>
+                    </group>
+
+                    <notebook>
+                        <page string="Historique Médical">
+                            <group>
+                                <field name="weight"/>
+                                <field name="height"/>
+                            </group>
+                            <field name="consultation_ids">
+                                <list>
+                                    <field name="consultation_date"/>
+                                    <field name="diagnosis"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_pediatric_patient" model="ir.actions.act_window">
+        <field name="name">Patients</field>
+        <field name="res_model">pediatric.patient</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="menu_pediatric_root" name="Pédiatrie" sequence="10"/>
+    <menuitem id="menu_pediatric_patient" name="Patients" parent="menu_pediatric_root" action="action_pediatric_patient" sequence="10"/>
+</odoo>

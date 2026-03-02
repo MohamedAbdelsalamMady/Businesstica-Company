@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pediatric_patient_user,pediatric.patient.user,model_pediatric_patient,base.group_user,1,1,1,1
+access_pediatric_appointment_user,pediatric.appointment.user,model_pediatric_appointment,base.group_user,1,1,1,1
+access_pediatric_consultation_user,pediatric.consultation.user,model_pediatric_consultation,base.group_user,1,1,1,1
+access_pediatric_prescription_user,pediatric.prescription.user,model_pediatric_prescription,base.group_user,1,1,1,1
+access_pediatric_prescription_line_user,pediatric.prescription.line.user,model_pediatric_prescription_line,base.group_user,1,1,1,1
+access_pediatric_medication_user,pediatric.medication.user,model_pediatric_medication,base.group_user,1,1,1,1
+access_pediatric_vaccination_user,pediatric.vaccination.user,model_pediatric_vaccination,base.group_user,1,1,1,1
+access_pediatric_vaccine_user,pediatric.vaccine.user,model_pediatric_vaccine,base.group_user,1,1,1,1
+access_pediatric_growth_chart_user,pediatric.growth.chart.user,model_pediatric_growth_chart,base.group_user,1,1,1,1
+access_pediatric_config,pediatric.config,model_pediatric_config,base.group_user,1,1,1,1

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Médicaments de base -->
+        <record id="medication_doliprane" model="pediatric.medication">
+            <field name="name">Doliprane Pédiatrique</field>
+            <field name="active_substance">Paracétamol</field>
+            <field name="form">syrup</field>
+            <field name="concentration">2.4%</field>
+            <field name="min_age_months">1</field>
+            <field name="max_age_months">180</field>
+            <field name="dose_per_kg">0.5</field>
+            <field name="pediatric_dosage">10-15mg/kg toutes les 6h maximum</field>
+        </record>
+
+        <record id="medication_advil" model="pediatric.medication">
+            <field name="name">Advil Pédiatrique</field>
+            <field name="active_substance">Ibuprofène</field>
+            <field name="form">syrup</field>
+            <field name="concentration">20mg/ml</field>
+            <field name="min_age_months">3</field>
+            <field name="max_age_months">180</field>
+            <field name="dose_per_kg">0.5</field>
+            <field name="pediatric_dosage">5-10mg/kg toutes les 8h</field>
+        </record>
+
+        <record id="medication_physiomer" model="pediatric.medication">
+            <field name="name">Physiomer</field>
+            <field name="active_substance">Eau de mer</field>
+            <field name="form">spray</field>
+            <field name="min_age_months">0</field>
+            <field name="pediatric_dosage">2-3 pulvérisations par narine 2-3 fois par jour</field>
+        </record>
+
+        <record id="medication_smecta" model="pediatric.medication">
+            <field name="name">Smecta</field>
+            <field name="active_substance">Diosmectite</field>
+            <field name="form">powder</field>
+            <field name="min_age_months">0</field>
+            <field name="pediatric_dosage">1 sachet 3 fois par jour chez l'enfant</field>
+        </record>
+    </data>
+</odoo>

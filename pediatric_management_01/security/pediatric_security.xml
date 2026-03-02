@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="module_category_pediatric_management" model="ir.module.category">
+            <field name="name">Gestion Pédiatrique</field>
+            <field name="description">Niveaux d'accès pour le personnel du cabinet</field>
+            <field name="sequence">10</field>
+        </record>
+
+        <record id="group_pediatric_nurse" model="res.groups">
+            <field name="name">Infirmier</field>
+            <field name="category_id" ref="module_category_pediatric_management"/>
+            <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        </record>
+
+        <record id="group_pediatric_doctor" model="res.groups">
+            <field name="name">Médecin</field>
+            <field name="category_id" ref="module_category_pediatric_management"/>
+            <field name="implied_ids" eval="[(4, ref('group_pediatric_nurse'))]"/>
+        </record>
+    </data>
+</odoo>
